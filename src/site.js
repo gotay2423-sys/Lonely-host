@@ -6,102 +6,6 @@ const statusText = document.getElementById("statusText");
 const statusLed = document.getElementById("statusLed");
 const fwText = document.getElementById("fwText");
 const runBtn = document.getElementById("runBtn");
-const soundToggle = document.getElementById("soundToggle");
-
-/* ---------- Retro Synthwave Audio Engine (Web Audio API) ---------- */
-class SoundFX {
-  constructor() {
-    this.ctx = null;
-    this.enabled = localStorage.getItem("lonely_sound") !== "0";
-  }
-
-  init() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
-    }
-    if (this.ctx && this.ctx.state === "suspended") {
-      this.ctx.resume();
-    }
-  }
-
-  toggle() {
-    this.enabled = !this.enabled;
-    localStorage.setItem("lonely_sound", this.enabled ? "1" : "0");
-    if (this.enabled) {
-      this.click();
-    }
-    return this.enabled;
-  }
-
-  playTone(freq, type, duration, startVol = 0.25, endVol = 0.001, timeOffset = 0) {
-    if (!this.enabled) return;
-    try {
-      this.init();
-      if (!this.ctx) return;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      const now = this.ctx.currentTime + timeOffset;
-
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, now);
-
-      gain.gain.setValueAtTime(startVol, now);
-      gain.gain.exponentialRampToValueAtTime(endVol, now + duration);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + duration);
-    } catch (_) {}
-  }
-
-  click() {
-    this.playTone(880, "sine", 0.04, 0.2);
-    this.playTone(440, "triangle", 0.06, 0.15, 0.001, 0.02);
-  }
-
-  stage() {
-    this.playTone(523.25, "sine", 0.08, 0.2, 0.001, 0);     // C5
-    this.playTone(659.25, "sine", 0.10, 0.22, 0.001, 0.05); // E5
-    this.playTone(783.99, "sine", 0.14, 0.25, 0.001, 0.10); // G5
-  }
-
-  success() {
-    // Synthwave ascending arpeggio chord (C5 -> E5 -> G5 -> B5 -> C6)
-    const notes = [523.25, 659.25, 783.99, 987.77, 1046.50];
-    notes.forEach((freq, idx) => {
-      this.playTone(freq, "sine", 0.35, 0.22, 0.001, idx * 0.08);
-      this.playTone(freq / 2, "triangle", 0.4, 0.12, 0.001, idx * 0.08);
-    });
-  }
-
-  error() {
-    this.playTone(220, "sawtooth", 0.25, 0.3);
-    this.playTone(180, "sawtooth", 0.35, 0.3, 0.001, 0.08);
-  }
-}
-
-const sounds = new SoundFX();
-
-// Sound toggle UI handling
-if (soundToggle) {
-  function updateSoundUI() {
-    if (sounds.enabled) {
-      soundToggle.textContent = "🔊 SOUND ON";
-      soundToggle.classList.remove("muted");
-    } else {
-      soundToggle.textContent = "🔇 MUTED";
-      soundToggle.classList.add("muted");
-    }
-  }
-  updateSoundUI();
-  soundToggle.addEventListener("click", () => {
-    sounds.toggle();
-    updateSoundUI();
-  });
-}
 
 // Auto-display detected firmware on load
 if (fwText) {
@@ -149,40 +53,6 @@ function writeEvent(name, detail, type) {
 window.writeLog = writeLog;
 window.jb = { mark: writeEvent };
 
-/* ---------- Native PS5 Pop-up Toast Notifications ---------- */
-async function showNotification(text) {
-  try {
-    const rop = window.ropRuntime;
-    if (!rop || !rop.chain || !rop.p) return;
-    const { p, chain } = rop;
-
-    const notifyOffset = (window.SYMBOLS && window.SYMBOLS.libkernel && window.SYMBOLS.libkernel.sceKernelSendNotificationRequest)
-      || (typeof OFFSET_lk_sceKernelSendNotificationRequest === "number" ? OFFSET_lk_sceKernelSendNotificationRequest : null);
-    if (!notifyOffset) return;
-
-    const fn = p.libKernelBase.add32(notifyOffset);
-    const req = p.malloc(0xc30);
-
-    for (let i = 0; i < 0xc30; i += 8) {
-      p.write8(req.add32(i), 0);
-    }
-    p.write4(req.add32(0x10), -1); // target_id = -1
-    p.write4(req.add32(0x14), -1); // user_id = -1
-
-    // write text string at offset 0x2d (message buffer)
-    const msg = String(text);
-    const maxLen = Math.min(msg.length, 1020);
-    for (let i = 0; i < maxLen; i++) {
-      p.write1(req.add32(0x2d + i), msg.charCodeAt(i));
-    }
-    p.write1(req.add32(0x2d + maxLen), 0);
-
-    await chain.call(fn, 0, req, 0xc30, 0);
-  } catch (e) {
-    console.warn("Notification error:", e);
-  }
-}
-
 async function getPrimitive() {
   setStatus("STAGE 1: WEBKIT", "running");
   writeLog("Starting WebKit exploit");
@@ -191,7 +61,6 @@ async function getPrimitive() {
     throw new Error("Memory primitive unavailable");
 
   writeLog("ARW ready", "success");
-  sounds.stage();
   return primitive;
 }
 
@@ -210,8 +79,6 @@ function getWebKitBase() {
 }
 
 async function run() {
-  sounds.click();
-
   if (runBtn) {
     runBtn.disabled = true;
     runBtn.textContent = "EXPLOITING...";
@@ -231,30 +98,22 @@ async function run() {
   writeLog(`WebKit base: 0x${getWebKitBase().toString(16)}`, "info");
 
   setStatus("STAGE 2: KERNEL", "running");
-  sounds.stage();
-
   await import("./relapse_exploit.js");
   await main(primitive);
 
   setStatus("JAILBROKEN", "success");
-  sounds.success();
-
   if (runBtn) {
     runBtn.textContent = "JAILBROKEN ✓";
     runBtn.classList.add("btn-success");
   }
-
-  await showNotification("Lonely Host: Jailbreak Successful! ⚡");
 }
 
 if (runBtn) {
   runBtn.addEventListener("click", () => {
     run().catch((error) => {
-      sounds.error();
       const msg = error instanceof Error ? error.message : String(error);
       writeLog(msg, "error");
       setStatus("FAILED", "error");
-      showNotification("Exploit failed — Please reboot console.");
       if (runBtn) {
         runBtn.disabled = false;
         runBtn.textContent = "RETRY EXPLOIT";
@@ -263,7 +122,7 @@ if (runBtn) {
   });
 }
 
-/* ---------- Dual-Mode Payload Dispatcher ---------- */
+/* ---------- Payload Host Dispatcher ---------- */
 async function sendPayloadViaRop(bytes, payloadName) {
   const rop = window.ropRuntime;
   if (!rop || !rop.chain || !rop.p) {
@@ -305,8 +164,6 @@ async function sendPayloadViaRop(bytes, payloadName) {
 }
 
 async function dispatchPayload(payloadName, btn, customBytes = null) {
-  sounds.click();
-
   if (btn) {
     btn.dataset.state = "sending";
     btn.textContent = "SENDING...";
@@ -350,22 +207,18 @@ async function dispatchPayload(payloadName, btn, customBytes = null) {
     }
 
     if (ok) {
-      sounds.stage();
       writeLog(msg, "success");
       if (btn) {
         btn.dataset.state = "sent";
         btn.textContent = "SENT ✓";
       }
-      await showNotification(`${payloadName} Loaded! 🚀`);
     }
   } catch (err) {
-    sounds.error();
     writeLog(`Payload dispatch failed: ${err.message}`, "error");
     if (btn) {
       btn.dataset.state = "failed";
       btn.textContent = "FAILED";
     }
-    await showNotification(`Failed to send ${payloadName}`);
   }
 
   if (btn) {
