@@ -2,6 +2,25 @@ import { establishPrimitive } from "./webkit.js";
 import { installWindowP } from "./utils/mem.js";
 
 const output = document.getElementById("console");
+const statusText = document.getElementById("statusText");
+const statusLed = document.getElementById("statusLed");
+const fwText = document.getElementById("fwText");
+const runBtn = document.getElementById("runBtn");
+
+// Auto-display detected firmware on load
+if (fwText) {
+  fwText.textContent = window.fw_str ? window.fw_str : "7.00 – 13.60";
+}
+
+function setStatus(text, state = "normal") {
+  if (statusText) statusText.textContent = text;
+  if (statusLed) {
+    statusLed.className = "led";
+    if (state === "running") statusLed.classList.add("led-yellow");
+    else if (state === "success") statusLed.classList.add("led-green");
+    else if (state === "error") statusLed.classList.add("led-red");
+  }
+}
 
 function writeLog(message, type = "log", replace = false) {
   let line = replace ? output.lastElementChild : null;
@@ -9,6 +28,16 @@ function writeLog(message, type = "log", replace = false) {
     line = document.createElement("div");
     output.appendChild(line);
   }
+
+  // Add color class based on message type
+  if (type === "error") {
+    line.className = "log-error";
+  } else if (type === "success") {
+    line.className = "log-success";
+  } else {
+    line.className = "log-info";
+  }
+
   let marker = "*";
   if (type === "error") marker = "-";
   if (type === "info" || type === "success") marker = "+";
@@ -25,6 +54,7 @@ window.writeLog = writeLog;
 window.jb = { mark: writeEvent };
 
 async function getPrimitive() {
+  setStatus("STAGE 1: WEBKIT", "running");
   writeLog("Starting WebKit exploit");
   const primitive = installWindowP(await establishPrimitive(writeEvent));
   if (!primitive || typeof primitive.read8 !== "function")
@@ -49,17 +79,191 @@ function getWebKitBase() {
 }
 
 async function run() {
+  if (runBtn) {
+    runBtn.disabled = true;
+    runBtn.textContent = "EXPLOITING...";
+    runBtn.classList.remove("btn-success");
+  }
+  setStatus("INITIALIZING...", "running");
+
   const rejection = window.firmware.rejection();
   if (rejection)
     throw new Error(rejection);
+
   writeLog("Credits: Sonic_Iso, Jordy, ntfargo, ufm42, Dr. Yenyen, TheFlow, SlidyBat, Flatz, cow, nhk, bollarz, Sleirsgoevy, EchoStretch, EarthOnion", "info");
   writeLog(`Agent: ${navigator.userAgent}`, "info");
   writeLog(`Firmware: ${window.fw_str}`, "info");
+
   const primitive = await getPrimitive();
   writeLog(`WebKit base: 0x${getWebKitBase().toString(16)}`, "info");
 
+  setStatus("STAGE 2: KERNEL", "running");
   await import("./relapse_exploit.js");
   await main(primitive);
+
+  setStatus("JAILBROKEN", "success");
+  if (runBtn) {
+    runBtn.textContent = "JAILBROKEN ✓";
+    runBtn.classList.add("btn-success");
+  }
 }
 
-run().catch((error) => writeLog(error instanceof Error ? error.message : String(error), "error"));
+if (runBtn) {
+  runBtn.addEventListener("click", () => {
+    run().catch((error) => {
+      const msg = error instanceof Error ? error.message : String(error);
+      writeLog(msg, "error");
+      setStatus("FAILED", "error");
+      if (runBtn) {
+        runBtn.disabled = false;
+        runBtn.textContent = "RETRY EXPLOIT";
+      }
+    });
+  });
+}
+
+/* ---------- Payload Host Dispatcher ---------- */
+async function sendPayloadViaRop(bytes, payloadName) {
+  const rop = window.ropRuntime;
+  if (!rop || !rop.chain || !rop.p) {
+    throw new Error("ROP runtime unavailable. Run the exploit first.");
+  }
+  const { p, chain } = rop;
+  // sockaddr_in for 127.0.0.1:9021
+  const sockaddr = p.malloc(0x10);
+  p.write1(sockaddr.add32(0x00), 0x10); // len
+  p.write1(sockaddr.add32(0x01), 0x02); // AF_INET
+  p.write2(sockaddr.add32(0x02), ((9021 & 0xff) << 8) | ((9021 >>> 8) & 0xff)); // htons(9021)
+  p.write4(sockaddr.add32(0x04), 0x0100007f); // 127.0.0.1 in network byte order
+
+  const sockRes = await chain.syscall(SYS_SOCKET, 2, 1, 0);
+  const fd = sockRes.low;
+  if (fd < 0) throw new Error("Socket creation failed");
+
+  try {
+    const connRes = await chain.syscall(SYS_CONNECT, fd, sockaddr, 0x10);
+    if (connRes.low !== 0) throw new Error("Could not connect to 127.0.0.1:9021 (is elfldr running?)");
+
+    // Send payload in 16KB blocks
+    const CHUNK_SIZE = 16384;
+    const chunkBuf = p.malloc(CHUNK_SIZE);
+    let sent = 0;
+    while (sent < bytes.length) {
+      const len = Math.min(CHUNK_SIZE, bytes.length - sent);
+      for (let i = 0; i < len; i++) {
+        p.write1(chunkBuf.add32(i), bytes[sent + i]);
+      }
+      const writeRes = await chain.syscall(SYS_WRITE, fd, chunkBuf, len);
+      if (writeRes.low <= 0) throw new Error("Write failed at byte " + sent);
+      sent += len;
+    }
+  } finally {
+    await chain.syscall(SYS_CLOSE, fd);
+  }
+  return true;
+}
+
+async function dispatchPayload(payloadName, btn, customBytes = null) {
+  if (btn) {
+    btn.dataset.state = "sending";
+    btn.textContent = "SENDING...";
+  }
+
+  writeLog(`Dispatching ${payloadName} to elfldr (port 9021)...`, "info");
+
+  try {
+    let ok = false;
+    let msg = "";
+
+    // 1. Try host server API (works when hosted locally via serve.py)
+    if (!customBytes) {
+      try {
+        const response = await fetch("/api/send-payload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ payload: payloadName })
+        });
+        if (response.ok) {
+          const data = await response.json();
+          ok = data.ok;
+          msg = data.message;
+        }
+      } catch (_) {
+        // API not available (e.g. running on GitHub Pages / static host)
+      }
+    }
+
+    // 2. If API was unavailable or running on a static host, dispatch in-browser via ROP socket
+    if (!ok) {
+      let bytes = customBytes;
+      if (!bytes) {
+        const elfResp = await fetch("./payloads/" + encodeURIComponent(payloadName), { cache: "no-store" });
+        if (!elfResp.ok) throw new Error("Failed to load payload file from host: HTTP " + elfResp.status);
+        bytes = new Uint8Array(await elfResp.arrayBuffer());
+      }
+      await sendPayloadViaRop(bytes, payloadName);
+      ok = true;
+      msg = `Sent ${payloadName} directly to 127.0.0.1:9021`;
+    }
+
+    if (ok) {
+      writeLog(msg, "success");
+      if (btn) {
+        btn.dataset.state = "sent";
+        btn.textContent = "SENT ✓";
+      }
+    }
+  } catch (err) {
+    writeLog(`Payload dispatch failed: ${err.message}`, "error");
+    if (btn) {
+      btn.dataset.state = "failed";
+      btn.textContent = "FAILED";
+    }
+  }
+
+  if (btn) {
+    setTimeout(() => {
+      btn.dataset.state = "idle";
+      btn.textContent = "SEND";
+    }, 3500);
+  }
+}
+
+// Attach listeners to all payload send buttons
+document.querySelectorAll(".btn-send").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const payload = btn.getAttribute("data-payload");
+    if (payload) {
+      dispatchPayload(payload, btn);
+    }
+  });
+});
+
+// Custom ELF File Chooser
+const customElfBtn = document.getElementById("customElfBtn");
+const customElfInput = document.getElementById("customElfInput");
+
+if (customElfBtn && customElfInput) {
+  customElfBtn.addEventListener("click", () => {
+    customElfInput.click();
+  });
+
+  customElfInput.addEventListener("change", async () => {
+    const file = customElfInput.files[0];
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith(".elf")) {
+      writeLog(`Selected file '${file.name}' is not an ELF binary.`, "error");
+      return;
+    }
+
+    writeLog(`Reading custom ELF: ${file.name} (${(file.size / 1024).toFixed(1)} KB)...`, "info");
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    if (bytes.length < 4 || bytes[0] !== 0x7f || bytes[1] !== 0x45 || bytes[2] !== 0x4c || bytes[3] !== 0x46) {
+      writeLog(`File '${file.name}' does not have a valid ELF header.`, "error");
+      return;
+    }
+    dispatchPayload(file.name, customElfBtn, bytes);
+  });
+}
