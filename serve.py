@@ -9,7 +9,7 @@ from pathlib import Path
 
 PORT = 8000
 ROOT = Path(__file__).resolve().parent
-PAYLOAD_DIR = ROOT / "payloads"
+PAYLOAD_DIR = ROOT / "ps5" / "payloads"
 
 def local_ip():
     try:
@@ -64,7 +64,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.path == "/api/payloads":
+        if self.path in ("/api/payloads", "/ps5/api/payloads"):
             files = [f.name for f in sorted(PAYLOAD_DIR.glob("*.elf")) if f.is_file()]
             resp = json.dumps({"payloads": files}).encode("utf-8")
             self.send_response(200)
@@ -74,7 +74,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(resp)
             return
 
-        if self.path == "/api/probe":
+        if self.path in ("/api/probe", "/ps5/api/probe"):
             target_ip = self.client_address[0]
             if target_ip in ("127.0.0.1", "::1", "localhost"):
                 target_ip = local_ip()
@@ -95,7 +95,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         super().do_GET()
 
     def do_POST(self):
-        if self.path == "/api/send-payload":
+        if self.path in ("/api/send-payload", "/ps5/api/send-payload"):
             content_length = int(self.headers.get("Content-Length", 0))
             raw_body = self.rfile.read(content_length).decode("utf-8") if content_length > 0 else "{}"
             try:
@@ -131,10 +131,12 @@ if __name__ == "__main__":
 
     ip = local_ip()
     print("==================================================")
-    print("      LONELY — PS5 EXPLOIT & PAYLOAD HOST         ")
+    print("      LONELY — UNIFIED PLAYSTATION EXPLOIT HUB    ")
     print("==================================================")
-    print(f"[*] Local Host URL : http://{ip}:{PORT}/")
-    print(f"[*] Payloads Dir   : {PAYLOAD_DIR}")
+    print(f"[*] Hub URL        : http://{ip}:{PORT}/")
+    print(f"[*] PS5 Exploit    : http://{ip}:{PORT}/ps5/")
+    print(f"[*] PS4 Exploit    : http://{ip}:{PORT}/ps4/")
+    print(f"[*] PS5 Payloads   : {PAYLOAD_DIR}")
     payloads = [f.name for f in sorted(PAYLOAD_DIR.glob("*.elf")) if f.is_file()]
     print(f"[*] Ready Payloads : {', '.join(payloads) if payloads else 'None'}")
     print("==================================================")

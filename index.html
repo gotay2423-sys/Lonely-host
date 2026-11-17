@@ -1,25 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.manifest">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lonely — PS5 Exploit &amp; Payload Host</title>
+  <title>Lonely — Unified PlayStation Exploit Hub</title>
+  <meta name="description" content="Unified PlayStation 4 & PlayStation 5 WebKit and Kernel Exploit Host.">
+  <script>
+    // Automatic Console Redirection
+    (function() {
+      var ua = navigator.userAgent;
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('stay') === '1') return; // Debug override
+
+      if (ua.indexOf("PlayStation 5") !== -1) {
+        window.location.replace("./ps5/");
+      } else if (ua.indexOf("PlayStation 4") !== -1) {
+        window.location.replace("./ps4/");
+      }
+    })();
+  </script>
   <style>
     :root {
       --neon-pink: #ff007f;
       --neon-cyan: #00f3ff;
+      --neon-blue: #0080ff;
+      --neon-purple: #9d4edd;
       --neon-green: #39ff14;
-      --neon-yellow: #ffd000;
-      --neon-red: #ff2a55;
       --bg-dark: #05020a;
-      --panel-bg: rgba(13, 6, 28, 0.88);
+      --panel-bg: rgba(14, 7, 30, 0.9);
       --border-cyan: rgba(0, 243, 255, 0.45);
     }
 
     * { box-sizing: border-box; }
 
-    html, body {
+    body {
       background: 
         linear-gradient(rgba(0, 243, 255, 0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 243, 255, 0.035) 1px, transparent 1px),
@@ -29,447 +43,233 @@
       color: var(--neon-cyan);
       font-family: 'Consolas', 'Courier New', monospace;
       margin: 0;
-      padding: 24px 16px;
+      padding: 30px 16px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
     }
 
     .container {
       width: 100%;
-      max-width: 840px;
+      max-width: 900px;
     }
 
-    /* ---------- Header ---------- */
     .header {
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 30px;
     }
 
     .header h1 {
       color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink), 0 0 22px var(--neon-pink), 0 0 40px rgba(255, 0, 127, 0.4);
-      font-size: 42px;
+      text-shadow: 0 0 12px var(--neon-pink), 0 0 25px var(--neon-pink), 0 0 45px rgba(255, 0, 127, 0.45);
+      font-size: 46px;
       font-weight: 800;
-      letter-spacing: 5px;
+      letter-spacing: 6px;
       margin: 0;
       text-transform: uppercase;
     }
 
     .header p {
       color: var(--neon-cyan);
-      text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
-      font-size: 13.5px;
-      letter-spacing: 2px;
-      margin-top: 6px;
-      opacity: 0.9;
-    }
-
-    /* ---------- Status Chips ---------- */
-    .status-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-
-    .chip {
-      background: rgba(18, 8, 36, 0.85);
-      border: 1px solid var(--border-cyan);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.08);
-      display: flex;
-      align-items: center;
-    }
-
-    .fw-chip {
-      color: var(--neon-pink);
-      border-color: rgba(255, 0, 127, 0.4);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.08);
-    }
-
-    .led {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 8px;
-      background: var(--neon-cyan);
-      box-shadow: 0 0 8px var(--neon-cyan);
-      animation: pulse 1.8s ease-in-out infinite;
-    }
-
-    .led.led-yellow { background: var(--neon-yellow); box-shadow: 0 0 8px var(--neon-yellow); }
-    .led.led-green  { background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
-    .led.led-red    { background: var(--neon-red); box-shadow: 0 0 8px var(--neon-red); }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.85); }
-    }
-
-    /* ---------- Run Button ---------- */
-    .controls {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
-    #runBtn {
-      background: rgba(255, 0, 127, 0.15);
-      color: var(--neon-pink);
-      border: 2px solid var(--neon-pink);
-      padding: 14px 44px;
-      font-size: 17px;
-      font-weight: 800;
-      font-family: inherit;
+      text-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+      font-size: 14px;
       letter-spacing: 2.5px;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 0 18px rgba(255, 0, 127, 0.35), inset 0 0 12px rgba(255, 0, 127, 0.15);
-      transition: all 0.2s ease;
+      margin-top: 8px;
+    }
+
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 22px;
+      margin-bottom: 28px;
+    }
+
+    .console-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-cyan);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 0 15px rgba(0, 243, 255, 0.06);
       position: relative;
       overflow: hidden;
     }
 
-    #runBtn::after {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%; width: 50%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-      transform: skewX(-20deg);
-      animation: shine 4.5s ease-in-out infinite;
+    .card-ps5 {
+      border-color: rgba(255, 0, 127, 0.45);
+    }
+    .card-ps5:hover {
+      border-color: var(--neon-pink);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 45px rgba(255, 0, 127, 0.3), inset 0 0 20px rgba(255, 0, 127, 0.12);
     }
 
-    @keyframes shine {
-      0%, 65% { left: -100%; }
-      100% { left: 160%; }
+    .card-ps4 {
+      border-color: rgba(0, 128, 255, 0.45);
+    }
+    .card-ps4:hover {
+      border-color: #00f3ff;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 45px rgba(0, 128, 255, 0.35), inset 0 0 20px rgba(0, 243, 255, 0.12);
     }
 
-    #runBtn:hover {
-      background: var(--neon-pink);
-      color: #05020a;
-      box-shadow: 0 0 30px var(--neon-pink);
-      transform: translateY(-1px);
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
     }
 
-    #runBtn:focus, #runBtn:focus-visible {
-      outline: 3px solid var(--neon-cyan);
-      outline-offset: 4px;
-    }
-
-    #runBtn:disabled {
-      border-color: #444;
-      color: #777;
-      background: rgba(40, 40, 40, 0.2);
-      box-shadow: none;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    #runBtn.btn-success {
-      border-color: var(--neon-green);
-      color: var(--neon-green);
-      box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
-    }
-
-    /* ---------- Terminal Chrome Bar ---------- */
-    .terminal-bar {
-      background: #110722;
-      border: 1px solid var(--border-cyan);
-      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      padding: 9px 16px;
+    .card-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .title-ps5 {
+      color: var(--neon-pink);
+      text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+    }
+
+    .title-ps4 {
+      color: #38bdf8;
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+    }
+
+    .fw-badge {
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-ps5 {
+      background: rgba(255, 0, 127, 0.15);
+      border: 1px solid var(--neon-pink);
+      color: var(--neon-pink);
+    }
+
+    .badge-ps4 {
+      background: rgba(0, 128, 255, 0.15);
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: #9d83c7;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px 0;
       font-size: 12px;
+      color: #c4b5fd;
+    }
+
+    .feature-list li {
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-list li::before {
+      content: "▹";
+      color: var(--neon-cyan);
+    }
+
+    .btn-launch {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 13px 20px;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: inherit;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 8px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-launch-ps5 {
+      background: rgba(255, 0, 127, 0.18);
+      border: 2px solid var(--neon-pink);
+      color: var(--neon-pink);
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.25);
+    }
+    .btn-launch-ps5:hover {
+      background: var(--neon-pink);
+      color: #05020a;
+      box-shadow: 0 0 25px var(--neon-pink);
+    }
+
+    .btn-launch-ps4 {
+      background: rgba(0, 128, 255, 0.18);
+      border: 2px solid #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 15px rgba(0, 128, 255, 0.25);
+    }
+    .btn-launch-ps4:hover {
+      background: #38bdf8;
+      color: #05020a;
+      box-shadow: 0 0 25px #38bdf8;
+    }
+
+    .credits-container {
+      background: rgba(10, 4, 22, 0.88);
+      border: 1px solid rgba(0, 243, 255, 0.25);
+      border-radius: 12px;
+      padding: 18px 22px;
+      text-align: center;
+      font-size: 11.5px;
+      color: #9d83c7;
+      line-height: 1.6;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     }
 
-    .terminal-dots { display: flex; gap: 7px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .dot-red { background: var(--neon-red); box-shadow: 0 0 6px var(--neon-red); }
-    .dot-yellow { background: var(--neon-yellow); box-shadow: 0 0 6px var(--neon-yellow); }
-    .dot-green { background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green); }
-
-    .terminal-title {
-      color: #9d83c7;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-
-    .terminal-port {
+    .credits-header {
       color: var(--neon-cyan);
-      opacity: 0.85;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-
-    /* ---------- Console Window ---------- */
-    #console {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-cyan);
-      border-top: none;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      padding: 16px 18px;
-      height: 280px;
-      overflow-y: auto;
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: var(--neon-cyan);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 127, 0.12);
-    }
-
-    /* Custom WebKit Scrollbar */
-    #console::-webkit-scrollbar, .payload-grid::-webkit-scrollbar {
-      width: 7px;
-    }
-    #console::-webkit-scrollbar-track, .payload-grid::-webkit-scrollbar-track {
-      background: rgba(5, 2, 10, 0.5);
-      border-radius: 4px;
-    }
-    #console::-webkit-scrollbar-thumb, .payload-grid::-webkit-scrollbar-thumb {
-      background: var(--neon-pink);
-      border-radius: 4px;
-      box-shadow: 0 0 8px var(--neon-pink);
-    }
-    #console::-webkit-scrollbar-thumb:hover, .payload-grid::-webkit-scrollbar-thumb:hover {
-      background: var(--neon-cyan);
-      box-shadow: 0 0 10px var(--neon-cyan);
-    }
-
-    /* Log Message Typography */
-    .log-info { color: var(--neon-cyan); text-shadow: 0 0 5px rgba(0, 243, 255, 0.4); }
-    .log-success { color: var(--neon-green); text-shadow: 0 0 6px rgba(57, 255, 20, 0.5); font-weight: bold; }
-    .log-error { color: var(--neon-red); text-shadow: 0 0 6px rgba(255, 42, 85, 0.6); font-weight: bold; }
-
-    /* ---------- Payload Host Menu ---------- */
-    .payload-section {
-      margin-top: 26px;
-      background: rgba(14, 7, 30, 0.85);
-      border: 1px solid var(--border-cyan);
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 0 15px rgba(0, 243, 255, 0.06);
-    }
-
-    .payload-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.18);
-    }
-
-    .payload-title {
-      font-size: 16px;
       font-weight: 800;
       letter-spacing: 2px;
-      color: var(--neon-pink);
+      margin-bottom: 8px;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+      font-size: 12.5px;
     }
 
-    .payload-subtitle {
-      font-size: 11.5px;
-      color: #8c72b2;
-      letter-spacing: 1px;
+    .credits-row {
+      margin-top: 6px;
     }
 
-    .payload-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-
-    .payload-card {
-      background: linear-gradient(140deg, rgba(25, 12, 45, 0.8) 0%, rgba(10, 4, 20, 0.95) 100%);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 10px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-    }
-
-    .payload-card:hover {
-      border-color: var(--neon-pink);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.25);
-    }
-
-    .card-featured {
-      border-color: rgba(255, 0, 127, 0.55);
-      background: linear-gradient(140deg, rgba(45, 12, 50, 0.85) 0%, rgba(16, 4, 25, 0.95) 100%);
-      box-shadow: 0 4px 18px rgba(255, 0, 127, 0.2);
-    }
-    .card-featured .p-name {
-      color: var(--neon-pink);
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
-    }
-    .btn-featured {
-      background: rgba(255, 0, 127, 0.15);
-      border-color: var(--neon-pink);
-      color: var(--neon-pink);
-    }
-    .btn-featured:hover {
-      background: var(--neon-pink);
-      color: #05020a;
-      box-shadow: 0 0 14px var(--neon-pink);
-    }
-
-    .p-icon {
-      font-size: 24px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    .p-info {
-      flex-grow: 1;
-      min-width: 0;
-    }
-
-    .p-name {
-      font-size: 14.5px;
-      font-weight: 700;
+    .credits-row b {
       color: #fff;
-      letter-spacing: 1px;
     }
 
-    .p-desc {
-      font-size: 11px;
-      color: #8fa0be;
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .btn-send {
-      background: rgba(0, 243, 255, 0.12);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-size: 12px;
-      font-family: inherit;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .btn-send:hover {
-      background: var(--neon-cyan);
-      color: #05020a;
-      box-shadow: 0 0 12px var(--neon-cyan);
-    }
-
-    .btn-send:focus-visible {
-      outline: 3px solid var(--neon-pink);
-      outline-offset: 2px;
-    }
-
-    .btn-send[data-state="sending"] {
-      border-color: var(--neon-yellow);
-      color: var(--neon-yellow);
-      background: rgba(255, 208, 0, 0.15);
-      animation: pulse 1s infinite;
-      pointer-events: none;
-    }
-
-    .btn-send[data-state="sent"] {
-      border-color: var(--neon-green);
-      color: var(--neon-green);
-      background: rgba(57, 255, 20, 0.15);
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
-    }
-
-    .btn-send[data-state="failed"] {
-      border-color: var(--neon-red);
-      color: var(--neon-red);
-      background: rgba(255, 42, 85, 0.15);
-    }
-
-    /* Auto-Run Toggle */
-    .auto-run-bar {
-      margin-top: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .toggle-wrap {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      user-select: none;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      color: #9d83c7;
-      transition: all 0.2s ease;
-    }
-
-    .toggle-wrap:hover {
-      color: var(--neon-cyan);
-    }
-
-    .toggle-wrap input {
-      display: none;
-    }
-
-    .toggle-slider {
-      width: 34px;
-      height: 18px;
-      background: rgba(18, 8, 36, 0.9);
-      border: 1px solid var(--border-cyan);
-      border-radius: 20px;
-      position: relative;
-      transition: all 0.25s ease;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
-    }
-
-    .toggle-slider::after {
-      content: "";
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      top: 2px;
-      left: 2px;
-      border-radius: 50%;
-      background: var(--neon-cyan);
-      box-shadow: 0 0 6px var(--neon-cyan);
-      transition: all 0.25s ease;
-    }
-
-    .toggle-wrap input:checked + .toggle-slider {
-      background: rgba(255, 0, 127, 0.25);
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
-    }
-
-    .toggle-wrap input:checked + .toggle-slider::after {
-      left: 18px;
-      background: var(--neon-pink);
-      box-shadow: 0 0 8px var(--neon-pink);
-    }
-
-    .toggle-wrap input:checked ~ .toggle-text {
+    .tag-highlight {
       color: var(--neon-pink);
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
+      font-weight: bold;
+    }
+    .tag-ps4 {
+      color: #38bdf8;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -477,126 +277,64 @@
   <div class="container">
     <div class="header">
       <h1>Lonely</h1>
-      <p>PlayStation 5 WebKit &amp; Kernel Exploit Host &middot; FW 7.00 – 13.60</p>
+      <p>UNIFIED PLAYSTATION EXPLOIT HUB</p>
     </div>
 
-    <div class="status-container">
-      <div class="chip fw-chip">FW <span id="fwText">7.00 – 13.60</span></div>
-      <div class="chip status-chip">
-        <span class="led" id="statusLed"></span>
-        <span id="statusText">SYSTEM READY</span>
+    <div class="hub-grid">
+      <!-- PlayStation 5 Card -->
+      <div class="console-card card-ps5">
+        <div>
+          <div class="card-top">
+            <h2 class="card-title title-ps5"><span>🎮</span> PS5 Host</h2>
+            <span class="fw-badge badge-ps5">FW 7.00 – 13.60</span>
+          </div>
+          <p class="card-desc">
+            Full WebKit ROP &amp; Relapse kernel exploit engine tailored for PS5 Prospero OS.
+          </p>
+          <ul class="feature-list">
+            <li><b>Kernel Chain:</b> Relapse Exploit</li>
+            <li><b>Payloads:</b> nexHEN (EchoStretch), zftpd, MemDBG, websrv</li>
+            <li><b>Elf Loader:</b> Port 9021 with Pre-flight Probe</li>
+            <li><b>Features:</b> Auto-Run on Load &amp; Offline PWA Caching</li>
+          </ul>
+        </div>
+        <a href="./ps5/" class="btn-launch btn-launch-ps5">Launch PS5 Host ➔</a>
       </div>
-      <div class="chip elfldr-chip" id="elfldrChip">
-        <span class="led led-yellow" id="elfldrLed"></span>
-        <span id="elfldrText">ELFLDR :9021</span>
-      </div>
-      <div class="chip cache-chip" id="cacheChip" title="Click to cache for offline use" style="cursor: pointer;">
-        <span class="led" id="cacheLed"></span>
-        <span id="cacheText">CACHE OFFLINE</span>
+
+      <!-- PlayStation 4 Card -->
+      <div class="console-card card-ps4">
+        <div>
+          <div class="card-top">
+            <h2 class="card-title title-ps4"><span>🎮</span> PS4 Host</h2>
+            <span class="fw-badge badge-ps4">FW 4.50 – 14.02</span>
+          </div>
+          <p class="card-desc">
+            Multi-firmware PS4 exploit engine powered by WebKitty &amp; PSFree modular chains.
+          </p>
+          <ul class="feature-list">
+            <li><b>Kernel Chains:</b> Lapse, Netctrl, Relapse, Afterglow</li>
+            <li><b>HEN Flavors:</b> nexHEN (nexHEN.bin), GoldHEN, PS4HEN</li>
+            <li><b>Payloads:</b> BinLoader (:9020), FTP, DB-Rebuilder, Linux</li>
+            <li><b>Vibe:</b> Lonely Cyberpunk Cobalt Edition</li>
+          </ul>
+        </div>
+        <a href="./ps4/" class="btn-launch btn-launch-ps4">Launch PS4 Host ➔</a>
       </div>
     </div>
 
-    <div class="controls">
-      <button id="runBtn" tabindex="0">RUN EXPLOIT</button>
-      <div class="auto-run-bar">
-        <label class="toggle-wrap" title="Automatically run exploit on page load">
-          <input type="checkbox" id="autoJbToggle">
-          <span class="toggle-slider"></span>
-          <span class="toggle-text">AUTO-RUN ON LOAD</span>
-        </label>
+    <!-- Unified Credits Section -->
+    <div class="credits-container">
+      <div class="credits-header">⚡ ACKNOWLEDGEMENTS &amp; CREDITS ⚡</div>
+      <div class="credits-row">
+        <span class="tag-highlight">PS5 Exploit:</span> Based on <b>Relapse-Exploit</b> by <b>Sonic_Iso</b> &amp; <b>ntfargo</b>. Research by <b>TheFlow, Dr. Yenyen, ufm42, Jordy, Sleirsgoevy, Flatz, Specter, EchoStretch</b>.
       </div>
-    </div>
-
-    <div class="terminal-bar">
-      <div class="terminal-dots">
-        <span class="dot dot-red"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-green"></span>
+      <div class="credits-row">
+        <span class="tag-ps4">PS4 Exploit:</span> Based on <b>WebKitty</b> by <b>ArabPixel</b> &amp; <b>PSFree Team</b>. Research by <b>ChendoChap, theflow0, Specter, flatz, fail0verflow, CTurt, sleirsgoevy</b>.
       </div>
-      <div class="terminal-title">lonely@ps5: ~/exploit</div>
-      <div class="terminal-port">PORT: 9021</div>
-    </div>
-
-    <div id="console"></div>
-
-    <!-- Payload Host Menu -->
-    <div class="payload-section" id="payloadSection">
-      <div class="payload-header">
-        <span class="payload-title">Payload Menu</span>
-        <span class="payload-subtitle">ELFLDR on port 9021 &middot; Select payload to dispatch</span>
-      </div>
-
-      <div class="payload-grid">
-        <div class="payload-card card-featured">
-          <span class="p-icon">⚡</span>
-          <div class="p-info">
-            <div class="p-name">nexHEN</div>
-            <div class="p-desc">Homebrew Enabler &amp; Debug Settings</div>
-          </div>
-          <button class="btn-send btn-featured" data-payload="nexHEN.elf">SEND</button>
-        </div>
-
-        <div class="payload-card">
-          <span class="p-icon">📁</span>
-          <div class="p-info">
-            <div class="p-name">zftpd</div>
-            <div class="p-desc">High-speed FTP server (Port 21 / 1337)</div>
-          </div>
-          <button class="btn-send" data-payload="zftpd-ps5.elf">SEND</button>
-        </div>
-
-        <div class="payload-card">
-          <span class="p-icon">🐞</span>
-          <div class="p-info">
-            <div class="p-name">MemDBG</div>
-            <div class="p-desc">Memory debugger &amp; trainer daemon</div>
-          </div>
-          <button class="btn-send" data-payload="MemDBG-ps5.elf">SEND</button>
-        </div>
-
-        <div class="payload-card">
-          <span class="p-icon">📡</span>
-          <div class="p-info">
-            <div class="p-name">klogsrv</div>
-            <div class="p-desc">Real-time kernel log server</div>
-          </div>
-          <button class="btn-send" data-payload="klogsrv-ps5.elf">SEND</button>
-        </div>
-
-        <div class="payload-card">
-          <span class="p-icon">💻</span>
-          <div class="p-info">
-            <div class="p-name">shsrv</div>
-            <div class="p-desc">Interactive system shell daemon</div>
-          </div>
-          <button class="btn-send" data-payload="shsrv-ps5.elf">SEND</button>
-        </div>
-
-        <div class="payload-card">
-          <span class="p-icon">🌐</span>
-          <div class="p-info">
-            <div class="p-name">websrv</div>
-            <div class="p-desc">Web-based file manager</div>
-          </div>
-          <button class="btn-send" data-payload="websrv-ps5.elf">SEND</button>
-        </div>
-
-        <div class="payload-card">
-          <span class="p-icon">🛠️</span>
-          <div class="p-info">
-            <div class="p-name">gdbsrv</div>
-            <div class="p-desc">GDB remote debugger stub</div>
-          </div>
-          <button class="btn-send" data-payload="gdbsrv-ps5.elf">SEND</button>
-        </div>
+      <div class="credits-row" style="margin-top: 8px; opacity: 0.85;">
+        <b>Payloads &amp; Tools:</b> <b>EchoStretch</b> (nexHEN), <b>SiSTRo</b> (GoldHEN), <b>John T&ouml;rnblom</b> (elfldr).
       </div>
     </div>
   </div>
-
-  <script src="./src/firmware.js"></script>
-  <script src="./src/main.js"></script>
-  <script src="./src/rop.js"></script>
-  <script src="./src/utils/syscalls.js"></script>
-  <script type="module" src="./src/site.js"></script>
 </body>
 </html>

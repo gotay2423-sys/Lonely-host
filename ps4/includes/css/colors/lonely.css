@@ -1,0 +1,88 @@
+/* LONELY Cyberpunk Theme for PS4 */
+:root {
+    --lonely-ps4-blue: #0080ff;
+    --lonely-ps4-cyan: #00f3ff;
+    --lonely-ps4-pink: #ff007f;
+    --lonely-ps4-purple: #9d4edd;
+    --lonely-bg-dark: #040814;
+}
+
+body {
+    background: 
+      linear-gradient(rgba(0, 128, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 128, 255, 0.04) 1px, transparent 1px),
+      radial-gradient(circle at top, #091a3e 0%, #050b18 60%, #02050d 100%) !important;
+    background-size: 32px 32px, 32px 32px, 100% 100% !important;
+    background-attachment: fixed !important;
+    color: #e0f2fe !important;
+}
+
+#ps-logo {
+    fill: #0080ff !important;
+    filter: drop-shadow(0 0 12px rgba(0, 128, 255, 0.6));
+}
+
+#ps-logo-container {
+    background: rgba(0, 128, 255, 0.08) !important;
+    border: 1px solid rgba(0, 243, 255, 0.3) !important;
+    box-shadow: 0 0 25px rgba(0, 128, 255, 0.25) !important;
+}
+
+#ps-logo-container:hover {
+    border-color: #00f3ff !important;
+    box-shadow: 0 0 35px rgba(0, 243, 255, 0.5) !important;
+}
+
+.mainContainer {
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+#exploit-status-panel, #payloadsSection, #choosejb-initial {
+    background: rgba(8, 18, 42, 0.88) !important;
+    border: 1px solid rgba(0, 243, 255, 0.35) !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 128, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+}
+
+#DebugConsole {
+    background: rgba(2, 6, 18, 0.85) !important;
+    border: 1px solid rgba(0, 243, 255, 0.25) !important;
+    color: #00f3ff !important;
+}
+
+#exploitRun {
+    background: rgba(0, 128, 255, 0.2) !important;
+    border: 2px solid #0080ff !important;
+    color: #00f3ff !important;
+    box-shadow: 0 0 15px rgba(0, 128, 255, 0.4) !important;
+}
+
+#exploitRun:hover {
+    background: #0080ff !important;
+    color: #fff !important;
+    box-shadow: 0 0 25px #0080ff !important;
+}
+
+.category-tools {
+    background-color: rgba(0, 243, 255, 0.15) !important;
+    color: #00f3ff !important;
+    border: 1px solid rgba(0, 243, 255, 0.3) !important;
+}
+
+.category-advanced {
+    background-color: rgba(255, 0, 127, 0.15) !important;
+    color: #ff007f !important;
+    border: 1px solid rgba(255, 0, 127, 0.3) !important;
+}
+
+.category-linux {
+    background-color: rgba(157, 78, 221, 0.2) !important;
+    color: #c77dff !important;
+    border: 1px solid rgba(157, 78, 221, 0.3) !important;
+}
+
+.category-homebrew {
+    background-color: rgba(59, 130, 246, 0.2) !important;
+    color: #93c5fd !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
