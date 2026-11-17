@@ -9,7 +9,7 @@ var GOLDHEN_VERSIONS = {
 
 var GOLDHEN_DEFAULT = 'GHv2.4b18.14'; // Latest
 var HEN_BASE_PATH   = './includes/payloads/HEN/';
-var DEFAULT_HEN     = "GoldHEN";
+var DEFAULT_HEN     = "nexHEN";
 
 function GoldHEN() {
     var version = storage.getString('GHVer', GOLDHEN_DEFAULT);
@@ -90,7 +90,8 @@ function saveJbFlavor(name, value) {
 }
 
 function loadJbFlavor() {
-    var flavor = user.currentJbFlavor || DEFAULT_HEN;
+    var flavor = storage.getString('jailbreakFlavor', 'nexHEN');
+    user.currentJbFlavor = flavor;
     var henRadio  = document.querySelector('input[name="hen"][value="' + flavor + '"]');
     var hen2Radio = document.querySelector('input[name="hen2"][value="' + flavor + '"]');
     if (henRadio)  henRadio.checked  = true;
@@ -103,7 +104,7 @@ function updateHenFlavorVisibility(fwVersion) {
     if (isNaN(fwNum)) return;
     var hideGoldHEN = (fwNum > 14.02 || fwNum < 5.05) ? true : false;
     
-    var hidenexHEN = !devMode;
+    var hidenexHEN = false;
 
     var hidePS4HEN = (fwNum > commonMax && fwNum != 4.55 && fwNum != 4.74) ? true : false;
 

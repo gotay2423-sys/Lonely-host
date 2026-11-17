@@ -5,26 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>Lonely — PS4 Exploit &amp; Payload Host</title>
-    <meta name="description" content="WebKitty is a user-friendly, feature-rich PS4 exploit host for 4.50-5.07 & 6.70 - 14.02." />
-    <meta name="author" content="ArabPixel">
+    <meta name="description" content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring nexHEN." />
+    <meta name="author" content="Lonely">
     <meta name="keywords"
-        content="PS4, PlayStation 4, webkit exploit, jailbreak, psfree lapse, cssfontface, WebKitty, PSFree Enhanced, cssfontface, lapse, netctrl, slopkit, relapse">
+        content="PS4, PlayStation 4, webkit exploit, jailbreak, nexHEN, psfree lapse, cssfontface, Lonely, lapse, netctrl, slopkit, relapse">
 
 
     <!-- Facebook / Discord / WhatsApp -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="WebKitty">
+    <meta property="og:title" content="Lonely PS4 Exploit Host">
     <meta property="og:description"
-        content="WebKitty is a user-friendly, feature-rich PS4 exploit host for 4.50-5.07 & 6.70 - 14.02.">
-    <meta property="og:image" content="http://webkitty.arabpixel.net/includes/assets/icons/webkitty.svg">
-    <meta property="og:url" content="http://webkitty.arabpixel.net">
+        content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring nexHEN.">
+    <meta property="og:url" content="https://gotay2423-sys.github.io/Lonely-host/ps4/">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="WebKitty">
+    <meta name="twitter:title" content="Lonely PS4 Exploit Host">
     <meta name="twitter:description"
-        content="WebKitty is a user-friendly, feature-rich PS4 exploit host for 4.50-5.07 & 6.70 - 14.02.">
-    <meta name="twitter:image" content="http://webkitty.arabpixel.net/includes/assets/icons/webkitty.svg">
+        content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring nexHEN.">
     <link rel="icon" href="./includes/assets/icons/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" id="main-stylesheet" href="">
     <link rel="stylesheet" id="color-stylesheet" href="">
@@ -149,28 +147,30 @@
                     payloads using a PayLoader - External link</button>
             </a>
 
-            <!-- Jailbreak flavor options -->
-            <div id="choosejb-initial" class="bg-gray-800 p-6 rounded-lg shadow-xl text-center">
-                <h3 class="text-xl font-semibold mb-4">Choose your HEN flavor</h3>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 rtl:gap-4 sm:rtl:gap-8">
-                    <label
-                        class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto mb-2 sm:mb-0"
+            <!-- Primary HEN Selection -->
+            <div id="choosejb-initial" class="p-6 rounded-lg shadow-xl text-center" style="background: rgba(8, 18, 42, 0.9); border: 1px solid rgba(0, 243, 255, 0.4); box-shadow: 0 0 25px rgba(0, 128, 255, 0.25); max-width: 520px; width: 100%;">
+                <div class="text-xs uppercase font-bold tracking-widest mb-3" style="color: #00f3ff; text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);">⚡ PRIMARY JAILBREAK PAYLOAD</div>
+                <div class="flex justify-center mb-3">
+                    <label id="nexHEN-label-initial"
+                        class="flex items-center px-6 py-3 rounded-lg cursor-pointer shadow border-2 transition-all duration-200" style="background: rgba(0, 128, 255, 0.25); border-color: #00f3ff; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4);">
+                        <input type="radio" name="hen" value="nexHEN" checked onchange="saveJbFlavor(this.name, this.value)"
+                            class="accent-cyan-400 w-5 h-5 ml-2">
+                        <span class="text-xl font-extrabold select-none ml-2 tracking-wide" style="color: #ffffff; text-shadow: 0 0 12px #00f3ff;">nexHEN (nexHEN.bin)</span>
+                    </label>
+                </div>
+                <div class="text-xs text-gray-400 mb-2">Secondary Alternatives:</div>
+                <div class="flex flex-row justify-center gap-3 text-xs">
+                    <label class="flex items-center px-3 py-1.5 rounded bg-gray-800/80 hover:bg-gray-700 cursor-pointer border border-gray-600 transition-colors"
                         id="goldhen-label-initial">
                         <input type="radio" name="hen" value="GoldHEN" onchange="saveJbFlavor(this.name, this.value)"
-                            class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
-                        <span class="text-lg font-semibold text-white/90 select-none">GoldHEN</span>
+                            class="w-4 h-4 mr-2">
+                        <span class="text-white/80 select-none">GoldHEN</span>
                     </label>
                     <label id="PS4HEN-label-initial"
-                        class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto">
+                        class="flex items-center px-3 py-1.5 rounded bg-gray-800/80 hover:bg-gray-700 cursor-pointer border border-gray-600 transition-colors">
                         <input type="radio" name="hen" value="PS4HEN" onchange="saveJbFlavor(this.name, this.value)"
-                            class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
-                        <span class="text-lg font-semibold text-white/90 select-none">PS4HEN</span>
-                    </label>
-                    <label id="nexHEN-label-initial"
-                        class="flex items-center px-4 py-2 rounded-lg bg-gray-700/60 hover:bg-gray-700 transition-colors cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500 w-full sm:w-auto">
-                        <input type="radio" name="hen" value="nexHEN" onchange="saveJbFlavor(this.name, this.value)"
-                            class="accent-blue-500 w-5 h-5 ml-3 focus:ring-2 focus:ring-blue-400">
-                        <span class="text-lg font-semibold text-white/90 select-none">nexHEN<br>Experimental</span>
+                            class="w-4 h-4 mr-2">
+                        <span class="text-white/80 select-none">PS4HEN</span>
                     </label>
                 </div>
             </div>
@@ -204,24 +204,24 @@
                     </div>
                     <!-- HEN Selector -->
                     <div id="henSelection" class="flex items-center justify-center gap-4">
+                        <label id="nexHEN-label-exploit"
+                            class="flex items-center px-3 py-1 rounded bg-blue-900/60 hover:bg-blue-800 cursor-pointer shadow border-2 border-cyan-400 focus-within:border-cyan-300">
+                            <input type="radio" name="hen2" value="nexHEN" checked class="accent-cyan-400 w-4 h-4 ml-2"
+                                onchange="saveJbFlavor(this.name, this.value)">
+                            <span class="text-base font-bold text-white select-none">⚡ nexHEN</span>
+                        </label>
                         <label
-                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500"
+                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border border-gray-600"
                             id="goldhen-label-exploit">
                             <input type="radio" name="hen2" value="GoldHEN" class="accent-blue-500 w-4 h-4 ml-2"
                                 onchange="saveJbFlavor(this.name, this.value)">
-                            <span class="text-base font-semibold text-white/90 select-none">GoldHEN</span>
+                            <span class="text-sm font-semibold text-white/80 select-none">GoldHEN</span>
                         </label>
                         <label id="PS4HEN-label-exploit"
-                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
+                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border border-gray-600">
                             <input type="radio" name="hen2" value="PS4HEN" class="accent-blue-500 w-4 h-4 ml-2"
                                 onchange="saveJbFlavor(this.name, this.value)">
-                            <span class="text-base font-semibold text-white/90 select-none">PS4HEN</span>
-                        </label>
-                        <label id="nexHEN-label-exploit"
-                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border-2 border-transparent focus-within:border-blue-500">
-                            <input type="radio" name="hen2" value="nexHEN" class="accent-blue-500 w-4 h-4 ml-2"
-                                onchange="saveJbFlavor(this.name, this.value)">
-                            <span class="text-base font-semibold text-white/90 select-none">nexHEN</span>
+                            <span class="text-sm font-semibold text-white/80 select-none">PS4HEN</span>
                         </label>
                         <button id="exploitRun"
                             class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
@@ -446,7 +446,7 @@
     <div class="fixed inset-0 bg-black/50 z-50 flex backdrop-blur-sm items-center justify-center p-4 hidden"
         id="about-popup-overlay">
         <div id="about-popup" class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h2 class="text-2xl font-bold">About WebKitty</h2>
+            <h2 class="text-2xl font-bold">About Lonely PS4</h2>
             <div class="space-y-2 text-white/80">
                 <p>Version: 2.0</p>
                 <p>A feature rich exploit host to jailbreak your PS4</p>
@@ -509,7 +509,7 @@
         id="settings-popup-overlay">
         <div id="settings-popup"
             class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-bold mb-4">WebKitty settings</h2>
+            <h2 class="text-2xl font-bold mb-4">Lonely PS4 settings</h2>
             <!-- Choose GoldHEN version -->
             <div id="chooseGoldHEN" class="mb-4">
                 <h3 class="text-lg font-semibold mb-2" id="ghVer">GoldHEN Versions</h3>

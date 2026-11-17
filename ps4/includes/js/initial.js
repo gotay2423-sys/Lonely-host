@@ -1,13 +1,13 @@
 var autoJbInterval;
 var lastScrollY = 0;
 var lastSection = "initial";           // For custom snap scroll on the PS4
-var projectName = "WebKitty";
+var projectName = "Lonely PS4";
 var hideUnsupportedPayloads = false;
 var commonMax = 14.02;                 // max supported paylaods
 
 var user = {
   currentLanguage: storage.getString('language', 'en'),
-  currentJbFlavor: storage.getString('jailbreakFlavor', DEFAULT_HEN),
+  currentJbFlavor: storage.getString('jailbreakFlavor', 'nexHEN'),
   platform: "PS4",                                                          // PS4/PC/Mobile etc..
   lastTab: storage.getString('lastTab', 'tools'),
   advancedPayloads: storage.getBoolean('advancedPayloads', false),          // true/false

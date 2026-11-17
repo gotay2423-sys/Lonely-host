@@ -7,8 +7,8 @@ var payloadsList = [
   {
     id: "nexHEN",
     name: "nexHEN",
-    author: "EchoStretch",
-    description: "Homebrew Enabler & Debug Settings for PS4 (nexHEN-ps4.bin).",
+    author: "Homebrew Enabler",
+    description: "Homebrew Enabler & Debug Settings for PS4 (nexHEN.bin).",
     specificFW: "5.05 - latest",
     category: "hen",
     src: "./includes/payloads/HEN/nexHEN-ps4.bin"
