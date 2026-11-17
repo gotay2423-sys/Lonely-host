@@ -74,6 +74,24 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(resp)
             return
 
+        if self.path == "/api/probe":
+            target_ip = self.client_address[0]
+            if target_ip in ("127.0.0.1", "::1", "localhost"):
+                target_ip = local_ip()
+            alive = False
+            try:
+                with socket.create_connection((target_ip, 9021), timeout=1.2):
+                    alive = True
+            except Exception:
+                alive = False
+            resp = json.dumps({"online": alive, "target": target_ip}).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(resp)))
+            self.end_headers()
+            self.wfile.write(resp)
+            return
+
         super().do_GET()
 
     def do_POST(self):

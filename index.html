@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="cache.manifest">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -403,40 +403,73 @@
       background: rgba(255, 42, 85, 0.15);
     }
 
-    /* Custom payload bar */
-    .custom-upload-bar {
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 1px dashed rgba(0, 243, 255, 0.2);
+    /* Auto-Run Toggle */
+    .auto-run-bar {
+      margin-top: 12px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
     }
 
-    .custom-label {
-      font-size: 12px;
-      color: #9d83c7;
-    }
-
-    .btn-custom {
-      background: rgba(255, 0, 127, 0.12);
-      border: 1px solid var(--neon-pink);
-      color: var(--neon-pink);
-      border-radius: 6px;
-      padding: 8px 18px;
-      font-size: 12px;
-      font-family: inherit;
-      font-weight: 700;
-      letter-spacing: 1px;
+    .toggle-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      color: #9d83c7;
       transition: all 0.2s ease;
     }
 
-    .btn-custom:hover {
+    .toggle-wrap:hover {
+      color: var(--neon-cyan);
+    }
+
+    .toggle-wrap input {
+      display: none;
+    }
+
+    .toggle-slider {
+      width: 34px;
+      height: 18px;
+      background: rgba(18, 8, 36, 0.9);
+      border: 1px solid var(--border-cyan);
+      border-radius: 20px;
+      position: relative;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+    }
+
+    .toggle-slider::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      top: 2px;
+      left: 2px;
+      border-radius: 50%;
+      background: var(--neon-cyan);
+      box-shadow: 0 0 6px var(--neon-cyan);
+      transition: all 0.25s ease;
+    }
+
+    .toggle-wrap input:checked + .toggle-slider {
+      background: rgba(255, 0, 127, 0.25);
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+    }
+
+    .toggle-wrap input:checked + .toggle-slider::after {
+      left: 18px;
       background: var(--neon-pink);
-      color: #05020a;
-      box-shadow: 0 0 15px var(--neon-pink);
+      box-shadow: 0 0 8px var(--neon-pink);
+    }
+
+    .toggle-wrap input:checked ~ .toggle-text {
+      color: var(--neon-pink);
+      text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
     }
   </style>
 </head>
@@ -453,11 +486,25 @@
         <span class="led" id="statusLed"></span>
         <span id="statusText">SYSTEM READY</span>
       </div>
-      <div class="chip">ELFLDR :9021</div>
+      <div class="chip elfldr-chip" id="elfldrChip">
+        <span class="led led-yellow" id="elfldrLed"></span>
+        <span id="elfldrText">ELFLDR :9021</span>
+      </div>
+      <div class="chip cache-chip" id="cacheChip" title="Click to cache for offline use" style="cursor: pointer;">
+        <span class="led" id="cacheLed"></span>
+        <span id="cacheText">CACHE OFFLINE</span>
+      </div>
     </div>
 
     <div class="controls">
       <button id="runBtn" tabindex="0">RUN EXPLOIT</button>
+      <div class="auto-run-bar">
+        <label class="toggle-wrap" title="Automatically run exploit on page load">
+          <input type="checkbox" id="autoJbToggle">
+          <span class="toggle-slider"></span>
+          <span class="toggle-text">AUTO-RUN ON LOAD</span>
+        </label>
+      </div>
     </div>
 
     <div class="terminal-bar">
@@ -542,12 +589,6 @@
           </div>
           <button class="btn-send" data-payload="gdbsrv-ps5.elf">SEND</button>
         </div>
-      </div>
-
-      <div class="custom-upload-bar">
-        <span class="custom-label">Send external or custom ELF payload:</span>
-        <input type="file" id="customElfInput" accept=".elf" style="display:none">
-        <button class="btn-custom" id="customElfBtn">SELECT .ELF FILE</button>
       </div>
     </div>
   </div>
