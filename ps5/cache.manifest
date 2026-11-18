@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# Lonely Host PS5 Offline Cache v2
-# 2026-11-17
+# Lonely Host PS5 Offline Cache v3 - jb success popup with prestige emblem
+# 2026-11-18
 
 CACHE:
 index.html
+prestige.jpg
 src/firmware.js
 src/main.js
 src/rop.js
