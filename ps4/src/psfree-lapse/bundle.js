@@ -3147,41 +3147,41 @@ try {
 //================================================================================================
 
 // sys/socket.h
-const AF_UNIX = 1;
-const AF_INET = 2;
-const AF_INET6 = 28;
-const SOCK_STREAM = 1;
-const SOCK_DGRAM = 2;
-const SOL_SOCKET = 0xffff;
-const SO_REUSEADDR = 4;
-const SO_LINGER = 0x80;
+var AF_UNIX = 1;
+var AF_INET = 2;
+var AF_INET6 = 28;
+var SOCK_STREAM = 1;
+var SOCK_DGRAM = 2;
+var SOL_SOCKET = 0xffff;
+var SO_REUSEADDR = 4;
+var SO_LINGER = 0x80;
 // netinet/in.h
-const IPPROTO_TCP = 6;
-const IPPROTO_UDP = 17;
-const IPPROTO_IPV6 = 41;
+var IPPROTO_TCP = 6;
+var IPPROTO_UDP = 17;
+var IPPROTO_IPV6 = 41;
 // netinet/tcp.h
-const TCP_INFO = 0x20;
-const size_tcp_info = 0xec;
+var TCP_INFO = 0x20;
+var size_tcp_info = 0xec;
 // netinet/tcp_fsm.h
-const TCPS_ESTABLISHED = 4;
+var TCPS_ESTABLISHED = 4;
 // netinet6/in6.h
-const IPV6_2292PKTOPTIONS = 25;
-const IPV6_PKTINFO = 46;
-const IPV6_NEXTHOP = 48;
-const IPV6_RTHDR = 51;
-const IPV6_TCLASS = 61;
+var IPV6_2292PKTOPTIONS = 25;
+var IPV6_PKTINFO = 46;
+var IPV6_NEXTHOP = 48;
+var IPV6_RTHDR = 51;
+var IPV6_TCLASS = 61;
 // sys/cpuset.h
-const CPU_LEVEL_WHICH = 3;
-const CPU_WHICH_TID = 1;
-const sizeof_cpuset_t_ = 16;
+var CPU_LEVEL_WHICH = 3;
+var CPU_WHICH_TID = 1;
+var sizeof_cpuset_t_ = 16;
 // CONFIG CONSTANTS
-const main_core = 7;
-const num_handles = 0x100;
-const num_sds = 0x100; // max is 0x100 due to max IPV6_TCLASS
-const num_alias = 100;
-const num_races = 100;
-const leak_len = 16;
-const num_clobbers = 8;
+var main_core = 7;
+var num_handles = 0x100;
+var num_sds = 0x100; // max is 0x100 due to max IPV6_TCLASS
+var num_alias = 100;
+var num_races = 100;
+var leak_len = 16;
+var num_clobbers = 8;
 
 function poll_aio(ids, states, num_ids=ids.length) {
   if (states !== undefined) {

@@ -571,11 +571,11 @@ function userland() {
 
   window.runPayload = function (path) {
     var isElfldrBin = path.indexOf("elfldr.bin") !== -1;
-    var isElf = !isElfldrBin && (isPayloadElf(path) || path.indexOf("nexHEN") !== -1);
+    var isElf = !isElfldrBin && isPayloadElf(path);
     var oldPath = path;
 
     if (isElf) {
-      log("Detected ELF/nexHEN payload, checking if elfldr is active...");
+      log("Detected ELF payload, checking if elfldr is active...");
       probeElfLoader().then(function (elfLoaderAvailable) {
         if (elfLoaderAvailable) {
           log("elfldr is already listening, loading payload...", "green");

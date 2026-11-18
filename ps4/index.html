@@ -94,9 +94,9 @@
             <button id="pslogo" class="outline-none focus:outline-none bg-transparent border-0 cursor-pointer p-0 z-10" style="display: inline-block;">
                 <div id="ps-logo-container"
                     class="relative group cursor-pointer flex flex-col items-center justify-center rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95"
-                    style="width: 170px; height: 170px; max-width: 170px; max-height: 170px; min-width: 170px; min-height: 170px; margin: 0 auto; box-sizing: border-box; overflow: hidden; background: radial-gradient(circle, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0.85) 75%); border: 2px solid rgba(239, 68, 68, 0.65); box-shadow: 0 0 35px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.25); display: flex; align-items: center; justify-content: center;">
-                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak" width="125" height="125"
-                        style="width: 125px; height: 125px; max-width: 125px; max-height: 125px; min-width: 125px; min-height: 125px; object-fit: contain; border-radius: 50%; display: block; margin: 0 auto; filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.85));">
+                    style="width: 180px; height: 180px; max-width: 180px; max-height: 180px; min-width: 180px; min-height: 180px; margin: 0 auto; padding: 0; box-sizing: border-box; overflow: hidden; border-radius: 50%; border: 3px solid #ef4444; box-shadow: 0 0 40px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.4); display: flex; align-items: center; justify-content: center; background: #000;">
+                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak" width="180" height="180"
+                        style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%; object-fit: cover; border-radius: 50%; display: block; margin: 0; padding: 0; filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.85));">
                 </div>
             </button>
             <h3 class="text-white/80 text-lg mt-4 font-mono font-bold tracking-wider z-10" id="click-to-start-text"></h3>
@@ -117,14 +117,17 @@
                         <span class="mac-dot mac-dot-yellow"></span>
                         <span class="mac-dot mac-dot-green"></span>
                     </div>
-                    <span class="text-xs uppercase font-bold tracking-widest text-cyan-400 font-mono" style="text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);">ACTIVE JAILBREAK PAYLOAD</span>
+                    <span class="text-xs uppercase font-bold tracking-widest text-emerald-400 font-mono" style="text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);">ACTIVE JAILBREAK PAYLOAD</span>
                     <span class="text-xs text-gray-400 font-mono">v2.4</span>
                 </div>
                 <div class="flex justify-center mb-2">
-                    <div id="nexHEN-label-initial"
-                        class="flex items-center justify-center px-6 py-3 rounded-xl shadow-lg border-2 cursor-pointer transition-all duration-200" style="background: rgba(0, 128, 255, 0.2); border-color: #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.35); min-width: 220px;" onclick="chooseHEN()">
-                        <span class="text-xl font-extrabold select-none tracking-wide text-white" style="text-shadow: 0 0 10px #00f3ff;">nexHEN</span>
-                    </div>
+                    <button id="nexHEN-btn-initial" onclick="activateNexHEN(true)"
+                        class="flex items-center justify-center space-x-3 px-8 py-3 rounded-xl shadow-lg border-2 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"
+                        style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)); border-color: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); min-width: 240px;">
+                        <span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-400" style="box-shadow: 0 0 10px #10b981;"></span>
+                        <span class="text-xl font-extrabold select-none tracking-wide text-white" style="text-shadow: 0 0 10px #10b981;">nexHEN</span>
+                        <span class="text-xs font-mono uppercase font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded ml-2">Selected</span>
+                    </button>
                 </div>
                 <p class="text-xs text-gray-400 mt-2 font-mono">Homebrew Enabler &amp; Debug Settings (EchoStretch)</p>
             </div>
@@ -166,10 +169,12 @@
                     </div>
                     <!-- HEN Indicator (nexHEN Active) -->
                     <div id="henSelection" class="flex items-center justify-center gap-3">
-                        <div id="nexHEN-label-exploit"
-                            class="flex items-center px-4 py-1.5 rounded-lg bg-blue-900/60 shadow border border-cyan-400">
+                        <button id="nexHEN-label-exploit" onclick="activateNexHEN(true)"
+                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-emerald-950/60 shadow border border-emerald-400 cursor-pointer hover:bg-emerald-900/80 transition-all">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400" style="box-shadow: 0 0 8px #10b981;"></span>
                             <span class="text-sm font-bold text-white select-none">nexHEN</span>
-                        </div>
+                            <span class="text-xs font-mono text-emerald-300 font-semibold">[Active]</span>
+                        </button>
                         <button id="exploitRun"
                             class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2.5 rounded-full transition-colors shadow-lg cursor-pointer" title="Run Exploit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"

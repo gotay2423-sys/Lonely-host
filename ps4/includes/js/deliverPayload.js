@@ -80,10 +80,10 @@ function sendElfToElfldr(url, payloadName, onDone, args) {
 }
 
 /**
- * Returns true if the payload path contains an elf extension or is nexHEN.
+ * Returns true if the payload path contains an elf extension.
  */
 function isPayloadElf(path) {
-    return (path.indexOf('.elf') != -1) || (path.indexOf('nexHEN') != -1);
+    return path.indexOf('.elf') !== -1;
 }
 
 /**
@@ -344,6 +344,14 @@ function customPayload(payloadFile) {
 function payloadRouter(payload) {
     if (!isPayloadSupported(payload)) {
         alert(window.lang.unsupportedFirmware + user.ps4Fw);
+        return;
+    }
+    // If it's a HEN payload (nexHEN, GoldHEN, PS4HEN), run jailbreak directly with that payload
+    if (payload.id === 'nexHEN' || payload.id === 'GoldHEN' || payload.id === 'PS4HEN') {
+        storage.set('jailbreakFlavor', payload.id);
+        storage.session.set('payload_path', payload.src);
+        user.currentJbFlavor = payload.id;
+        jailbreak();
         return;
     }
     // It's a BinLoader
