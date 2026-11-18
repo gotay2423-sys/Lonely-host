@@ -119,24 +119,14 @@ function updateHenFlavorVisibility(fwVersion) {
     var PS4HENInputExploit = document.getElementById('PS4HEN-label-exploit');
 
     if (hideGoldHEN) {
-        if (goldHenInputInitial && goldHenInputExploit && goldHenVersionSelector) {
-            toggleVisibility(goldHenInputInitial.id, !hideGoldHEN);
-            toggleVisibility(goldHenInputExploit.id, !hideGoldHEN);
-            toggleVisibility(goldHenVersionSelector.id, !hideGoldHEN);
-        }
-        var henInputs = document.querySelectorAll(
-            'input[name="hen"][value="PS4HEN"], input[name="hen2"][value="PS4HEN"]'
-        );
-        for (var i = 0; i < henInputs.length; i++) {
-            henInputs[i].checked = true;
-        }
-        user.currentJbFlavor = 'PS4HEN';
-        storage.set('jailbreakFlavor', 'PS4HEN');
+        if (goldHenInputInitial) toggleVisibility(goldHenInputInitial.id, false);
+        if (goldHenInputExploit) toggleVisibility(goldHenInputExploit.id, false);
+        if (goldHenVersionSelector) toggleVisibility(goldHenVersionSelector.id, false);
     }
 
-    toggleVisibility(nexHENInputInitial.id, !hidenexHEN);
-    toggleVisibility(nexHENInputExploit.id, !hidenexHEN);
+    if (nexHENInputInitial) toggleVisibility(nexHENInputInitial.id, !hidenexHEN);
+    if (nexHENInputExploit) toggleVisibility(nexHENInputExploit.id, !hidenexHEN);
 
-    toggleVisibility(PS4HENInputInitial.id, !hidePS4HEN);
-    toggleVisibility(PS4HENInputExploit.id, !hidePS4HEN);
+    if (PS4HENInputInitial) toggleVisibility(PS4HENInputInitial.id, !hidePS4HEN);
+    if (PS4HENInputExploit) toggleVisibility(PS4HENInputExploit.id, !hidePS4HEN);
 }

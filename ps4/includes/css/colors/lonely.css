@@ -1,10 +1,11 @@
-/* LONELY Cyberpunk Theme for PS4 - Relapse Signature Edition */
+/* LONELY Cyberpunk macOS Theme for PS4 - Relapse Signature Edition */
 :root {
     --lonely-ps4-blue: #0080ff;
     --lonely-ps4-cyan: #00f3ff;
     --lonely-ps4-pink: #ff007f;
     --lonely-ps4-purple: #9d4edd;
     --lonely-ps4-green: #39ff14;
+    --lonely-ps4-red: #ef4444;
     --lonely-bg-dark: #040814;
 }
 
@@ -16,47 +17,182 @@ body {
     background-size: 34px 34px, 34px 34px, 100% 100% !important;
     background-attachment: fixed !important;
     color: #e0f2fe !important;
-    font-family: 'Consolas', 'Courier New', monospace !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, 'Consolas', 'Courier New', monospace !important;
 }
 
-#ps-logo {
-    fill: #0080ff !important;
-    filter: drop-shadow(0 0 14px rgba(0, 128, 255, 0.8));
+/* macOS Top Bar */
+.mac-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(8, 14, 28, 0.88) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.25) !important;
+    z-index: 50;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6) !important;
 }
 
+/* macOS Traffic Light Dots */
+.mac-traffic-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.mac-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.mac-dot-red {
+    background-color: #ff5f56;
+    border: 1px solid #e0443e;
+    box-shadow: 0 0 8px rgba(255, 95, 86, 0.5);
+}
+
+.mac-dot-yellow {
+    background-color: #ffbd2e;
+    border: 1px solid #dea123;
+    box-shadow: 0 0 8px rgba(255, 189, 46, 0.5);
+}
+
+.mac-dot-green {
+    background-color: #27c93f;
+    border: 1px solid #1aab29;
+    box-shadow: 0 0 8px rgba(39, 201, 63, 0.5);
+}
+
+.mac-brand-text {
+    color: #00f3ff;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+.mac-fw-pill {
+    background: rgba(0, 128, 255, 0.15);
+    border: 1px solid rgba(0, 243, 255, 0.4);
+    color: #7dd3fc;
+}
+
+/* macOS Navigation Pills */
+.mac-nav-btn {
+    padding: 6px 14px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #cbd5e1;
+    font-weight: 600;
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.mac-nav-btn:hover {
+    background: rgba(0, 243, 255, 0.2);
+    border-color: #00f3ff;
+    color: #fff;
+    box-shadow: 0 0 12px rgba(0, 243, 255, 0.35);
+    transform: translateY(-1px);
+}
+
+.mac-nav-hub {
+    background: rgba(0, 128, 255, 0.22);
+    border-color: rgba(0, 243, 255, 0.5);
+    color: #38bdf8;
+    font-weight: bold;
+}
+.mac-nav-hub:hover {
+    background: #00f3ff;
+    color: #040814;
+    box-shadow: 0 0 18px #00f3ff;
+}
+
+.mac-nav-ps5 {
+    background: rgba(255, 0, 127, 0.18);
+    border-color: rgba(255, 0, 127, 0.5);
+    color: #f472b6;
+    font-weight: bold;
+}
+.mac-nav-ps5:hover {
+    background: #ff007f;
+    color: #fff;
+    box-shadow: 0 0 18px #ff007f;
+}
+
+/* macOS Glass Card Styling */
+.mac-card {
+    background: rgba(8, 18, 42, 0.92) !important;
+    border: 1px solid rgba(0, 243, 255, 0.35) !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), inset 0 0 20px rgba(0, 128, 255, 0.12) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-radius: 14px !important;
+}
+
+.mac-card-titlebar, .mac-terminal-bar {
+    border-bottom: 1px solid rgba(0, 243, 255, 0.2) !important;
+}
+
+/* Call of Duty Prestige Emblem Logo */
 #ps-logo-container {
-    background: rgba(0, 128, 255, 0.1) !important;
-    border: 2px solid rgba(0, 243, 255, 0.45) !important;
-    box-shadow: 0 0 30px rgba(0, 128, 255, 0.35) !important;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0.85) 75%) !important;
+    border: 2px solid rgba(239, 68, 68, 0.65) !important;
+    box-shadow: 0 0 35px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.25) !important;
     transition: all 0.3s ease !important;
+    border-radius: 50% !important;
 }
 
 #ps-logo-container:hover {
-    border-color: #00f3ff !important;
-    box-shadow: 0 0 45px rgba(0, 243, 255, 0.6) !important;
-    transform: scale(1.04) !important;
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 50px rgba(239, 68, 68, 0.8), inset 0 0 25px rgba(239, 68, 68, 0.4) !important;
+    transform: scale(1.05) !important;
+}
+
+#ps-logo {
+    filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.85)) !important;
+    transition: transform 0.3s ease !important;
+}
+
+#ps-logo:hover {
+    filter: drop-shadow(0 0 26px rgba(239, 68, 68, 1)) !important;
 }
 
 .mainContainer {
-    font-family: 'Consolas', 'Courier New', monospace !important;
+    font-family: inherit !important;
 }
 
-/* Glass Cyber Panels */
-#exploit-status-panel, #payloadsSection, #choosejb-initial, .settings-popup-content {
+/* Panels */
+#exploit-status-panel, #payloadsSection, .settings-popup-content {
     background: rgba(8, 18, 42, 0.92) !important;
     border: 1px solid rgba(0, 243, 255, 0.35) !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 128, 255, 0.12) !important;
     backdrop-filter: blur(12px) !important;
-    border-radius: 12px !important;
+    border-radius: 14px !important;
 }
 
-/* Cyber Console Window */
+/* Cyber macOS Console Window */
 #DebugConsole {
-    background: rgba(2, 6, 18, 0.9) !important;
+    background: rgba(2, 6, 18, 0.92) !important;
     border: 1px solid rgba(0, 243, 255, 0.3) !important;
     box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.1) !important;
     color: #00f3ff !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
+    font-family: 'Consolas', 'Courier New', monospace !important;
 }
 
 #DebugConsole pre {
@@ -148,3 +284,4 @@ body {
     background: #00f3ff;
     box-shadow: 0 0 12px #00f3ff;
 }
+

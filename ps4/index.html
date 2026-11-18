@@ -42,19 +42,8 @@
         else
             document.dir = "ltr";
 
-        // redirect to http request
-        var goToHttps = localStorage.getItem("dontHTTPS") != "1";
-        var isThisPS4 = navigator.userAgent.indexOf("PlayStation 4") !== -1;
-        var isLocalServer =  /^(127\.|192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/.test(window.location.hostname);
-        var isCurrentHTTPS = window.location.protocol === 'https:';
-        if (isThisPS4 && goToHttps && !isLocalServer && isCurrentHTTPS){
-            if (confirm("You are currently using HTTPS, which prevents loading payloads through a bin/elf loader servers, switch to http instead? (recommended)")){
-                window.abortLoading = true;
-                window.location.href = "http://webkitty.arabpixel.net";
-            } else{
-                localStorage.setItem("dontHTTPS", "1");
-            }
-        }
+        // Disable external HTTPS redirect prompts
+        localStorage.setItem("dontHTTPS", "1");
     </script>
 </head>
 
@@ -62,117 +51,85 @@
     <main class="mainContainer">
         <section id="initial-screen" class="relative flex flex-col items-center justify-center min-h-screen p-6 transition-opacity duration-700
             opacity-100">
-            <!-- Navigation to Hub & PS5 -->
-            <div class="absolute top-6 right-6 flex space-x-2 z-10 font-mono text-xs">
-                <a href="../index.html" class="px-3 py-2 rounded-lg bg-blue-900/60 border border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-black transition-colors font-bold tracking-wider" style="text-decoration:none;">⚡ HUB</a>
-                <a href="../ps5/index.html" class="px-3 py-2 rounded-lg bg-pink-900/60 border border-pink-500 text-pink-300 hover:bg-pink-500 hover:text-black transition-colors font-bold tracking-wider" style="text-decoration:none;">🎮 PS5 HOST</a>
-            </div>
-
-            <!-- Header Buttons -->
-            <header class="absolute top-6 left-6 flex space-x-3 rtl:space-x-reverse z-10">
-                <div>
-                    <button onclick="settingsPopup()"
-                        class="settings-btn p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
-                        title="Settings">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                            class="bi bi-gear" viewBox="0 0 16 16">
-                            <path
-                                d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-                            <path
-                                d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
-                        </svg>
-                    </button>
-                    <button onclick="aboutPopup()"
-                        class="about-btn p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
-                        title="About">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                            viewBox="0 0 512 512">
-                            <path
-                                d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z" />
-                        </svg>
-                    </button>
-                    <button onclick="themePopup()"
-                        class="theme-btn h-10 p-2 inline-flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
-                        title="Theme Customization">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-                            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-                            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-                            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-                            <path
-                                d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.71 1.7-1.63 0-.44-.17-.85-.45-1.16-.27-.3-.43-.71-.43-1.15 0-.92.75-1.66 1.67-1.66h2.24c2.8 0 5.07-2.27 5.07-5.07 0-5.25-4.38-9.33-9.7-9.33z" />
-                        </svg>
-                    </button>
+            <!-- macOS Cyber Menubar -->
+            <div class="mac-header-bar fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-5 py-2.5">
+                <!-- Mac Traffic Light Dots + Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="mac-traffic-dots flex items-center space-x-2 mr-2">
+                        <span class="mac-dot mac-dot-red" title="Close"></span>
+                        <span class="mac-dot mac-dot-yellow" title="Minimize"></span>
+                        <span class="mac-dot mac-dot-green" title="Maximize"></span>
+                    </div>
+                    <span class="font-bold tracking-wider text-sm font-mono mac-brand-text">LONELY <span class="text-pink-500">PS4</span></span>
+                    <span class="mac-fw-pill text-xs px-2.5 py-0.5 rounded-full font-mono font-semibold">FW 4.50 &ndash; 14.02</span>
                 </div>
-                <button id="updateCache"
-                    class="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white">
-                    Update Cache
-                </button>
-            </header>
+
+                <!-- Action & Navigation Pills (Clean Text / No Emojis for PS4 TV) -->
+                <div class="flex items-center space-x-2 font-mono text-xs">
+                    <button id="updateCache" class="mac-nav-btn" title="Offline PWA Cache">
+                        Cache
+                    </button>
+                    <button onclick="settingsPopup()" class="mac-nav-btn settings-btn" title="Host Settings">
+                        Settings
+                    </button>
+                    <button onclick="aboutPopup()" class="mac-nav-btn about-btn" title="About &amp; Credits">
+                        About
+                    </button>
+                    <a href="../index.html" class="mac-nav-btn mac-nav-hub" style="text-decoration: none;" title="Unified Hub">
+                        HUB
+                    </a>
+                    <a href="../ps5/index.html" class="mac-nav-btn mac-nav-ps5" style="text-decoration: none;" title="Switch to PS5 Host">
+                        PS5 Host &rarr;
+                    </a>
+                </div>
+            </div>
 
             <!-- Lonely PS4 Branding -->
-            <div class="text-center mb-6 mt-12 z-10 font-mono">
+            <div class="text-center mb-6 mt-14 z-10 font-mono">
                 <h1 style="color: #00f3ff; text-shadow: 0 0 14px #0080ff, 0 0 28px rgba(0, 243, 255, 0.45); font-size: 38px; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; margin: 0;">LONELY <span style="color: #ff007f; text-shadow: 0 0 15px #ff007f;">PS4</span></h1>
-                <p style="color: #93c5fd; font-size: 13px; letter-spacing: 2px; margin-top: 4px; opacity: 0.9;">PlayStation 4 WebKit &amp; Kernel Exploit Host &middot; FW 4.50 – 14.02</p>
+                <p style="color: #93c5fd; font-size: 13px; letter-spacing: 2px; margin-top: 4px; opacity: 0.9;">PlayStation 4 WebKit &amp; Kernel Exploit Host</p>
             </div>
 
-            <!-- PS Button -->
-            <button id="pslogo">
+            <!-- Prestige Master Start Button -->
+            <button id="pslogo" class="outline-none focus:outline-none bg-transparent border-0 cursor-pointer p-0 z-10">
                 <div id="ps-logo-container"
-                    class="relative group cursor-pointer flex flex-col items-center justify-center p-8 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:scale-102">
-                    <svg id="ps-logo" class="w-32 h-32 transition-all duration-500 ease-in-out" viewBox="0 0 32 32"
-                        fill="#3B82F6" xmlns="http://www.w3.org/2000/svg">
-                        <g id="SVGRepo_iconCarrier">
-                            <path
-                                d="M0.69116 21.9548C-0.506476 22.7935 -0.284724 24.2384 2.44769 25.1419C5.18011 26.0455 8.35603 26.2323 11.1505 25.729C11.0707 25.729 11.3102 25.729 11.1505 25.729V22.8774L8.43588 23.8C7.39792 24.1355 6.35997 24.2194 5.32202 23.9677C4.5236 23.7161 4.68328 23.2129 5.64139 22.7935L11.1505 20.7806V17.6774L3.48565 20.4452C2.52754 20.7806 1.56943 21.2839 0.69116 21.9548ZM19.2146 9.37419V17.5097C22.4881 19.1871 25.0431 17.5097 25.0431 13.1484C25.0431 8.70323 23.5261 6.69032 19.1348 5.09677C16.8193 4.25806 14.4241 3.50323 12.0288 3V27.2387L17.6178 29V8.61935C17.6178 7.69677 17.6178 7.02581 18.2565 7.27742C19.1348 7.52903 19.2146 8.45161 19.2146 9.37419ZM29.5941 20.0258C27.2787 19.1871 24.8036 18.8516 22.4083 19.1032C21.0779 19.1906 19.8294 19.5869 18.5759 20.0258V23.2968L23.7656 21.2839C24.8036 20.9484 25.8415 20.8645 26.8795 21.1161C27.6779 21.3677 27.5182 21.871 26.5601 22.2903L18.5759 25.3935V28.5806L29.5941 24.3032C30.3925 23.9677 31.1111 23.5484 31.7499 22.8774C32.3088 22.0387 32.0692 20.8645 29.5941 20.0258Z">
-                            </path>
-                        </g>
-                    </svg>
+                    class="relative group cursor-pointer flex flex-col items-center justify-center p-3 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95"
+                    style="background: radial-gradient(circle, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0.85) 75%); border: 2px solid rgba(239, 68, 68, 0.65); box-shadow: 0 0 35px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.25);">
+                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak"
+                        class="w-36 h-36 object-contain rounded-full transition-all duration-300"
+                        style="filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.85));">
                 </div>
             </button>
-            <h3 class="text-white/70 text-lg mt-4" id="click-to-start-text"></h3>
+            <h3 class="text-white/80 text-lg mt-4 font-mono font-bold tracking-wider z-10" id="click-to-start-text"></h3>
             <button onclick="clearInterval(autoJbInterval);"
-                class="hidden mt-2 bg-red-600 hover:bg-red-700 p-3 rounded font-semibold transition-colors"
+                class="hidden mt-2 bg-red-600 hover:bg-red-700 p-3 rounded font-semibold transition-colors z-10"
                 id="stopAutoJb">
                 Stop Auto Jailbreak
             </button>
 
             <!-- Compatibility message -->
-            <p id="PS4FW" class="text-white/70 text-lg mt-4 mb-6">-</p>
-            <a class="hidden secondHostBtn bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center"
-                href="http://webkitty.arabpixel.net/" style="text-decoration: none;">
-                <button
-                    class="bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load
-                    payloads using a PayLoader - External link</button>
-            </a>
+            <p id="PS4FW" class="text-white/70 text-lg mt-3 mb-5 font-mono z-10">-</p>
 
-            <!-- Primary HEN Selection -->
-            <div id="choosejb-initial" class="p-6 rounded-lg shadow-xl text-center" style="background: rgba(8, 18, 42, 0.9); border: 1px solid rgba(0, 243, 255, 0.4); box-shadow: 0 0 25px rgba(0, 128, 255, 0.25); max-width: 520px; width: 100%;">
-                <div class="text-xs uppercase font-bold tracking-widest mb-3" style="color: #00f3ff; text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);">⚡ PRIMARY JAILBREAK PAYLOAD</div>
-                <div class="flex justify-center mb-3">
+            <!-- Primary HEN Selection (nexHEN Only) -->
+            <div id="choosejb-initial" class="p-5 rounded-xl shadow-xl text-center mac-card z-10" style="max-width: 480px; width: 100%;">
+                <div class="mac-card-titlebar flex items-center justify-between pb-3 mb-4 border-b border-white/10">
+                    <div class="mac-traffic-dots flex items-center space-x-1.5">
+                        <span class="mac-dot mac-dot-red"></span>
+                        <span class="mac-dot mac-dot-yellow"></span>
+                        <span class="mac-dot mac-dot-green"></span>
+                    </div>
+                    <span class="text-xs uppercase font-bold tracking-widest text-cyan-400 font-mono" style="text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);">ACTIVE JAILBREAK PAYLOAD</span>
+                    <span class="text-xs text-gray-400 font-mono">v2.4</span>
+                </div>
+                <div class="flex justify-center mb-2">
                     <label id="nexHEN-label-initial"
-                        class="flex items-center px-6 py-3 rounded-lg cursor-pointer shadow border-2 transition-all duration-200" style="background: rgba(0, 128, 255, 0.25); border-color: #00f3ff; box-shadow: 0 0 16px rgba(0, 243, 255, 0.4);">
+                        class="flex items-center px-6 py-3 rounded-xl cursor-pointer shadow-lg border-2 transition-all duration-200" style="background: rgba(0, 128, 255, 0.2); border-color: #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.35);">
                         <input type="radio" name="hen" value="nexHEN" checked onchange="saveJbFlavor(this.name, this.value)"
                             class="accent-cyan-400 w-5 h-5 ml-2">
-                        <span class="text-xl font-extrabold select-none ml-2 tracking-wide" style="color: #ffffff; text-shadow: 0 0 12px #00f3ff;">nexHEN (nexHEN.bin)</span>
+                        <span class="text-xl font-extrabold select-none ml-2 tracking-wide text-white" style="text-shadow: 0 0 10px #00f3ff;">nexHEN</span>
                     </label>
                 </div>
-                <div class="text-xs text-gray-400 mb-2">Secondary Alternatives:</div>
-                <div class="flex flex-row justify-center gap-3 text-xs">
-                    <label class="flex items-center px-3 py-1.5 rounded bg-gray-800/80 hover:bg-gray-700 cursor-pointer border border-gray-600 transition-colors"
-                        id="goldhen-label-initial">
-                        <input type="radio" name="hen" value="GoldHEN" onchange="saveJbFlavor(this.name, this.value)"
-                            class="w-4 h-4 mr-2">
-                        <span class="text-white/80 select-none">GoldHEN</span>
-                    </label>
-                    <label id="PS4HEN-label-initial"
-                        class="flex items-center px-3 py-1.5 rounded bg-gray-800/80 hover:bg-gray-700 cursor-pointer border border-gray-600 transition-colors">
-                        <input type="radio" name="hen" value="PS4HEN" onchange="saveJbFlavor(this.name, this.value)"
-                            class="w-4 h-4 mr-2">
-                        <span class="text-white/80 select-none">PS4HEN</span>
-                    </label>
-                </div>
+                <p class="text-xs text-gray-400 mt-2 font-mono">Homebrew Enabler &bull; GoldHEN &amp; PS4HEN in Payloads</p>
             </div>
 
             <!-- Scroll Down Icon -->
@@ -187,48 +144,43 @@
         <!-- Exploit section -->
         <section id="exploit-main-screen" class="flex w-full bg-gray-900 text-white transition-opacity duration-700">
             <div id="exploitContainer" class="grid md:grid-cols-2">
-                <!-- Exploit console panel -->
-                <div id="exploit-status-panel" class="gap-4 bg-gray-800 p-6 rounded-lg flex flex-col h-full w-full">
-                    <div class="flex justify-between w-auto" style="align-items: baseline;">
-                        <h2 class="text-xl font-semibold mb-4" id="state">Exploit status</h2>
+                <!-- Exploit console panel (macOS Terminal Style) -->
+                <div id="exploit-status-panel" class="gap-4 bg-gray-800 p-5 rounded-xl flex flex-col h-full w-full mac-card">
+                    <div class="mac-terminal-bar flex items-center justify-between pb-3 border-b border-white/10">
+                        <div class="mac-traffic-dots flex items-center space-x-1.5">
+                            <span class="mac-dot mac-dot-red"></span>
+                            <span class="mac-dot mac-dot-yellow"></span>
+                            <span class="mac-dot mac-dot-green"></span>
+                        </div>
+                        <div class="text-xs font-mono text-gray-400 tracking-wider">lonely@ps4: ~/exploit &mdash; zsh</div>
                         <button id="successRate" style="white-space: nowrap;"
-                            class="text-base font-semibold duration-300 transform hover:scale-102 hover:border-bottom cursor-pointer"
+                            class="text-xs font-mono font-semibold text-cyan-300 hover:text-cyan-100 cursor-pointer"
                             onclick="clearStats()">
                             Success rate
                         </button>
                     </div>
+                    <div class="flex justify-between w-auto items-baseline">
+                        <h2 class="text-lg font-semibold text-cyan-400 font-mono" id="state">Exploit status</h2>
+                    </div>
                     <div id="DebugConsole"
-                        class="flex-grow min-h-0 min-h-[150px] bg-black/50 p-4 rounded-lg overflow-y-auto mb-4 text-xs font-mono"
+                        class="flex-grow min-h-0 min-h-[160px] bg-black/60 p-4 rounded-lg overflow-y-auto mb-3 text-xs font-mono"
                         dir="ltr">
                         <pre id='console'><center>--</center></pre>
                     </div>
-                    <!-- HEN Selector -->
-                    <div id="henSelection" class="flex items-center justify-center gap-4">
+                    <!-- HEN Selector (nexHEN Active) -->
+                    <div id="henSelection" class="flex items-center justify-center gap-3">
                         <label id="nexHEN-label-exploit"
-                            class="flex items-center px-3 py-1 rounded bg-blue-900/60 hover:bg-blue-800 cursor-pointer shadow border-2 border-cyan-400 focus-within:border-cyan-300">
+                            class="flex items-center px-4 py-1.5 rounded-lg bg-blue-900/60 hover:bg-blue-800 cursor-pointer shadow border border-cyan-400">
                             <input type="radio" name="hen2" value="nexHEN" checked class="accent-cyan-400 w-4 h-4 ml-2"
                                 onchange="saveJbFlavor(this.name, this.value)">
-                            <span class="text-base font-bold text-white select-none">⚡ nexHEN</span>
-                        </label>
-                        <label
-                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border border-gray-600"
-                            id="goldhen-label-exploit">
-                            <input type="radio" name="hen2" value="GoldHEN" class="accent-blue-500 w-4 h-4 ml-2"
-                                onchange="saveJbFlavor(this.name, this.value)">
-                            <span class="text-sm font-semibold text-white/80 select-none">GoldHEN</span>
-                        </label>
-                        <label id="PS4HEN-label-exploit"
-                            class="flex items-center px-2 py-1 rounded bg-gray-700/60 hover:bg-gray-700 cursor-pointer shadow border border-gray-600">
-                            <input type="radio" name="hen2" value="PS4HEN" class="accent-blue-500 w-4 h-4 ml-2"
-                                onchange="saveJbFlavor(this.name, this.value)">
-                            <span class="text-sm font-semibold text-white/80 select-none">PS4HEN</span>
+                            <span class="text-sm font-bold text-white select-none">nexHEN</span>
                         </label>
                         <button id="exploitRun"
-                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                class="bi bi-play" viewBox="0 0 16 16">
+                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2.5 rounded-full transition-colors shadow-lg" title="Run Exploit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                class="bi bi-play-fill" viewBox="0 0 16 16">
                                 <path
-                                    d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
+                                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                             </svg>
                         </button>
                     </div>
@@ -419,13 +371,7 @@
                             </div>
                         </div>
                     </div>
-                    <a hidden
-                        class="secondHostBtn w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center"
-                        href="http://webkitty.arabpixel.net/" style="text-decoration: none;">
-                        <button
-                            class="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-semibold disabled:opacity-50 transition-colors text-white text-center">Load
-                            payloads using a payload loader - External link</button>
-                    </a>
+
                 </div>
             </div>
 
