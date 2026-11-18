@@ -14,24 +14,6 @@ var payloadsList = [
     src: "./includes/payloads/HEN/nexHEN-ps4.bin"
   },
   {
-    id: "GoldHEN",
-    name: "GoldHEN v2.4b18.14",
-    author: "SiSTRo",
-    description: "GoldHEN Homebrew Enabler with Cheat Engine, Plugins & Package Installer.",
-    specificFW: "5.05 - 11.00",
-    category: "tools",
-    src: "./includes/payloads/HEN/goldhen_v2.4b18.14.bin"
-  },
-  {
-    id: "PS4HEN",
-    name: "PS4HEN",
-    author: "Scene Collective",
-    description: "Original PS4 Homebrew Enabler payload for legacy & standard firmwares.",
-    specificFW: "4.50 - 11.00",
-    category: "tools",
-    src: "./includes/payloads/HEN/PS4HEN.bin"
-  },
-  {
     id: "FTP",
     name: "FTP",
     author: "Scene Collective",

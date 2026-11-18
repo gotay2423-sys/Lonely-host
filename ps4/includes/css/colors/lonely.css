@@ -148,13 +148,35 @@ body {
     border-bottom: 1px solid rgba(0, 243, 255, 0.2) !important;
 }
 
-/* Call of Duty Prestige Emblem Logo */
+/* Call of Duty Prestige Emblem Logo - Scaled Proportional to Original PS Logo */
+#pslogo {
+    display: inline-block !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    outline: none !important;
+    cursor: pointer !important;
+}
+
 #ps-logo-container {
+    width: 170px !important;
+    height: 170px !important;
+    max-width: 170px !important;
+    max-height: 170px !important;
+    min-width: 170px !important;
+    min-height: 170px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     background: radial-gradient(circle, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0.85) 75%) !important;
     border: 2px solid rgba(239, 68, 68, 0.65) !important;
     box-shadow: 0 0 35px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.25) !important;
     transition: all 0.3s ease !important;
     border-radius: 50% !important;
+    overflow: hidden !important;
 }
 
 #ps-logo-container:hover {
@@ -164,12 +186,22 @@ body {
 }
 
 #ps-logo {
-    filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.85)) !important;
+    width: 125px !important;
+    height: 125px !important;
+    max-width: 125px !important;
+    max-height: 125px !important;
+    min-width: 125px !important;
+    min-height: 125px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    display: block !important;
+    margin: 0 auto !important;
+    filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.85)) !important;
     transition: transform 0.3s ease !important;
 }
 
 #ps-logo:hover {
-    filter: drop-shadow(0 0 26px rgba(239, 68, 68, 1)) !important;
+    filter: drop-shadow(0 0 24px rgba(239, 68, 68, 1)) !important;
 }
 
 .mainContainer {

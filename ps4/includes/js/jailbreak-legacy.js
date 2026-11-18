@@ -33,12 +33,9 @@ function _jailbreak() {
           // autoJbRetry will pickup on userland fail and reload
           storage.session.set('autoJb', false);
 
-          // Skip if payload was chosen, useful when a payload was chosen from deliverPayload.js
+          // Always load nexHEN for jailbreak
+          chooseHEN();
           payloadPath = storage.session.getString('payload_path', null);
-          if (!payloadPath || payloadPath == null) {
-            // Choose HEN
-            chooseHEN();
-          }
           cleanUp();
           payloadPath = storage.session.getString('payload_path', null);
           log("Loading: " + payloadPath);

@@ -7,7 +7,7 @@ var commonMax = 14.02;                 // max supported paylaods
 
 var user = {
   currentLanguage: storage.getString('language', 'en'),
-  currentJbFlavor: storage.getString('jailbreakFlavor', 'nexHEN'),
+  currentJbFlavor: 'nexHEN',
   platform: "PS4",                                                          // PS4/PC/Mobile etc..
   lastTab: storage.getString('lastTab', 'tools'),
   advancedPayloads: storage.getBoolean('advancedPayloads', false),          // true/false
@@ -18,6 +18,10 @@ var user = {
   exploitChain: storage.getNumber('exploitChain', null),                    // Exploit chain method
   blockJailbreak: false,                                                    // Prevent double jailbreak execution
 };
+
+// Force nexHEN as the only jailbreak payload
+storage.set('jailbreakFlavor', 'nexHEN');
+storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.bin');
 
 var ui = {
   mainContainer: document.querySelector('.mainContainer'),

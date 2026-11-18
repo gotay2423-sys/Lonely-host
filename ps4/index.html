@@ -91,13 +91,12 @@
             </div>
 
             <!-- Prestige Master Start Button -->
-            <button id="pslogo" class="outline-none focus:outline-none bg-transparent border-0 cursor-pointer p-0 z-10">
+            <button id="pslogo" class="outline-none focus:outline-none bg-transparent border-0 cursor-pointer p-0 z-10" style="display: inline-block;">
                 <div id="ps-logo-container"
-                    class="relative group cursor-pointer flex flex-col items-center justify-center p-3 rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95"
-                    style="background: radial-gradient(circle, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0.85) 75%); border: 2px solid rgba(239, 68, 68, 0.65); box-shadow: 0 0 35px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.25);">
-                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak"
-                        class="w-36 h-36 object-contain rounded-full transition-all duration-300"
-                        style="filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.85));">
+                    class="relative group cursor-pointer flex flex-col items-center justify-center rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95"
+                    style="width: 170px; height: 170px; max-width: 170px; max-height: 170px; min-width: 170px; min-height: 170px; margin: 0 auto; box-sizing: border-box; overflow: hidden; background: radial-gradient(circle, rgba(220, 38, 38, 0.25) 0%, rgba(15, 23, 42, 0.85) 75%); border: 2px solid rgba(239, 68, 68, 0.65); box-shadow: 0 0 35px rgba(220, 38, 38, 0.5), inset 0 0 20px rgba(220, 38, 38, 0.25); display: flex; align-items: center; justify-content: center;">
+                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak" width="125" height="125"
+                        style="width: 125px; height: 125px; max-width: 125px; max-height: 125px; min-width: 125px; min-height: 125px; object-fit: contain; border-radius: 50%; display: block; margin: 0 auto; filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.85));">
                 </div>
             </button>
             <h3 class="text-white/80 text-lg mt-4 font-mono font-bold tracking-wider z-10" id="click-to-start-text"></h3>
@@ -122,14 +121,12 @@
                     <span class="text-xs text-gray-400 font-mono">v2.4</span>
                 </div>
                 <div class="flex justify-center mb-2">
-                    <label id="nexHEN-label-initial"
-                        class="flex items-center px-6 py-3 rounded-xl cursor-pointer shadow-lg border-2 transition-all duration-200" style="background: rgba(0, 128, 255, 0.2); border-color: #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.35);">
-                        <input type="radio" name="hen" value="nexHEN" checked onchange="saveJbFlavor(this.name, this.value)"
-                            class="accent-cyan-400 w-5 h-5 ml-2">
-                        <span class="text-xl font-extrabold select-none ml-2 tracking-wide text-white" style="text-shadow: 0 0 10px #00f3ff;">nexHEN</span>
-                    </label>
+                    <div id="nexHEN-label-initial"
+                        class="flex items-center justify-center px-6 py-3 rounded-xl shadow-lg border-2 cursor-pointer transition-all duration-200" style="background: rgba(0, 128, 255, 0.2); border-color: #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.35); min-width: 220px;" onclick="chooseHEN()">
+                        <span class="text-xl font-extrabold select-none tracking-wide text-white" style="text-shadow: 0 0 10px #00f3ff;">nexHEN</span>
+                    </div>
                 </div>
-                <p class="text-xs text-gray-400 mt-2 font-mono">Homebrew Enabler &bull; GoldHEN &amp; PS4HEN in Payloads</p>
+                <p class="text-xs text-gray-400 mt-2 font-mono">Homebrew Enabler &amp; Debug Settings (EchoStretch)</p>
             </div>
 
             <!-- Scroll Down Icon -->
@@ -167,16 +164,14 @@
                         dir="ltr">
                         <pre id='console'><center>--</center></pre>
                     </div>
-                    <!-- HEN Selector (nexHEN Active) -->
+                    <!-- HEN Indicator (nexHEN Active) -->
                     <div id="henSelection" class="flex items-center justify-center gap-3">
-                        <label id="nexHEN-label-exploit"
-                            class="flex items-center px-4 py-1.5 rounded-lg bg-blue-900/60 hover:bg-blue-800 cursor-pointer shadow border border-cyan-400">
-                            <input type="radio" name="hen2" value="nexHEN" checked class="accent-cyan-400 w-4 h-4 ml-2"
-                                onchange="saveJbFlavor(this.name, this.value)">
+                        <div id="nexHEN-label-exploit"
+                            class="flex items-center px-4 py-1.5 rounded-lg bg-blue-900/60 shadow border border-cyan-400">
                             <span class="text-sm font-bold text-white select-none">nexHEN</span>
-                        </label>
+                        </div>
                         <button id="exploitRun"
-                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2.5 rounded-full transition-colors shadow-lg" title="Run Exploit">
+                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2.5 rounded-full transition-colors shadow-lg cursor-pointer" title="Run Exploit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
                                 class="bi bi-play-fill" viewBox="0 0 16 16">
                                 <path
@@ -456,45 +451,6 @@
         <div id="settings-popup"
             class="bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             <h2 class="text-2xl font-bold mb-4">Lonely PS4 settings</h2>
-            <!-- Choose GoldHEN version -->
-            <div id="chooseGoldHEN" class="mb-4">
-                <h3 class="text-lg font-semibold mb-2" id="ghVer">GoldHEN Versions</h3>
-                <div class="radio-group space-y-2">
-                    <label class="flex items-center text-white/80">
-                        <input type="radio" name="goldhen" value="GHv2.4b18.14" onchange="setGoldHENVer(this.value);">
-                        <p>GoldHEN v2.4b18.14 - </p>
-                        <pre id="latestVer"> Latest</pre>
-                    </label>
-                    <details>
-                        <summary>Other versions</summary>
-                        <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.13"
-                                onchange="setGoldHENVer(this.value);">
-                            <p>GoldHEN v2.4b18.13</p>
-                        </label>
-                        <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.12"
-                                onchange="setGoldHENVer(this.value);">
-                            <p>GoldHEN v2.4b18.12</p>
-                        </label>
-                        <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.10"
-                                onchange="setGoldHENVer(this.value);">
-                            <p>GoldHEN v2.4b18.10</p>
-                        </label>
-                        <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.9"
-                                onchange="setGoldHENVer(this.value);">
-                            <p>GoldHEN v2.4b18.9</p>
-                        </label>
-                        <label class="flex items-center text-white/80">
-                            <input type="radio" name="goldhen" value="GHv2.4b18.8"
-                                onchange="setGoldHENVer(this.value);">
-                            <p>GoldHEN v2.4b18.8</p>
-                        </label>
-                    </details>
-                </div>
-            </div>
             <div id="chooseExploitChain" class="mb-4">
                 <h3 class="text-lg font-semibold mb-2" id="exploitChainTitle">Exploit Chain</h3>
                 <div class="radio-group space-y-2 flex flex-wrap">
