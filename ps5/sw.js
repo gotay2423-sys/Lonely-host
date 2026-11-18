@@ -1,9 +1,8 @@
-const CACHE_NAME = 'lonely-ps5-v4';
+const CACHE_NAME = 'lonely-ps5-v2';
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './prestige.jpg',
   './src/firmware.js',
   './src/main.js',
   './src/rop.js',
