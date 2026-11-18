@@ -337,13 +337,25 @@
       box-shadow: 0 0 18px var(--neon-pink);
     }
 
-    .p-icon {
-      font-size: 26px;
-      line-height: 1;
+    .p-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--neon-cyan);
+      color: var(--neon-cyan);
+      background: rgba(0, 243, 255, 0.12);
       flex-shrink: 0;
-      width: 32px;
       margin-right: 14px;
       text-align: center;
+      min-width: 44px;
+    }
+    .p-badge-pink {
+      border-color: var(--neon-pink);
+      color: var(--neon-pink);
+      background: rgba(255, 0, 127, 0.15);
+      box-shadow: 0 0 8px rgba(255, 0, 127, 0.3);
     }
 
     .p-info {
@@ -777,7 +789,7 @@
 
       <div class="payload-grid">
         <div class="payload-card card-featured">
-          <span class="p-icon">⚡</span>
+          <span class="p-badge p-badge-pink">HEN</span>
           <div class="p-info">
             <div class="p-name">nexHEN</div>
             <div class="p-desc">Homebrew Enabler &amp; Debug Settings</div>
@@ -786,7 +798,7 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">📁</span>
+          <span class="p-badge">FTP</span>
           <div class="p-info">
             <div class="p-name">zftpd</div>
             <div class="p-desc">High-speed FTP server (Port 21 / 1337)</div>
@@ -795,7 +807,7 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🐞</span>
+          <span class="p-badge">DBG</span>
           <div class="p-info">
             <div class="p-name">MemDBG</div>
             <div class="p-desc">Memory debugger &amp; trainer daemon</div>
@@ -804,7 +816,7 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">📡</span>
+          <span class="p-badge">LOG</span>
           <div class="p-info">
             <div class="p-name">klogsrv</div>
             <div class="p-desc">Real-time kernel log server</div>
@@ -813,7 +825,7 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">💻</span>
+          <span class="p-badge">SH</span>
           <div class="p-info">
             <div class="p-name">shsrv</div>
             <div class="p-desc">Interactive system shell daemon</div>
@@ -822,7 +834,7 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🌐</span>
+          <span class="p-badge">WEB</span>
           <div class="p-info">
             <div class="p-name">websrv</div>
             <div class="p-desc">Web-based file manager</div>
@@ -831,7 +843,7 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🛠️</span>
+          <span class="p-badge">GDB</span>
           <div class="p-info">
             <div class="p-name">gdbsrv</div>
             <div class="p-desc">GDB remote debugger stub</div>
@@ -844,8 +856,8 @@
     <!-- Credits Footer -->
     <div class="credits-box">
       <div class="credits-title">LONELY PS5 EXPLOIT SUITE &middot; CREDITS</div>
-      <p style="margin: 0 0 6px 0;">Based on <b>Relapse-Exploit</b> by <span style="color:var(--neon-cyan)">ntfargo</span> &amp; <span style="color:var(--neon-pink)">Sonic_Iso</span>.</p>
-      <p style="margin: 0; opacity: 0.85;">
+      <p style="margin: 0 0 6px 0; color: #f1f5f9; font-size: 12.5px;">Based on <b>Relapse-Exploit</b> by <span style="color:var(--neon-cyan); font-weight: bold;">ntfargo</span> &amp; <span style="color:var(--neon-pink); font-weight: bold;">Sonic_Iso</span>.</p>
+      <p style="margin: 0; color: #cbd5e1; font-size: 11.5px; opacity: 0.95;">
         <b>Kernel &amp; WebKit Research:</b> TheFlow, Dr. Yenyen, ufm42, Jordy, Sleirsgoevy, Flatz, Specter, EchoStretch, cow, nhk, bollarz, EarthOnion.<br>
         <b>Payloads:</b> EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.
       </p>
