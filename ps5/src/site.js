@@ -179,6 +179,9 @@ async function run() {
     runBtn.textContent = "JAILBROKEN ✓";
     runBtn.classList.add("btn-success");
   }
+  if (typeof window.showJbSuccessPopup === "function") {
+    window.showJbSuccessPopup("Kernel Active &bull; elfldr :9021 Ready");
+  }
 }
 
 function handleRunError(error) {
@@ -342,6 +345,9 @@ async function dispatchPayload(payloadName, btn) {
       if (btn) {
         btn.dataset.state = "sent";
         btn.textContent = "SENT ✓";
+      }
+      if (typeof window.showJbSuccessPopup === "function") {
+        window.showJbSuccessPopup(`${payloadName} Active &bull; System Ready`);
       }
     }
   } catch (err) {

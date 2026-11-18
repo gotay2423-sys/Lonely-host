@@ -534,9 +534,166 @@
       text-transform: uppercase;
       text-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
     }
+
+    /* ---------- Jailbreak Success Small Popup Notification ---------- */
+    #jb-success-popup {
+      position: fixed !important;
+      top: 24px !important;
+      right: 24px !important;
+      z-index: 99999 !important;
+      max-width: 360px !important;
+      width: calc(100% - 48px) !important;
+      pointer-events: none !important;
+      opacity: 0 !important;
+      transform: translateY(-20px) scale(0.95) !important;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    #jb-success-popup.jb-popup-show {
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+      pointer-events: auto !important;
+    }
+
+    .jb-popup-card {
+      position: relative !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      padding: 12px 16px !important;
+      background: rgba(13, 6, 28, 0.96) !important;
+      border: 2px solid var(--neon-red, #ff2a55) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 42, 85, 0.45) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      overflow: hidden !important;
+      cursor: pointer !important;
+    }
+
+    .jb-popup-glow {
+      position: absolute !important;
+      top: -50% !important;
+      left: -50% !important;
+      width: 200% !important;
+      height: 200% !important;
+      background: radial-gradient(circle at 20% 50%, rgba(255, 42, 85, 0.22), transparent 60%) !important;
+      pointer-events: none !important;
+    }
+
+    .jb-popup-img {
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px !important;
+      min-height: 48px !important;
+      max-width: 48px !important;
+      max-height: 48px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 2px solid var(--neon-red, #ff2a55) !important;
+      box-shadow: 0 0 12px rgba(255, 42, 85, 0.75) !important;
+      flex-shrink: 0 !important;
+      z-index: 1 !important;
+    }
+
+    .jb-popup-content {
+      display: flex !important;
+      flex-direction: column !important;
+      flex-grow: 1 !important;
+      min-width: 0 !important;
+      z-index: 1 !important;
+    }
+
+    .jb-popup-header {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 2px !important;
+    }
+
+    .jb-popup-badge {
+      font-family: inherit !important;
+      font-size: 10px !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.1em !important;
+      color: var(--neon-green, #39ff14) !important;
+      text-shadow: 0 0 8px rgba(57, 255, 20, 0.6) !important;
+      text-transform: uppercase !important;
+    }
+
+    .jb-popup-time {
+      font-family: inherit !important;
+      font-size: 10px !important;
+      color: rgba(255, 255, 255, 0.45) !important;
+    }
+
+    .jb-popup-title {
+      font-family: inherit !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.05em !important;
+      color: #ffffff !important;
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.7) !important;
+      line-height: 1.2 !important;
+    }
+
+    .jb-popup-subtitle {
+      font-family: inherit !important;
+      font-size: 11px !important;
+      color: rgba(255, 255, 255, 0.75) !important;
+      margin-top: 2px !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    .jb-popup-close {
+      background: transparent !important;
+      border: none !important;
+      color: rgba(255, 255, 255, 0.6) !important;
+      font-size: 22px !important;
+      font-weight: bold !important;
+      cursor: pointer !important;
+      padding: 0 4px !important;
+      line-height: 1 !important;
+      transition: color 0.2s ease !important;
+      z-index: 1 !important;
+    }
+
+    .jb-popup-close:hover {
+      color: #ffffff !important;
+      text-shadow: 0 0 8px var(--neon-red, #ff2a55) !important;
+    }
+
+    @media (max-width: 640px) {
+      #jb-success-popup {
+        top: 16px !important;
+        right: 16px !important;
+        left: 16px !important;
+        width: auto !important;
+        max-width: none !important;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Jailbreak Success Small Popup Message -->
+  <div id="jb-success-popup" role="alert" onclick="closeJbSuccessPopup()">
+    <div class="jb-popup-card">
+      <div class="jb-popup-glow"></div>
+      <img src="./prestige.jpg" alt="Prestige Master" class="jb-popup-img">
+      <div class="jb-popup-content">
+        <div class="jb-popup-header">
+          <span class="jb-popup-badge">STATUS: ONLINE</span>
+          <span class="jb-popup-time">Just now</span>
+        </div>
+        <div class="jb-popup-title">Jailbreak Success!</div>
+        <div class="jb-popup-subtitle">Kernel Active &bull; System Ready</div>
+      </div>
+      <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
+    </div>
+  </div>
+
   <div class="container">
     <div class="top-nav-hub">
       <a href="../index.html" class="nav-hub-link">⚡ LONELY HUB</a>
@@ -676,5 +833,29 @@
   <script src="./src/rop.js"></script>
   <script src="./src/utils/syscalls.js"></script>
   <script type="module" src="./src/site.js"></script>
+  <script>
+    function showJbSuccessPopup(subtitle) {
+      var popup = document.getElementById('jb-success-popup');
+      if (!popup) return;
+      if (subtitle) {
+        var subEl = popup.querySelector('.jb-popup-subtitle');
+        if (subEl) subEl.innerHTML = subtitle;
+      }
+      popup.classList.add('jb-popup-show');
+      if (window._jbPopupTimer) clearTimeout(window._jbPopupTimer);
+      window._jbPopupTimer = setTimeout(function () {
+        closeJbSuccessPopup();
+      }, 8000);
+    }
+
+    function closeJbSuccessPopup() {
+      var popup = document.getElementById('jb-success-popup');
+      if (popup) {
+        popup.classList.remove('jb-popup-show');
+      }
+    }
+    window.showJbSuccessPopup = showJbSuccessPopup;
+    window.closeJbSuccessPopup = closeJbSuccessPopup;
+  </script>
 </body>
 </html>
