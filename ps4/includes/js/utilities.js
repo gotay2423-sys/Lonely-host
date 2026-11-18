@@ -127,6 +127,26 @@ function jailbreakSuccess(statusMessage) {
             stateEl.textContent = statusMessage;
         }
     }
+
+    // Trigger small popup message with Prestige image
+    showJbSuccessPopup();
+}
+
+function showJbSuccessPopup() {
+    var popup = document.getElementById('jb-success-popup');
+    if (!popup) return;
+    popup.classList.add('jb-popup-show');
+    if (window._jbPopupTimer) clearTimeout(window._jbPopupTimer);
+    window._jbPopupTimer = setTimeout(function () {
+        closeJbSuccessPopup();
+    }, 8000);
+}
+
+function closeJbSuccessPopup() {
+    var popup = document.getElementById('jb-success-popup');
+    if (popup) {
+        popup.classList.remove('jb-popup-show');
+    }
 }
 
 function isLocalIP(ip) {

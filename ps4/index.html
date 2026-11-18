@@ -48,6 +48,22 @@
 </head>
 
 <body class="bg-gray-900 text-white">
+    <!-- Jailbreak Success Small Popup Message -->
+    <div id="jb-success-popup" role="alert" onclick="closeJbSuccessPopup()">
+        <div class="jb-popup-card">
+            <div class="jb-popup-glow"></div>
+            <img src="./prestige.jpg" alt="Prestige Master" class="jb-popup-img">
+            <div class="jb-popup-content">
+                <div class="jb-popup-header">
+                    <span class="jb-popup-badge">STATUS: ONLINE</span>
+                    <span class="jb-popup-time">Just now</span>
+                </div>
+                <div class="jb-popup-title">Jailbreak Success!</div>
+                <div class="jb-popup-subtitle">nexHEN Active &bull; System Ready</div>
+            </div>
+            <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
+        </div>
+    </div>
     <main class="mainContainer">
         <section id="initial-screen" class="relative flex flex-col items-center justify-center min-h-screen p-6 transition-opacity duration-700
             opacity-100">

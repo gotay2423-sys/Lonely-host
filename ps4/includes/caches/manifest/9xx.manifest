@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# v2.8 - nexHEN.elf daemon update
-# Updated on 2026-11-17
+# v2.9 - jb success popup with prestige emblem
+# Updated on 2026-11-18
 
 CACHE:
 ../../../
 ../../../index.html
 ../../../exploit.html
+../../../prestige.jpg
 ../../../includes/js/HENs.js
 ../../../includes/js/design.js
 ../../../includes/js/autoJbRetry.js
