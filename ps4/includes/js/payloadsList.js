@@ -11,7 +11,7 @@ var payloadsList = [
     description: "Homebrew Enabler & Debug Settings for PS4.",
     specificFW: "5.05 - latest",
     category: "tools",
-    src: "./includes/payloads/HEN/nexHEN-ps4.bin"
+    src: "./includes/payloads/HEN/nexHEN-ps4.elf"
   },
   {
     id: "FTP",
