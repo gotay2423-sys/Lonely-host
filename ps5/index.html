@@ -287,94 +287,118 @@
 
     .payload-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: 1fr;
       gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .payload-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .payload-card {
-      background: linear-gradient(140deg, rgba(25, 12, 45, 0.8) 0%, rgba(10, 4, 20, 0.95) 100%);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 10px;
-      padding: 12px 14px;
+      background: linear-gradient(140deg, rgba(25, 12, 45, 0.88) 0%, rgba(10, 4, 20, 0.98) 100%);
+      border: 1.5px solid rgba(0, 243, 255, 0.45);
+      border-radius: 12px;
+      padding: 14px 18px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      box-sizing: border-box;
+      min-height: 72px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     }
 
     .payload-card:hover {
-      border-color: var(--neon-pink);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 16px rgba(0, 243, 255, 0.35);
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.25);
     }
 
     .card-featured {
-      border-color: rgba(255, 0, 127, 0.55);
-      background: linear-gradient(140deg, rgba(45, 12, 50, 0.85) 0%, rgba(16, 4, 25, 0.95) 100%);
-      box-shadow: 0 4px 18px rgba(255, 0, 127, 0.2);
+      border: 2px solid var(--neon-pink);
+      background: linear-gradient(140deg, rgba(50, 12, 55, 0.92) 0%, rgba(20, 4, 30, 0.98) 100%);
+      box-shadow: 0 0 20px rgba(255, 0, 127, 0.35);
     }
     .card-featured .p-name {
       color: var(--neon-pink);
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
+      text-shadow: 0 0 10px rgba(255, 0, 127, 0.7);
     }
     .btn-featured {
-      background: rgba(255, 0, 127, 0.15);
+      background: rgba(255, 0, 127, 0.2);
       border-color: var(--neon-pink);
       color: var(--neon-pink);
+      box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
     }
     .btn-featured:hover {
       background: var(--neon-pink);
       color: #05020a;
-      box-shadow: 0 0 14px var(--neon-pink);
+      box-shadow: 0 0 18px var(--neon-pink);
     }
 
     .p-icon {
-      font-size: 24px;
+      font-size: 26px;
       line-height: 1;
       flex-shrink: 0;
+      width: 32px;
+      margin-right: 14px;
+      text-align: center;
     }
 
     .p-info {
-      flex-grow: 1;
+      flex: 1;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 12px;
     }
 
     .p-name {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #ffffff;
       letter-spacing: 1px;
+      margin: 0;
+      padding: 0;
+      text-shadow: 0 0 6px rgba(0, 243, 255, 0.4);
     }
 
     .p-desc {
-      font-size: 11px;
-      color: #8fa0be;
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 11.5px;
+      line-height: 1.35;
+      color: #b8c7e0;
+      margin-top: 3px;
+      padding: 0;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .btn-send {
-      background: rgba(0, 243, 255, 0.12);
-      border: 1px solid var(--neon-cyan);
+      background: rgba(0, 243, 255, 0.15);
+      border: 1.5px solid var(--neon-cyan);
       color: var(--neon-cyan);
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-size: 12px;
+      border-radius: 8px;
+      padding: 9px 18px;
+      font-size: 12.5px;
       font-family: inherit;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
       cursor: pointer;
       transition: all 0.2s ease;
       flex-shrink: 0;
+      margin-left: auto;
+      min-width: 84px;
+      text-align: center;
+      box-shadow: 0 0 8px rgba(0, 243, 255, 0.2);
     }
 
     .btn-send:hover {
       background: var(--neon-cyan);
       color: #05020a;
-      box-shadow: 0 0 12px var(--neon-cyan);
+      box-shadow: 0 0 16px var(--neon-cyan);
     }
 
     .btn-send:focus-visible {
@@ -385,7 +409,7 @@
     .btn-send[data-state="sending"] {
       border-color: var(--neon-yellow);
       color: var(--neon-yellow);
-      background: rgba(255, 208, 0, 0.15);
+      background: rgba(255, 208, 0, 0.2);
       animation: pulse 1s infinite;
       pointer-events: none;
     }
@@ -393,14 +417,14 @@
     .btn-send[data-state="sent"] {
       border-color: var(--neon-green);
       color: var(--neon-green);
-      background: rgba(57, 255, 20, 0.15);
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+      background: rgba(57, 255, 20, 0.2);
+      box-shadow: 0 0 14px rgba(57, 255, 20, 0.5);
     }
 
     .btn-send[data-state="failed"] {
       border-color: var(--neon-red);
       color: var(--neon-red);
-      background: rgba(255, 42, 85, 0.15);
+      background: rgba(255, 42, 85, 0.2);
     }
 
     /* Auto-Run Toggle */
@@ -514,25 +538,25 @@
 
     .credits-box {
       margin-top: 24px;
-      padding: 14px 18px;
-      background: rgba(10, 4, 22, 0.85);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 10px;
+      padding: 16px 20px;
+      background: rgba(14, 7, 30, 0.92);
+      border: 1.5px solid rgba(0, 243, 255, 0.4);
+      border-radius: 12px;
       text-align: center;
-      font-size: 11px;
-      color: #9d83c7;
+      font-size: 12px;
+      color: #c4b5fd;
       line-height: 1.6;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
     }
 
     .credits-title {
       color: var(--neon-pink);
       font-weight: 800;
-      letter-spacing: 1.5px;
-      margin: 0 0 4px 0;
-      font-size: 12px;
+      letter-spacing: 2px;
+      margin: 0 0 6px 0;
+      font-size: 13px;
       text-transform: uppercase;
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+      text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
     }
 
     /* ---------- Jailbreak Success Small Popup Notification ---------- */
