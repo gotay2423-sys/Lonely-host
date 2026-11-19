@@ -1996,15 +1996,10 @@ async function kexSuccess() {
     doneSuccessfully();
     runBinLoader();
   } else {
-    var elfLoaderAvailable = await probeElfLoader();
-    if (!elfLoaderAvailable) {
-      log("Starting elfldr daemon...", "yellow");
-      runPayload('./includes/payloads/Bins/elfldr.bin', true);
-      await new Promise(function(resolve) { setTimeout(resolve, 2000); });
-    }
-
+    log("Loading nexHEN...", "yellow");
+    runPayload('./includes/payloads/HEN/nexHEN-ps4.bin', true);
     window.log("\nKernel exploit succeeded!", "green");
-    window.log("System Ready. Select a payload below to dispatch.", "cyan");
+    window.log("nexHEN loaded successfully!", "green");
     sessionStorage.removeItem("payload_path");
     doneSuccessfully();
   }

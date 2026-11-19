@@ -154,11 +154,11 @@ async function post_jailbreak() {
 }
 
 async function load_payload(){
-  const elfLoaderAvailable = await probeElfLoader();
-  if (!elfLoaderAvailable) {
-    load_bin("./includes/payloads/Bins/elfldr.bin");
-  }
+  log("Loading nexHEN...", "yellow");
+  load_bin("./includes/payloads/HEN/nexHEN-ps4.bin");
   sessionStorage.removeItem("payload_path");
+  log("Kernel exploit succeeded!", "green");
+  log("nexHEN loaded successfully!", "green");
   if (typeof jailbreakSuccess === "function") {
     jailbreakSuccess();
   }

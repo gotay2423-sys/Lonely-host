@@ -302,7 +302,11 @@ function Loadpayloadonline(PLfile) {
     }
 
     if (isPS4Console()) {
-        jailbreak();
+        if (window.script_loaded) {
+            window.location.reload();
+        } else {
+            jailbreak();
+        }
     }
 }
 
@@ -321,9 +325,9 @@ function payloadRouter(payload) {
         alert(window.lang.unsupportedFirmware + user.ps4Fw);
         return;
     }
-    // If it's a HEN payload, dispatch directly to elfldr without re-running jailbreak
+    // If it's a HEN payload, dispatch directly
     if (payload.id === 'nexHEN' || payload.id === 'GoldHEN' || payload.id === 'PS4HEN') {
-        Loadpayloadlocal('./includes/payloads/HEN/nexHEN-ps4.elf', 'nexHEN', 'nexHEN');
+        Loadpayloadlocal('./includes/payloads/HEN/nexHEN-ps4.bin', 'nexHEN', 'nexHEN');
         return;
     }
     // It's a BinLoader

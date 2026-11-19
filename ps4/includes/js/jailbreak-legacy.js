@@ -178,16 +178,7 @@ function _badHoistJailbreak() {
           }
           _context3.n = 8;
           return probeElfLoader();
-        case 8:
-          elfLoaderAvailable = _context3.v;
-          log("Waiting 600ms");
-          sleep(600);
-          if (elfLoaderAvailable) {
-            log("elfldr is already running. Skipping elfldr.bin boot.", "green");
-          } else {
-            log("elfldr not running. Booting elfldr.bin first...", "yellow");
-            injectionPath = './includes/payloads/Bins/elfldr.bin';
-          }
+          injectionPath = './includes/payloads/HEN/nexHEN-ps4.bin';
         case 9:
           if (!(result === 0 || result === 91 || result === 179)) {
             _context3.n = 11;
@@ -197,13 +188,11 @@ function _badHoistJailbreak() {
             log("\nAlready jailbroken, skipping..", "green");
           } else {
             log("\nKernel exploit succeeded", "green");
+            log("Injecting nexHEN...", "yellow");
+            getPayload672(injectionPath);
+            _context3.n = 10;
+            return sleep(1000);
           }
-
-          // Inject either the binary payload or elfldr.bin
-          log("Injecting payload: " + injectionPath);
-          getPayload672(injectionPath);
-          _context3.n = 10;
-          return sleep(1000);
         case 10:
           log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
           log("Implementation taken from Feyzee61");

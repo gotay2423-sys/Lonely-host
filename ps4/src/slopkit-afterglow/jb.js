@@ -7,7 +7,7 @@ const outEl = document.getElementById("console");
 const scrollEl = document.getElementById("DebugConsole") || outEl;
 const stateEl = document.getElementById("state") || outEl;
 var payload_path = sessionStorage.getItem("payload_path");
-const elfldr_path = './includes/payloads/Bins/elfldr.bin';
+const nexhen_path = './includes/payloads/HEN/nexHEN-ps4.bin';
 var isElfPayload = isPayloadElf(payload_path);
 var elfLoaderAvailable; // Needs to me validated somewhere
 

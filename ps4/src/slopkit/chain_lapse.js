@@ -246,7 +246,7 @@ function makeRpc(worker) {
                 : "no firmware key, so no blob name -- stage 9 will not run"));
 
         let payload = null;
-        let payloadSource = isElfPayload ? './includes/payloads/Bins/elfldr.bin' : payload_path;
+        let payloadSource = payload_path || './includes/payloads/HEN/nexHEN-ps4.bin';
         try {
             const prsp = await fetch(payloadSource);
             if (prsp.ok) payload = new Uint8Array(await prsp.arrayBuffer());

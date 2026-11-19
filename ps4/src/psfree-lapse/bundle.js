@@ -4809,36 +4809,26 @@ async function kexSuccess() {
   if (sessionStorage.getItem('binloader')) {
     runBinLoader();
   } else {
-    // Ensure elfldr daemon is running on port 9021 so user can dispatch payloads
-    var elfLoaderAvailable = await probeElfLoader();
-    
-    if (!elfLoaderAvailable) {
-      log("Starting elfldr daemon...", "yellow");
-      const loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
-      if (loadElfldr !== 1) {
-        log("Failed to load elfldr!\nPlease restart console and try again...", "red");
+    // If not already root / nexHEN already running, load nexHEN directly
+    var isRoot = false;
+    try {
+      isRoot = (sysi("setuid", 0) == 0);
+    } catch (e) {}
+
+    if (!isRoot) {
+      log("Loading nexHEN...", "yellow");
+      const loadNexHen = await PayloadLoader('./includes/payloads/HEN/nexHEN-ps4.bin');
+      if (loadNexHen !== 1) {
+        log("Failed to load nexHEN!\nPlease restart console and try again...", "red");
         return;
       }
-
-      // Poll port 9021 until elfldr daemon is actively listening
-      log("Waiting for elfldr on port 9021...", "yellow");
-      for (var attempt = 1; attempt <= 10; attempt++) {
-        await new Promise(function(resolve) { setTimeout(resolve, 500); });
-        elfLoaderAvailable = await probeElfLoader();
-        if (elfLoaderAvailable) {
-          break;
-        }
-      }
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log("nexHEN loaded successfully!", "green");
+    } else {
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log("nexHEN is active!", "green");
     }
 
-    if (elfLoaderAvailable) {
-      log("elfldr is active on port 9021", "green");
-    }
-
-    window.log("\nKernel exploit succeeded!", "green");
-    window.log("System Ready. Select a payload below to dispatch.", "cyan");
-
-    // Clear any queued payload path so nothing ever auto-loads
     sessionStorage.removeItem("payload_path");
 
     if (typeof jailbreakSuccess === "function") {

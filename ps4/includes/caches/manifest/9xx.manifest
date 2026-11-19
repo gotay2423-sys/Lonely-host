@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v5.0 - strictly disabled all auto-loading of payloads, manual dispatch only
-# Updated 2026-11-19T12:35:00
+# v6.0 - load nexHEN-ps4.bin directly without elfldr, elfldr bundled inside nexHEN
+# Updated 2026-11-19T12:55:00
 
 CACHE:
 ../../../
@@ -62,7 +62,7 @@ CACHE:
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold70.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold80.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold85.bin
-../../../includes/payloads/HEN/nexHEN-ps4.elf
+../../../includes/payloads/HEN/nexHEN-ps4.bin
 ../../../includes/payloads/Linux/linux-32mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
 ../../../includes/payloads/Linux/linux-128mb.elf

@@ -171,7 +171,7 @@ let allDone = false;
             ? "blob=" + kpatchName + " bytes=" + kpatch.length
               + " sites=" + KPATCH_JMP_SITES.length
             : "blob=" + kpatchName + " MISSING");
-            var payloadSrc = isElfPayload ? './includes/payloads/Bins/elfldr.bin' : payload_path;
+            var payloadSrc = payload_path || './includes/payloads/HEN/nexHEN-ps4.bin';
         try {
             const r = await fetch(payloadSrc);
             if (r.ok) payload = new Uint8Array(await r.arrayBuffer());

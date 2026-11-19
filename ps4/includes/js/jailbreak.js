@@ -101,23 +101,19 @@ async function badHoistJailbreak() {
   await loadScript('./src/badhoist/672kexploit.js', false, devMode);
   var result = KernelExploit672();
 
-  var elfLoaderAvailable = await probeElfLoader();
-  if (!elfLoaderAvailable) {
-    log("Booting elfldr daemon...", "yellow");
-    getPayload672('./includes/payloads/Bins/elfldr.bin');
-    await sleep(1000);
-  }
-
   if (result === 0 || result === 91 || result === 179) {
     if (result === 179) {
       log("\nAlready jailbroken, skipping..", "green");
     } else {
       log("\nKernel exploit succeeded", "green");
+      log("Injecting nexHEN...", "yellow");
+      getPayload672('./includes/payloads/HEN/nexHEN-ps4.bin');
+      await sleep(1000);
+      log("nexHEN loaded successfully!", "green");
     }
 
     log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
     log("Implementation taken from Feyzee61");
-    log("System Ready. Select a payload below to dispatch.", "cyan");
     sessionStorage.removeItem("payload_path");
     jailbreakSuccess();
   } else {
