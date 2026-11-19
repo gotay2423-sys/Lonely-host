@@ -124,18 +124,31 @@ function renderPayloads(payloads) {
             payloadCard.onclick = function () {
                 Loadpayloads(payload);
             };
-            var isFeatured = payload.name && (payload.name.indexOf('nexHEN') !== -1 || payload.name.indexOf('HEN') !== -1);
-            payloadCard.className = 'payload payload-card' + (isFeatured ? ' card-featured' : '');
+            payloadCard.className = 'payload payload-card relative group cursor-pointer duration-300 transform hover:scale-102';
             payloadCard.dataset.payloadId = payload.id;
 
-            var specificFwHtml = payload.specificFW ? '<span style="color: #f59e0b; font-size: 10px; margin-left: 6px;">(' + payload.specificFW + ')</span>' : '';
+            var specificFwHtml = payload.specificFW ? '<p style="color: orange;">' + payload.specificFW + '</p>' : '';
 
             payloadCard.innerHTML =
-                '<div class="p-info">' +
-                '<div class="p-name">' + payload.name + specificFwHtml + '</div>' +
-                '<div class="p-desc" title="' + (payload.description || payload.author || '') + '">' + (payload.description || payload.author || '') + '</div>' +
+                '<button class="w-full payloadContainer">' +
+                '<div class="bg-gray-800 border border-white/20 rounded-xl p-6 h-full">' +
+                '<div class="flex items-start justify-between mb-4">' +
+                '<div class="flex items-center space-x-3">' +
+                '<div>' +
+                '<h3 class="text-start font-semibold text-white text-lg">' + payload.name + '</h3>' +
+                '<p class="text-start text-cyan-300" style="font-size: 0.75rem">' + payload.author + '</p>' +
                 '</div>' +
-                '<button type="button" class="btn-send' + (isFeatured ? ' btn-featured' : '') + '">LOAD</button>';
+                '</div>' +
+                '<span class="px-2 py-1 rounded-full text-xs border ' + getPayloadCategoryClass(payload.category) + '">' +
+                payload.category +
+                '</span>' +
+                '</div>' +
+                '<p class="text-start text-white/70 text-sm leading-relaxed">' + payload.description + '</p>' +
+                '<div class="flex items-center justify-between text-xs text-white/60">' +
+                specificFwHtml +
+                '</div>' +
+                '</div>' +
+                '</button>';
 
             switch (payload.category) {
                 case "tools":

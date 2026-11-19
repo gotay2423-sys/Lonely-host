@@ -130,47 +130,6 @@ function jailbreakSuccess(statusMessage) {
 
     // Trigger small popup message with Prestige image
     showJbSuccessPopup();
-
-    // Ensure payloads section and initial screen remain visible
-    var payloadsSection = document.getElementById('payloadsSection');
-    if (payloadsSection) toggleVisibility(payloadsSection.id, 1);
-    if (typeof ui !== 'undefined' && ui.initialScreen) toggleVisibility(ui.initialScreen.id, 1);
-}
-
-function resetPs4Cache() {
-    var btnText = document.getElementById('resetCacheText');
-    var btnLed = document.getElementById('resetCacheLed');
-    if (btnText) btnText.textContent = 'RESETTING...';
-    if (btnLed) btnLed.className = 'led led-yellow';
-
-    try {
-        if ('caches' in window) {
-            caches.keys().then(function (keys) {
-                keys.forEach(function (k) { caches.delete(k); });
-            });
-        }
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function (regs) {
-                regs.forEach(function (r) { r.unregister(); });
-            });
-        }
-        var dontHttps = localStorage.getItem('dontHTTPS');
-        var autoJb = localStorage.getItem('autoJb');
-        localStorage.clear();
-        sessionStorage.clear();
-        if (dontHttps) localStorage.setItem('dontHTTPS', dontHttps);
-        if (autoJb) localStorage.setItem('autoJb', autoJb);
-
-        if (btnText) btnText.textContent = 'CLEARED!';
-        if (btnLed) btnLed.className = 'led led-green';
-        setTimeout(function () {
-            var url = window.location.origin + window.location.pathname;
-            window.location.replace(url + '?nocache=' + Date.now());
-        }, 700);
-    } catch (e) {
-        if (btnText) btnText.textContent = 'RESET ERROR';
-        if (btnLed) btnLed.className = 'led led-red';
-    }
 }
 
 function showJbSuccessPopup() {

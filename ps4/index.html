@@ -64,109 +64,194 @@
             <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
         </div>
     </div>
-    <main class="mainContainer container">
-        <!-- Top Nav Hub -->
-        <div class="top-nav-hub">
-            <a href="../index.html" class="nav-hub-link" title="Unified Hub">LONELY HUB</a>
-            <a href="../ps5/index.html" class="nav-hub-link nav-ps5" title="Switch to PS5 Host">PS5 HOST &rarr;</a>
-        </div>
-
-        <!-- Header -->
-        <div class="header">
-            <h1>LONELY <span class="ps4-accent">PS4</span></h1>
-            <p>PlayStation 4 WebKit &amp; Kernel Exploit Host &middot; FW 4.50 - 14.02</p>
-        </div>
-
-        <!-- Status Chips Bar -->
-        <div class="status-container">
-            <div class="chip fw-chip">FW <span id="PS4FW">4.50 - 14.02</span></div>
-            <div class="chip status-chip">
-                <span class="led" id="statusLed"></span>
-                <span id="state">SYSTEM READY</span>
-            </div>
-            <div class="chip hen-chip" id="henSelection">
-                <span class="led led-green"></span>
-                <span id="nexHEN-btn-initial">nexHEN [Active]</span>
-            </div>
-            <button type="button" class="chip cache-chip" id="updateCache" title="Offline PWA Cache">
-                <span class="led led-green" id="cacheLed"></span>
-                <span id="cacheText">CACHE</span>
-            </button>
-            <button type="button" class="chip reset-chip" id="resetCacheBtn" onclick="resetPs4Cache()" title="Reset offline cache and reload fresh">
-                <span class="led led-red" id="resetCacheLed"></span>
-                <span id="resetCacheText">RESET CACHE</span>
-            </button>
-            <button type="button" class="chip menu-chip settings-btn" onclick="settingsPopup()" title="Host Settings">
-                <span>SETTINGS</span>
-            </button>
-            <button type="button" class="chip menu-chip about-btn" onclick="aboutPopup()" title="About &amp; Credits">
-                <span>ABOUT</span>
-            </button>
-            <button type="button" class="chip menu-chip theme-btn" onclick="themePopup()" title="Theme Customization">
-                <span>THEME</span>
-            </button>
-        </div>
-
-        <!-- Hero Start Section Matching PS5 Layout with Proportional Prestige Logo -->
-        <div id="initial-screen" class="controls">
-            <div class="hero-action-wrap">
-                <button id="pslogo" type="button" class="hero-logo-btn" tabindex="0" title="Click to Run Exploit">
-                    <div id="ps-logo-container" class="hero-logo-container">
-                        <img id="ps-logo" src="./prestige.jpg" alt="Prestige Master" class="hero-logo-img">
+    <main class="mainContainer">
+        <section id="initial-screen" class="relative flex flex-col items-center justify-center min-h-screen p-6 transition-opacity duration-700
+            opacity-100">
+            <!-- macOS Cyber Menubar -->
+            <div class="mac-header-bar fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-5 py-2.5">
+                <!-- Mac Traffic Light Dots + Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="mac-traffic-dots flex items-center space-x-2 mr-2">
+                        <span class="mac-dot mac-dot-red" title="Close"></span>
+                        <span class="mac-dot mac-dot-yellow" title="Minimize"></span>
+                        <span class="mac-dot mac-dot-green" title="Maximize"></span>
                     </div>
-                </button>
-                <button id="exploitRun" type="button" class="run-btn" tabindex="0" title="Click to Run Exploit">
-                    <span>RUN EXPLOIT</span>
-                </button>
-            </div>
-            <h3 id="click-to-start-text" class="click-to-start" style="display: none;" aria-hidden="true">CLICK TO START</h3>
+                    <span class="font-bold tracking-wider text-sm font-mono mac-brand-text">LONELY <span class="text-pink-500">PS4</span></span>
+                    <span class="mac-fw-pill text-xs px-2.5 py-0.5 rounded-full font-mono font-semibold">FW 4.50 &ndash; 14.02</span>
+                </div>
 
-            <div class="auto-run-bar" id="autoJbContainer">
-                <label class="toggle-wrap" id="autoJbOption" title="Automatically run exploit on page load">
-                    <input type="checkbox" id="autoJb" onclick="setAutoJb(this.checked)">
-                    <span class="toggle-slider"></span>
-                    <span class="toggle-text" id="autoJbText">AUTO-RUN ON LOAD</span>
-                </label>
-                <button id="stopAutoJb" onclick="clearInterval(autoJbInterval);" class="stop-autojb-btn hidden">
-                    STOP AUTO JAILBREAK
-                </button>
+                <!-- Action & Navigation Pills (Clean Text / No Emojis for PS4 TV) -->
+                <div class="flex items-center space-x-2 font-mono text-xs">
+                    <button id="updateCache" class="mac-nav-btn" title="Offline PWA Cache">
+                        Cache
+                    </button>
+                    <button onclick="settingsPopup()" class="mac-nav-btn settings-btn" title="Host Settings">
+                        Settings
+                    </button>
+                    <button onclick="aboutPopup()" class="mac-nav-btn about-btn" title="About &amp; Credits">
+                        About
+                    </button>
+                    <a href="../index.html" class="mac-nav-btn mac-nav-hub" style="text-decoration: none;" title="Unified Hub">
+                        HUB
+                    </a>
+                    <a href="../ps5/index.html" class="mac-nav-btn mac-nav-ps5" style="text-decoration: none;" title="Switch to PS5 Host">
+                        PS5 Host &rarr;
+                    </a>
+                </div>
             </div>
-        </div>
+
+            <!-- Lonely PS4 Branding -->
+            <div class="text-center mb-6 mt-14 z-10 font-mono">
+                <h1 style="color: #00f3ff; text-shadow: 0 0 14px #0080ff, 0 0 28px rgba(0, 243, 255, 0.45); font-size: 38px; font-weight: 800; letter-spacing: 5px; text-transform: uppercase; margin: 0;">LONELY <span style="color: #ff007f; text-shadow: 0 0 15px #ff007f;">PS4</span></h1>
+                <p style="color: #93c5fd; font-size: 13px; letter-spacing: 2px; margin-top: 4px; opacity: 0.9;">PlayStation 4 WebKit &amp; Kernel Exploit Host</p>
+            </div>
+
+            <!-- Prestige Master Start Button -->
+            <button id="pslogo" class="outline-none focus:outline-none bg-transparent border-0 cursor-pointer p-0 z-10" style="display: inline-block;">
+                <div id="ps-logo-container"
+                    class="relative group cursor-pointer flex flex-col items-center justify-center rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95"
+                    style="width: 180px; height: 180px; max-width: 180px; max-height: 180px; min-width: 180px; min-height: 180px; margin: 0 auto; padding: 0; box-sizing: border-box; overflow: hidden; border-radius: 50%; border: 3px solid #ef4444; box-shadow: 0 0 40px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.4); display: flex; align-items: center; justify-content: center; background: #000;">
+                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak" width="180" height="180"
+                        style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; min-width: 100%; min-height: 100%; object-fit: cover; border-radius: 50%; display: block; margin: 0; padding: 0; filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.85));">
+                </div>
+            </button>
+            <h3 class="text-white/80 text-lg mt-4 font-mono font-bold tracking-wider z-10" id="click-to-start-text"></h3>
+            <button onclick="clearInterval(autoJbInterval);"
+                class="hidden mt-2 bg-red-600 hover:bg-red-700 p-3 rounded font-semibold transition-colors z-10"
+                id="stopAutoJb">
+                Stop Auto Jailbreak
+            </button>
+
+            <!-- Compatibility message -->
+            <p id="PS4FW" class="text-white/70 text-lg mt-3 mb-5 font-mono z-10">-</p>
+
+            <!-- Primary HEN Selection (nexHEN Only) -->
+            <div id="choosejb-initial" class="p-5 rounded-xl shadow-xl text-center mac-card z-10" style="max-width: 480px; width: 100%;">
+                <div class="mac-card-titlebar flex items-center justify-between pb-3 mb-4 border-b border-white/10">
+                    <div class="mac-traffic-dots flex items-center space-x-1.5">
+                        <span class="mac-dot mac-dot-red"></span>
+                        <span class="mac-dot mac-dot-yellow"></span>
+                        <span class="mac-dot mac-dot-green"></span>
+                    </div>
+                    <span class="text-xs uppercase font-bold tracking-widest text-emerald-400 font-mono" style="text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);">ACTIVE JAILBREAK PAYLOAD</span>
+                    <span class="text-xs text-gray-400 font-mono">v2.4</span>
+                </div>
+                <div class="flex justify-center mb-2">
+                    <button id="nexHEN-btn-initial" onclick="activateNexHEN(true)"
+                        class="flex items-center justify-center space-x-3 px-8 py-3 rounded-xl shadow-lg border-2 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"
+                        style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)); border-color: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); min-width: 240px;">
+                        <span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-400" style="box-shadow: 0 0 10px #10b981;"></span>
+                        <span class="text-xl font-extrabold select-none tracking-wide text-white" style="text-shadow: 0 0 10px #10b981;">nexHEN</span>
+                        <span class="text-xs font-mono uppercase font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded ml-2">Selected</span>
+                    </button>
+                </div>
+                <p class="text-xs text-gray-400 mt-2 font-mono">Homebrew Enabler &amp; Debug Settings (EchoStretch)</p>
+            </div>
+
+            <!-- Scroll Down Icon -->
+            <button id="scrollDown" class="absolute bottom-10 cursor-pointer"
+                onclick="ui.exploitScreen.scrollIntoView({block: 'end'});">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="currentColor" viewBox="0 0 512 512">
+                    <polyline points="112 184 256 328 400 184"></polyline>
+                </svg>
+            </button>
+        </section>
 
         <!-- Exploit section -->
-        <section id="exploit-main-screen" class="w-full">
-            <div id="exploitContainer" class="w-full">
-                <!-- Exploit console panel -->
-                <div id="exploit-status-panel" class="w-full mb-6">
-                    <div class="terminal-bar">
-                        <div class="terminal-dots">
-                            <span class="dot dot-red"></span>
-                            <span class="dot dot-yellow"></span>
-                            <span class="dot dot-green"></span>
+        <section id="exploit-main-screen" class="flex w-full bg-gray-900 text-white transition-opacity duration-700">
+            <div id="exploitContainer" class="grid md:grid-cols-2">
+                <!-- Exploit console panel (macOS Terminal Style) -->
+                <div id="exploit-status-panel" class="gap-4 bg-gray-800 p-5 rounded-xl flex flex-col h-full w-full mac-card">
+                    <div class="mac-terminal-bar flex items-center justify-between pb-3 border-b border-white/10">
+                        <div class="mac-traffic-dots flex items-center space-x-1.5">
+                            <span class="mac-dot mac-dot-red"></span>
+                            <span class="mac-dot mac-dot-yellow"></span>
+                            <span class="mac-dot mac-dot-green"></span>
                         </div>
-                        <div class="terminal-title">lonely@ps4: ~/exploit</div>
-                        <button id="successRate" onclick="clearStats()" class="terminal-port" style="background: none; border: none; cursor: pointer;">
-                            SUCCESS RATE
+                        <div class="text-xs font-mono text-gray-400 tracking-wider">lonely@ps4: ~/exploit &mdash; zsh</div>
+                        <button id="successRate" style="white-space: nowrap;"
+                            class="text-xs font-mono font-semibold text-cyan-300 hover:text-cyan-100 cursor-pointer"
+                            onclick="clearStats()">
+                            Success rate
                         </button>
                     </div>
-                    <div id="DebugConsole" class="console-box" dir="ltr">
-                        <pre id="console">--</pre>
+                    <div class="flex justify-between w-auto items-baseline">
+                        <h2 class="text-lg font-semibold text-cyan-400 font-mono" id="state">Exploit status</h2>
+                    </div>
+                    <div id="DebugConsole"
+                        class="flex-grow min-h-0 min-h-[160px] bg-black/60 p-4 rounded-lg overflow-y-auto mb-3 text-xs font-mono"
+                        dir="ltr">
+                        <pre id='console'><center>--</center></pre>
+                    </div>
+                    <!-- HEN Indicator (nexHEN Active) -->
+                    <div id="henSelection" class="flex items-center justify-center gap-3">
+                        <button id="nexHEN-label-exploit" onclick="activateNexHEN(true)"
+                            class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-emerald-950/60 shadow border border-emerald-400 cursor-pointer hover:bg-emerald-900/80 transition-all">
+                            <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400" style="box-shadow: 0 0 8px #10b981;"></span>
+                            <span class="text-sm font-bold text-white select-none">nexHEN</span>
+                            <span class="text-xs font-mono text-emerald-300 font-semibold">[Active]</span>
+                        </button>
+                        <button id="exploitRun"
+                            class="flex items-center justify-center bg-blue-600 hover:bg-blue-700 p-2.5 rounded-full transition-colors shadow-lg cursor-pointer" title="Run Exploit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                class="bi bi-play-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Payloads section -->
-                <div id="payloadsSection" class="payload-section">
-                    <div class="payload-header">
+                <div id="payloadsSection" class="gap-4 bg-gray-800 p-6 rounded-lg flex flex-col h-full">
+                    <div class="flex justify-between">
                         <div>
-                            <span class="payload-title" id="payloads-section-title">Payload Menu</span>
-                            <span class="payload-subtitle">Select payload to dispatch to PS4</span>
+                            <h2 class="text-xl font-semibold mb-4" id="payloads-section-title">
+                                Payloads
+                            </h2>
+                            <header class="flex space-x-3 rtl:space-x-reverse hidden" id="header2">
+                                <button onclick="settingsPopup()"
+                                    class="settings-btn p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                                    title="Settings">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor"
+                                        class="bi bi-gear" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                                        <path
+                                            d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                                    </svg>
+                                </button>
+                                <button onclick="aboutPopup()"
+                                    class="about-btn p-2 rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                                    title="About">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="25" fill="currentColor"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M256,56C145.72,56,56,145.72,56,256s89.72,200,200,200,200-89.72,200-200S366.28,56,256,56Zm0,82a26,26,0,1,1-26,26A26,26,0,0,1,256,138Zm64,226H200V332h44V244H212V212h64V332h44Z" />
+                                    </svg>
+                                </button>
+                                <button onclick="themePopup()"
+                                    class="theme-btn h-10 p-2 inline-flex items-center justify-center rounded-lg bg-gray-800 hover:bg-gray-700 transition-colors text-white/80 hover:text-white"
+                                    title="Theme Customization">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                                        <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                                        <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                                        <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                                        <path
+                                            d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.71 1.7-1.63 0-.44-.17-.85-.45-1.16-.27-.3-.43-.71-.43-1.15 0-.92.75-1.66 1.67-1.66h2.24c2.8 0 5.07-2.27 5.07-5.07 0-5.25-4.38-9.33-9.7-9.33z" />
+                                    </svg>
+                                </button>
+                            </header>
                         </div>
-                        <header class="flex space-x-3 rtl:space-x-reverse hidden" id="header2">
+                        <div class="flex items-center flex-col gap-2">
                             <input type="text" id="ps4IpInput"
-                                class="hidden bg-blue-600 p-1 rounded font-semibold text-white border-transparent text-center"
+                                class="hidden bg-blue-600 hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white border-transparent text-center"
                                 placeholder="PS4 IP Address">
                             <select style="background: transparent;" id="ps4FwSelect"
-                                class="hidden p-1 text-center rounded font-semibold text-white">
+                                class="hidden p-1 text-center rounded font-semibold transition-colors text-white">
                                 <option selected hidden>PS4 FW</option>
                                 <option value="4.50">4.50</option>
                                 <option value="4.55">4.55</option>
@@ -174,6 +259,7 @@
                                 <option value="4.71">4.71</option>
                                 <option value="4.72">4.72</option>
                                 <option value="4.73">4.73</option>
+                                <option value="4.71">4.71</option>
                                 <option value="4.74">4.74</option>
                                 <option value="5.00">5.00</option>
                                 <option value="5.01">5.01</option>
@@ -230,45 +316,89 @@
                                 <option value="14.00">14.00</option>
                                 <option value="14.02">14.02</option>
                             </select>
-                        </header>
+                        </div>
                     </div>
-
-                    <!-- Category Tabs Bar -->
-                    <div class="payload-tabs-bar">
-                        <button class="payload-tab-btn active" id="tools-tab" type="button">Tools</button>
-                        <button class="payload-tab-btn" id="homebrew-tab" type="button">Homebrew</button>
-                        <button class="payload-tab-btn" id="linux-tab" type="button">Linux</button>
-                        <span id="advancedPayloadsTab" class="hidden"><button class="payload-tab-btn" id="advanced-tab" type="button">Advanced</button></span>
-                        <span id="customPayloadsTab" class="hidden"><button class="payload-tab-btn" id="custom-tab" type="button">Custom</button></span>
+                    <div class="border-b border-gray-200 border-gray-700 w-full sticky top-0 bg-gray-800 z-10 tabs">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center w-full" id="default-tab"
+                            data-tabs-toggle="#default-tab-content" role="tablist">
+                            <li class="flex-1" role="presentation">
+                                <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="tools-tab"
+                                    data-tabs-target="#tools" type="button" role="tab" aria-controls="tools"
+                                    aria-selected="false">Tools</button>
+                            </li>
+                            <li class="flex-1" role="presentation">
+                                <button class="w-full inline-block p-4 border-b-2 rounded-t-lg" id="homebrew-tab"
+                                    data-tabs-target="#homebrew" type="button" role="tab" aria-controls="homebrew"
+                                    aria-selected="false">Homebrew</button>
+                            </li>
+                            <li class="flex-1" role="presentation">
+                                <button
+                                    class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                    id="linux-tab" data-tabs-target="#linux" type="button" role="tab"
+                                    aria-controls="linux" aria-selected="false">Linux</button>
+                            </li>
+                            <li id="advancedPayloadsTab" class="hidden flex-1" role="presentation">
+                                <button
+                                    class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                    id="advanced-tab" data-tabs-target="#advanced" type="button" role="tab"
+                                    aria-controls="advanced" aria-selected="false">Advanced</button>
+                            </li>
+                            <li class="hidden flex-1" id="customPayloadsTab" role="presentation">
+                                <button
+                                    class="w-full inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 hover:text-gray-300"
+                                    id="custom-tab" data-tabs-target="#custom" type="button" role="tab"
+                                    aria-controls="custom" aria-selected="false">Custom</button>
+                            </li>
+                        </ul>
                     </div>
-
-                    <!-- Payloads Content -->
-                    <div id="payloadsGrid" class="payload-grid-wrap">
-                        <div id="default-tab-content">
-                            <div id="tools" class="payload-tab-pane"></div>
-                            <div id="homebrew" class="payload-tab-pane hidden"></div>
-                            <div id="linux" class="payload-tab-pane hidden"></div>
-                            <div id="advanced" class="payload-tab-pane hidden"></div>
-                            <div id="custom" class="payload-tab-pane hidden">
-                                <p class="custom-upload-label" id="customPayloadUpload">Upload a custom payload file</p>
-                                <div class="custom-upload-box">
-                                    <input type="file" id="customPayloadInput" class="custom-file-input" accept=".bin,.elf">
-                                    <button id="sendCustomPayloadBtn" onclick="Loadpayloads('custom')" class="btn-send-custom">
-                                        SEND
+                    <div id="payloadsGrid" class="space-y-3 overflow-y-auto flex-grow max-h-[calc(100vh-250px)]"
+                        style="overflow-x: hidden !important;">
+                        <div id="default-tab-content" class="bg-gray-800">
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="tools" role="tabpanel"
+                                aria-labelledby="tools-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="homebrew" role="tabpanel"
+                                aria-labelledby="homebrew-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="linux" role="tabpanel"
+                                aria-labelledby="linux-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="advanced" role="tabpanel"
+                                aria-labelledby="advanced-tab">
+                            </div>
+                            <div class="hidden p-4 rounded-lg bg-gray-50 bg-gray-800" id="custom" role="tabpanel"
+                                aria-labelledby="custom-tab">
+                                <p class="text-sm text-white/80 mb-2" id="customPayloadUpload">Upload a custom payload file</p>
+                                <div class="flex gap-2">
+                                    <input type="file" id="customPayloadInput" style="width: 150px;"
+                                        class="bg-gray-700 p-2 rounded flex-grow text-white border-transparent focus:ring-2 focus:ring-blue-500"
+                                        accept=".bin,.elf">
+                                    <button id="sendCustomPayloadBtn" onclick="Loadpayloads('custom')"
+                                        class="hover:bg-blue-700 p-1 rounded font-semibold transition-colors text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20px"
+                                            shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+                                            image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd"
+                                            viewBox="0 0 512 512.006">
+                                            <path fill="#fff" fill-rule="nonzero"
+                                                d="M11.671 160.968L498.394.692c8.503-3.038 15.951 4.41 12.915 12.915L351.027 500.328c-5.264 15.865-27.364 15.388-32.617-.357l-71.675-234.703-234.703-71.675c-15.889-5.275-16.073-27.373-.361-32.625zm13.952 16.188l226.175 69.064L465.84 32.177 25.623 177.156z" />
+                                        </svg>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Credits Box (Matching PS5 Layout) -->
-            <div class="credits-box">
-                <div class="credits-title">LONELY PS4 EXPLOIT SUITE &middot; CREDITS</div>
-                <p>Based on <b>WebKitty</b> created by ArabPixel and the PSFree Team.</p>
-                <p><b>Kernel &amp; WebKit Research:</b> Lapse, Netctrl, Relapse (PS4 port), Afterglow, sleirsgoevy, ChendoChap, TheFlow, Specter, flatz, fail0verflow, CTurt.</p>
-                <p><b>HEN &amp; Payloads:</b> SiSTRo (GoldHEN), EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.</p>
+            <!-- Credits Footer -->
+            <div class="mt-8 mb-4 p-4 border border-cyan-500/30 bg-gray-950/80 rounded-lg text-center text-xs text-gray-400 font-mono max-w-4xl mx-auto shadow-lg">
+                <p class="text-cyan-400 font-bold tracking-wider text-sm mb-1">LONELY PS4 EXPLOIT SUITE &middot; CREDITS</p>
+                <p class="mb-1">Based on <b class="text-blue-400">WebKitty</b> created by <span class="text-white">ArabPixel</span> and the <span class="text-white">PSFree Team</span>.</p>
+                <p class="text-gray-400 leading-relaxed">
+                    <b>Kernel Exploits:</b> Lapse, Netctrl, Relapse (PS4 port), Afterglow, sleirsgoevy, ChendoChap, theflow0, Specter, flatz, fail0verflow, CTurt.<br>
+                    <b>HEN &amp; Payloads:</b> SiSTRo (GoldHEN), EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.
+                </p>
             </div>
         </section>
     </main>
