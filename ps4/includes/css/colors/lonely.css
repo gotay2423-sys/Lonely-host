@@ -10,12 +10,7 @@
 }
 
 body {
-    background: 
-      linear-gradient(rgba(0, 128, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 128, 255, 0.04) 1px, transparent 1px),
-      radial-gradient(circle at top, #091a3e 0%, #050b18 60%, #02050d 100%) !important;
-    background-size: 34px 34px, 34px 34px, 100% 100% !important;
-    background-attachment: fixed !important;
+    background-color: #040814 !important;
     color: #e0f2fe !important;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, 'Consolas', 'Courier New', monospace !important;
     margin: 0 !important;
@@ -24,6 +19,28 @@ body {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+body::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: 
+      linear-gradient(rgba(0, 128, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 128, 255, 0.04) 1px, transparent 1px),
+      radial-gradient(circle at top, #091a3e 0%, #050b18 60%, #02050d 100%) !important;
+    background-size: 34px 34px, 34px 34px, 100% 100% !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+    will-change: transform !important;
 }
 
 .container, .mainContainer {
@@ -245,25 +262,17 @@ button.chip:hover, button.chip:focus {
     background: #000 !important;
     border: 2.5px solid #ef4444 !important;
     box-shadow: 0 0 28px rgba(239, 68, 68, 0.75), inset 0 0 14px rgba(239, 68, 68, 0.35) !important;
-    transition: all 0.3s ease !important;
+    transition: all 0.25s ease !important;
     border-radius: 50% !important;
     overflow: hidden !important;
-    animation: prestigePulse 2.5s ease-in-out infinite !important;
-}
-
-@keyframes prestigePulse {
-    0%, 100% {
-        box-shadow: 0 0 25px rgba(239, 68, 68, 0.7), inset 0 0 12px rgba(239, 68, 68, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 40px rgba(239, 68, 68, 0.95), inset 0 0 20px rgba(239, 68, 68, 0.5);
-    }
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
 }
 
 #ps-logo-container:hover, .hero-logo-container:hover, .ps-logo-container:hover {
     border-color: #ff4d4d !important;
-    box-shadow: 0 0 50px rgba(255, 77, 77, 1), inset 0 0 24px rgba(255, 77, 77, 0.6) !important;
-    transform: scale(1.05) !important;
+    box-shadow: 0 0 45px rgba(255, 77, 77, 0.95), inset 0 0 20px rgba(255, 77, 77, 0.5) !important;
+    transform: scale(1.05) translateZ(0) !important;
 }
 
 #ps-logo, .hero-logo-img {
@@ -278,19 +287,36 @@ button.chip:hover, button.chip:focus {
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
-    filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.85)) !important;
+    filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.8)) !important;
 }
 
-.click-to-start {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin: 4px 0 10px 0;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-    font-family: inherit;
-    text-align: center;
+#click-to-start-text, .click-to-start {
+    color: #ffffff !important;
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2.5px !important;
+    margin: 8px auto 6px auto !important;
+    text-transform: uppercase !important;
+    text-shadow: 0 0 12px rgba(0, 243, 255, 0.6) !important;
+    font-family: inherit !important;
+    text-align: center !important;
+    cursor: pointer !important;
+    display: block !important;
+    padding: 6px 14px !important;
+    border-radius: 8px !important;
+    border: 1px solid transparent !important;
+    transition: all 0.2s ease !important;
+    user-select: none !important;
+}
+
+#click-to-start-text:hover, .click-to-start:hover,
+#click-to-start-text:focus, .click-to-start:focus {
+    color: #00f3ff !important;
+    border-color: rgba(0, 243, 255, 0.35) !important;
+    background: rgba(0, 243, 255, 0.1) !important;
+    text-shadow: 0 0 18px rgba(0, 243, 255, 0.9) !important;
+    transform: scale(1.04) !important;
+    outline: none !important;
 }
 
 .auto-run-bar {
@@ -620,12 +646,12 @@ button.chip:hover, button.chip:focus {
 
 /* macOS Glass Card Styling */
 .mac-card {
-    background: rgba(8, 18, 42, 0.92) !important;
+    background: rgba(8, 18, 42, 0.95) !important;
     border: 1px solid rgba(0, 243, 255, 0.35) !important;
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), inset 0 0 20px rgba(0, 128, 255, 0.12) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     border-radius: 14px !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
 }
 
 .mac-card-titlebar, .mac-terminal-bar {
@@ -718,13 +744,14 @@ button.chip:hover, button.chip:focus {
     width: 100% !important;
     margin: 0 0 24px 0 !important;
     flex: none !important;
-    background: rgba(8, 18, 42, 0.88) !important;
+    background: rgba(8, 18, 42, 0.96) !important;
     border: 1px solid rgba(0, 243, 255, 0.35) !important;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 0 15px rgba(0, 128, 255, 0.08) !important;
-    backdrop-filter: blur(12px) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     border-radius: 14px !important;
     padding: 20px !important;
     box-sizing: border-box !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
 }
 
 .settings-popup-content {
@@ -740,12 +767,15 @@ button.chip:hover, button.chip:focus {
     border-top: none !important;
     border-bottom-left-radius: 12px !important;
     border-bottom-right-radius: 12px !important;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(0, 243, 255, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
     color: #00f3ff !important;
     height: 280px !important;
     overflow-y: auto !important;
     padding: 16px 18px !important;
     font-family: 'Consolas', 'Courier New', monospace !important;
+    -webkit-overflow-scrolling: touch !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
 }
 
 #DebugConsole pre {
@@ -768,10 +798,13 @@ button.chip:hover, button.chip:focus {
     display: flex !important;
     align-items: center !important;
     gap: 12px !important;
-    transition: all 0.2s ease !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+    transition: transform 0.2s ease, border-color 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
     cursor: pointer !important;
     box-sizing: border-box !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    contain: layout style paint !important;
 }
 
 .payload-card:hover {
@@ -922,13 +955,13 @@ button.chip:hover, button.chip:focus {
     align-items: center !important;
     gap: 14px !important;
     padding: 12px 16px !important;
-    background: rgba(10, 18, 38, 0.96) !important;
+    background: rgba(10, 18, 38, 0.98) !important;
     border: 2px solid #ef4444 !important;
     border-radius: 16px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 25px rgba(239, 68, 68, 0.45) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
     overflow: hidden !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
 }
 
 .jb-popup-glow {

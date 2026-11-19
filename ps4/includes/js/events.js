@@ -1,26 +1,35 @@
 // DOM event listeners and popup toggle functions.
 
-// Smooth scrolling (unified layout - no snap jump)
-if (ui.mainContainer) {
-    ui.mainContainer.addEventListener('scroll', function () {
-        lastScrollY = ui.mainContainer.scrollTop;
+// Jailbreak launch triggers
+function triggerJailbreak() {
+    if (user.blockJailbreak) return;
+    user.blockJailbreak = true;
+    chooseHEN();
+    jailbreak();
+}
+
+if (ui.psLogoContainer) {
+    ui.psLogoContainer.addEventListener('click', triggerJailbreak);
+}
+
+var psLogoBtn = document.getElementById('pslogo');
+if (psLogoBtn) {
+    psLogoBtn.addEventListener('click', triggerJailbreak);
+}
+
+if (ui.clickToStartText) {
+    ui.clickToStartText.addEventListener('click', triggerJailbreak);
+    ui.clickToStartText.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerJailbreak();
+        }
     });
 }
 
-// Jailbreak launch
-ui.exploitRunBtn.addEventListener('click', function () {
-    if (user.blockJailbreak) return;
-    user.blockJailbreak = true;
-    chooseHEN();
-    jailbreak();
-});
-
-ui.psLogoContainer.addEventListener('click', function () {
-    if (user.blockJailbreak) return;
-    user.blockJailbreak = true;
-    chooseHEN();
-    jailbreak();
-});
+if (ui.exploitRunBtn) {
+    ui.exploitRunBtn.addEventListener('click', triggerJailbreak);
+}
 
 // Tab switching
 var TAB_SECTIONS = {
