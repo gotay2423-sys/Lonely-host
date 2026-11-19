@@ -107,14 +107,16 @@
             </button>
         </div>
 
-        <!-- Hero Start Section with COD Prestige Emblem -->
-        <div id="initial-screen" class="controls prestige-controls">
-            <button id="pslogo" type="button" class="ps-logo-btn" tabindex="0" title="Click to Start Jailbreak">
-                <div id="ps-logo-container" class="ps-logo-container">
-                    <img id="ps-logo" src="./prestige.jpg" alt="Click to Start Jailbreak" width="180" height="180">
-                </div>
-            </button>
-            <h3 id="click-to-start-text" class="click-to-start">CLICK TO START JAILBREAK</h3>
+        <!-- Hero Start Section Matching PS5 Layout -->
+        <div id="initial-screen" class="controls">
+            <div id="ps-logo-container" style="display: inline-block;">
+                <button id="exploitRun" type="button" class="run-btn" tabindex="0" title="Click to Run Exploit">
+                    <img id="ps-logo" src="./prestige.jpg" alt="Prestige Master" class="run-btn-emblem">
+                    <span>RUN EXPLOIT</span>
+                </button>
+            </div>
+            <button id="pslogo" style="display: none;" tabindex="-1" aria-hidden="true"></button>
+            <h3 id="click-to-start-text" style="display: none;" aria-hidden="true"></h3>
 
             <div class="auto-run-bar" id="autoJbContainer">
                 <label class="toggle-wrap" id="autoJbOption" title="Automatically run exploit on page load">
@@ -126,7 +128,6 @@
                     STOP AUTO JAILBREAK
                 </button>
             </div>
-            <button id="exploitRun" style="display: none;" tabindex="-1" aria-hidden="true"></button>
         </div>
 
         <!-- Exploit section -->
@@ -259,11 +260,11 @@
                 </div>
             </div>
 
-            <!-- Credits Footer -->
-            <div class="credits">
-                <p class="credits-title">LONELY PS4 EXPLOIT SUITE &middot; CREDITS</p>
+            <!-- Credits Box (Matching PS5 Layout) -->
+            <div class="credits-box">
+                <div class="credits-title">LONELY PS4 EXPLOIT SUITE &middot; CREDITS</div>
                 <p>Based on <b>WebKitty</b> created by ArabPixel and the PSFree Team.</p>
-                <p><b>Kernel Exploits:</b> Lapse, Netctrl, Relapse (PS4 port), Afterglow, sleirsgoevy, ChendoChap, theflow0, Specter, flatz, fail0verflow, CTurt.</p>
+                <p><b>Kernel &amp; WebKit Research:</b> Lapse, Netctrl, Relapse (PS4 port), Afterglow, sleirsgoevy, ChendoChap, TheFlow, Specter, flatz, fail0verflow, CTurt.</p>
                 <p><b>HEN &amp; Payloads:</b> SiSTRo (GoldHEN), EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.</p>
             </div>
         </section>
