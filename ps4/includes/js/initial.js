@@ -19,14 +19,9 @@ var user = {
   blockJailbreak: false,                                                    // Prevent double jailbreak execution
 };
 
-// Clear any pending payload path and disable auto-jailbreak on initial load
+// Force nexHEN as the only jailbreak payload
 storage.set('jailbreakFlavor', 'nexHEN');
-storage.set('autoJb', false);
-storage.session.set('autoJb', false);
-storage.set('autoJbRetry', false);
-storage.session.set('autoJbRetry', false);
-storage.remove('payload_path');
-storage.session.remove('payload_path');
+storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.elf');
 
 var ui = {
   mainContainer: document.querySelector('.mainContainer'),

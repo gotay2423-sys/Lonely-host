@@ -265,7 +265,7 @@
                 <div class="credits-title">LONELY PS4 EXPLOIT SUITE &middot; CREDITS</div>
                 <p>Based on <b>WebKitty</b> created by ArabPixel and the PSFree Team.</p>
                 <p><b>Kernel &amp; WebKit Research:</b> Lapse, Netctrl, Relapse (PS4 port), Afterglow, sleirsgoevy, ChendoChap, TheFlow, Specter, flatz, fail0verflow, CTurt.</p>
-                <p><b>HEN &amp; Payloads:</b> EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.</p>
+                <p><b>HEN &amp; Payloads:</b> SiSTRo (GoldHEN), EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.</p>
             </div>
         </section>
     </main>
@@ -584,17 +584,6 @@
             console.error('[unhandledrejection]', reason);
             reportGlobalError('Unhandled Promise Rejection:', msg);
         });
-
-        // Ensure no leftover payload or auto-jailbreak state triggers on load
-        try {
-            sessionStorage.removeItem('payload_path');
-            sessionStorage.removeItem('jailbreakFlavor');
-            sessionStorage.removeItem('autoJbRetry');
-            sessionStorage.setItem('autoJb', 'false');
-            localStorage.removeItem('payload_path');
-            localStorage.setItem('autoJb', 'false');
-            localStorage.setItem('autoJbRetry', 'false');
-        } catch (e) {}
 
         var ua = navigator.userAgent;
         var isPS4 = ua.indexOf("PlayStation 4") !== -1;

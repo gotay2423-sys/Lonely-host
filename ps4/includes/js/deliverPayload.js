@@ -96,19 +96,33 @@ function probeElfLoader() {
         
         var xhr = new XMLHttpRequest();
         xhr.open("GET", endpoint, true);
-        xhr.timeout = 1000;
+        xhr.timeout = 2000; // 2 second timeout
         
         xhr.onload = function () {
+            log("Elfldr probe response: " + xhr.status + " " + xhr.statusText);
+            // Even a 404 or connection response means something is listening on port 9021
             resolve(true);
         };
+        
         xhr.onerror = function () {
+            log("Elfldr probe failed: " + xhr.status + " " + xhr.statusText);
+            // Connection refused / unreachable means elfldr is not running
             resolve(false);
         };
+        
         xhr.ontimeout = function () {
+            log("Elfldr probe timed out");
             resolve(false);
         };
+        
         try {
             xhr.send();
+
+            log("[elfldr probe] ip: " + ps4Ip);
+            log("[elfldr probe] URL: " + endpoint);
+            log("[elfldr probe] Page: " + location.href);
+            log("[elfldr probe] Origin: " + location.origin);
+            return;
         } catch (e) {
             resolve(false);
         }
@@ -222,35 +236,46 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
         (resolvedName && resolvedName.toLowerCase().endsWith(".elf"));
 
     if (isElf && cleanPath.indexOf('linux') == -1) {
-        var attempts = 0;
-        var maxAttempts = 5;
+        var checkAndBootElfldr = function () {
+            ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
+            ELFLDR = "http://" + ps4Ip + ":9021";
 
-        var dispatchElf = function () {
-            sendElfToElfldr(PLfile, resolvedName, function (success, resp) {
-                if (success) {
-                    if (id === 'jailbreak') {
-                        log("nexHEN loaded successfully!", "green");
-                        if (typeof jailbreakSuccess === "function") {
-                            jailbreakSuccess();
-                        }
+            log(window.lang.elfLoaderStarting || "Starting Elf Loader...");
+            sendViaBinLoader("./includes/payloads/Bins/elfldr.elf", function (goldHenSuccess) {
+                if (!goldHenSuccess) {
+                    if (!needsPayloadLoader) {
+                        log(window.lang.binLoaderNotResponding, "red");
                     }
+                    handleFallback();
                     return;
                 }
 
-                attempts++;
-                if (attempts < maxAttempts) {
-                    log("Retrying elfldr on port 9021 (" + attempts + "/" + maxAttempts + ")...", "yellow");
-                    setTimeout(dispatchElf, 1000);
-                } else {
-                    log("Failed to connect to elfldr on port 9021", "red");
-                    if (id !== "jailbreak") {
-                        handleFallback();
-                    }
-                }
+                // Wait 5 s for elfldr to boot on port 9021, then retry sending the ELF
+                setTimeout(function () {
+                    log(window.lang.elfLoaderSending || "Sending payload to the Elf Loader...");
+                    sendElfToElfldr(PLfile, name, function (retrySuccess) {
+                        if (!retrySuccess) handleFallback();
+                    });
+                }, 3000);
             });
         };
 
-        dispatchElf();
+        // First, check if elfldr is already running on port 9021
+        sendElfToElfldr(PLfile, name, function (success) {
+            if (success) return;
+
+            // If not running, boot it via GoldHEN binloader
+            if (ps4Ip === "127.0.0.1" && !isPS4Console() && !isLocalIP(window.location.hostname)) {
+                guessIp().then(function () {
+                    checkAndBootElfldr();
+                }).catch(function () {
+                    handleFallback();
+                });
+            } else {
+                checkAndBootElfldr();
+            }
+        });
+
     } else {
         getPayload(PLfile, function (fetchReq) {
             if (fetchReq && fetchReq.status === 404) {
@@ -266,7 +291,7 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
             log(window.lang.payloadLoaderSending.replace("{payload}", name));
 
             var targetPort = customPort || 9090;
-            var targetName = customPort ? window.lang.customPort : "nexHEN";
+            var targetName = customPort ? window.lang.customPort : "GoldHEN / nexHEN";
             var targetUrl = "http://" + ps4Ip + ":" + targetPort + "/";
 
             sendPayloadWithTimeout(targetUrl, fetchReq.response, 5000, function (success) {
@@ -302,11 +327,7 @@ function Loadpayloadonline(PLfile) {
     }
 
     if (isPS4Console()) {
-        if (window.script_loaded) {
-            window.location.reload();
-        } else {
-            jailbreak();
-        }
+        jailbreak();
     }
 }
 
@@ -325,9 +346,12 @@ function payloadRouter(payload) {
         alert(window.lang.unsupportedFirmware + user.ps4Fw);
         return;
     }
-    // If it's a HEN payload, dispatch directly
+    // If it's a HEN payload (nexHEN, GoldHEN, PS4HEN), run jailbreak directly with that payload
     if (payload.id === 'nexHEN' || payload.id === 'GoldHEN' || payload.id === 'PS4HEN') {
-        Loadpayloadlocal('./includes/payloads/HEN/nexHEN-ps4.bin', 'nexHEN', 'nexHEN');
+        storage.set('jailbreakFlavor', payload.id);
+        storage.session.set('payload_path', payload.src);
+        user.currentJbFlavor = payload.id;
+        jailbreak();
         return;
     }
     // It's a BinLoader

@@ -171,7 +171,7 @@ let allDone = false;
             ? "blob=" + kpatchName + " bytes=" + kpatch.length
               + " sites=" + KPATCH_JMP_SITES.length
             : "blob=" + kpatchName + " MISSING");
-            var payloadSrc = payload_path || './includes/payloads/HEN/nexHEN-ps4.bin';
+            var payloadSrc = isElfPayload ? './includes/payloads/Bins/elfldr.bin' : payload_path;
         try {
             const r = await fetch(payloadSrc);
             if (r.ok) payload = new Uint8Array(await r.arrayBuffer());
@@ -414,7 +414,9 @@ let allDone = false;
                 state((window.lang.alreadyJailbroken || "Already Jailbroken ..."), "warn");
                 mark("Already Jailbroken ...");
                 log("<br>");
-                sessionStorage.removeItem('payload_path');
+                if (isElfPayload && elfLoaderAvailable) {
+                    Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');                
+                }
                 window.jailbreakSuccess();
                 return;
             }
@@ -2323,7 +2325,9 @@ let allDone = false;
                                     if (payloadRunning){
                                         mark("PAYLOAD-RUNNING",
                                         "bytes=" + payload.length + " entry=" + entry);
-                                        sessionStorage.removeItem('payload_path');
+                                        if (isElfPayload) {
+                                            Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
+                                        }
                                         window.jailbreakSuccess();
                                     } 
                                 }

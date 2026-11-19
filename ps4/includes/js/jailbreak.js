@@ -14,15 +14,15 @@ async function jailbreak() {
   // turn off auto-jailbreak for this session, so it doesn't loop forever
   // autoJbRetry will pickup on userland fail and reload
   storage.session.set('autoJb', false);
-  storage.set('autoJb', false);
 
-  // Do not auto-load any payload on jailbreak
-  storage.session.remove('payload_path');
-  storage.remove('payload_path');
+  // Always load nexHEN for jailbreak
+  chooseHEN();
+  var payloadPath = storage.session.getString('payload_path', null);
 
   cleanUp();
 
-  log("Starting WebKit & Kernel Exploit...");
+  payloadPath = storage.session.getString('payload_path', null);
+  log("Loading: " + payloadPath);
 
   // barebone exploit preferred? go to exploit file
   if (user.bareboneJB) {
@@ -101,20 +101,46 @@ async function badHoistJailbreak() {
   await loadScript('./src/badhoist/672kexploit.js', false, devMode);
   var result = KernelExploit672();
 
+  var payloadPath = storage.session.getString('payload_path', '');
+  let isElfPayload = isPayloadElf(payloadPath);
+  let elfLoaderAvailable = null;
+
+  let injectionPath = payloadPath;
+  if (isElfPayload) {
+    elfLoaderAvailable = await probeElfLoader();
+    log("Waiting 600ms");
+    sleep(600);
+    if (elfLoaderAvailable) {
+      log("elfldr is already running. Skipping elfldr.bin boot.", "green");
+    } else {
+      log("elfldr not running. Booting elfldr.bin first...", "yellow");
+      injectionPath = './includes/payloads/Bins/elfldr.bin';
+    }
+  }
+
   if (result === 0 || result === 91 || result === 179) {
     if (result === 179) {
       log("\nAlready jailbroken, skipping..", "green");
     } else {
       log("\nKernel exploit succeeded", "green");
-      log("Injecting nexHEN...", "yellow");
-      getPayload672('./includes/payloads/HEN/nexHEN-ps4.bin');
-      await sleep(1000);
-      log("nexHEN loaded successfully!", "green");
+    }
+
+    // Inject either the binary payload or elfldr.bin
+    log("Injecting payload: " + injectionPath);
+    getPayload672(injectionPath);
+    await sleep(1000);
+
+    if (isElfPayload) {
+      if (elfLoaderAvailable) {
+        log("Sending the ELF payload: " + payloadPath, "green");
+        Loadpayloadlocal(payloadPath, getPayloadName(payloadPath), "jailbreak");
+      } else {
+        log("Error: Failed to connect to elfldr on port 9021.", "red");
+      }
     }
 
     log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
     log("Implementation taken from Feyzee61");
-    sessionStorage.removeItem("payload_path");
     jailbreakSuccess();
   } else {
     log("\nAn error occured during Kernel Exploit\nPlease restart console and try again...", "red");

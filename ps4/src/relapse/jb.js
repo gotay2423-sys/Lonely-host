@@ -7,7 +7,7 @@ const outEl = document.getElementById("console");
 const scrollEl = document.getElementById("DebugConsole") || outEl;
 const stateEl = document.getElementById("state") || outEl;
 var payload_path = sessionStorage.getItem("payload_path");
-const nexhen_path = './includes/payloads/HEN/nexHEN-ps4.bin';
+const elfldr_path = './includes/payloads/Bins/elfldr.bin';
 var isElfPayload = isPayloadElf(payload_path);
 var elfLoaderAvailable; // Needs to me validated somewhere
 
@@ -65,7 +65,15 @@ async function finishUI(ok) {
   document.body.className = ok ? "done" : "fail";
   
   if (ok) {
-    sessionStorage.removeItem("payload_path");
+    if (isElfPayload) {
+        elfLoaderAvailable = await probeElfLoader();
+        setTimeout(function (){
+            mark("ELFLDR-SEND", "Sending the elf payload: " + payload_path);
+            // 3. Send the actual ELF/nexHEN payload
+            if (window.log) log("<br>");
+            Loadpayloadlocal(payload_path, getPayloadName(payload_path), "jailbreak");
+        },2000);
+    }
     if (typeof jailbreakSuccess == "function") jailbreakSuccess();
   }
   state(result);
@@ -551,7 +559,7 @@ let allDone = false,
         }
         async function relaunchPayload() {
             let blob = null;
-            let choosePayload = payload_path || nexhen_path;
+            let choosePayload = isElfPayload ? elfldr_path : payload_path;
             mark(choosePayload);
             try {
                 const r = await fetch(choosePayload);
@@ -3038,7 +3046,7 @@ let allDone = false,
                         state("Loading the kernel patches...", 'warn');
                         if (DO_PAYLOAD) {
                             try {
-                              let choosePayload = payload_path || nexhen_path;
+                              let choosePayload = isElfPayload ? elfldr_path : payload_path;
                               mark(choosePayload);
                                 const r = await fetch(choosePayload);
                                 if (r.ok) payloadBlob = new Uint8Array(await r.arrayBuffer());

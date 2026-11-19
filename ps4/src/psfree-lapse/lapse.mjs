@@ -1996,19 +1996,30 @@ async function kexSuccess() {
     doneSuccessfully();
     runBinLoader();
   } else {
-    var isNexHenRunning = await probeElfLoader();
-    if (!isNexHenRunning) {
-      log("Loading nexHEN...", "yellow");
-      runPayload('./includes/payloads/HEN/nexHEN-ps4.bin', true);
-      await new Promise(function(resolve) { setTimeout(resolve, 1500); });
-      window.log("\nKernel exploit succeeded!", "green");
-      window.log("nexHEN loaded successfully!", "green");
+    let payload_path = sessionStorage.getItem("payload_path");
+    if (isPayloadElf(payload_path)) payload_path = payload_path.replace('.bin', '.elf');
+    log("Payload path: " + payload_path);
+
+    if (payload_path && isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
+      // check if elfldr is listening
+      var elfLoaderAvailable = await probeElfLoader();
+      
+      if (!elfLoaderAvailable) {
+        log("elfldr is not running, starting elfldr...", "yellow");
+        runPayload('./includes/payloads/Bins/elfldr.bin', true);
+        
+        await new Promise(function(resolve) { setTimeout(resolve, 2000); });
+      }
+
+      // Sending to elfldr
+      Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
+      doneSuccessfully();
     } else {
-      window.log("\nKernel exploit succeeded!", "green");
-      window.log("nexHEN is already active!", "green");
+      // Inject HEN payload
+      runPayload(sessionStorage.getItem('payload_path'));
     }
-    sessionStorage.removeItem("payload_path");
-    doneSuccessfully();
+    window.log("Payload loaded", "green");
+    window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
   }
 }
 

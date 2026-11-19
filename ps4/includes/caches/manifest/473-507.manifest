@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v7.0 - actively load nexHEN-ps4.bin into kernel and probe elfldr on 9021
-# Updated 2026-11-19T13:08:00
+# v8.0 - reverted to last stable setup
+# Updated 2026-11-19T13:15:00
 
 CACHE:
 ../../../
@@ -79,6 +79,8 @@ CACHE:
 ../../../includes/payloads/Linux/linux-4096mb.elf
 ../../../includes/payloads/Linux/linux-512mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
+../../../includes/payloads/HEN/goldhen_v2.4b18.13.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.12.bin
 ../../../includes/payloads/HEN/PS4HEN-474.bin
 ../../../includes/payloads/HEN/PS4HEN.bin
 ../../../includes/payloads/Legacy/ps4-disable-updates-legacy.bin

@@ -115,17 +115,26 @@ async function doCssFontFaceJailbreak() {
 
       kernel_patches(kpatches_u8);
 
-      log("Loading nexHEN...", "yellow");
-      const bin_rsp = await fetch("./includes/payloads/HEN/nexHEN-ps4.bin");
-      const bin_buf = await bin_rsp.arrayBuffer();
-      const bin_u8 = new Uint8Array(bin_buf);
-      load_bin(bin_u8);
+      const payload_path = sessionStorage.getItem("payload_path");
+      if (isPayloadElf(payload_path)) {
+        const elfLoaderAvailable = await probeElfLoader();
 
-      sessionStorage.removeItem("payload_path");
-      log("Kernel exploit succeeded!", "green");
-      log("nexHEN loaded successfully!", "green");
-      if (typeof jailbreakSuccess === "function") {
-        jailbreakSuccess();
+        if (!elfLoaderAvailable) {
+          const bin_rsp = await fetch("./includes/payloads/Bins/elfldr.bin");
+          const bin_buf = await bin_rsp.arrayBuffer();
+          const bin_u8 = new Uint8Array(bin_buf);
+    
+          load_bin(bin_u8);
+        }
+
+        await new Promise(function(resolve) { setTimeout(resolve, 2000); });
+        Loadpayloadlocal(payload_path, getPayloadName(payload_path), "jailbreak");
+      }else {
+        const bin_rsp = await fetch(sessionStorage.getItem("payload_path"));
+        const bin_buf = await bin_rsp.arrayBuffer();
+        const bin_u8 = new Uint8Array(bin_buf);
+  
+        load_bin(bin_u8);
       }
     }
 

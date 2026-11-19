@@ -24,13 +24,13 @@ function autoJailbreak() {
     }
 
     // Auto jailbreak retry logic
-    var autoJbRetryChecked = storage.getBoolean('autoJbRetry', false);
+    var autoJbRetryChecked = storage.getBoolean('autoJbRetry', true);
     var autoJbRetrySessionChecked = storage.session.getBoolean('autoJbRetry', false);
     if (ui.autoJbRetry) ui.autoJbRetry.checked = autoJbRetryChecked;
 
     // Auto jailbreak logic
     var autoJbChecked = storage.getBoolean('autoJb', false);
-    var autoJbSessionChecked = storage.session.getBoolean('autoJb', false);
+    var autoJbSessionChecked = storage.session.getBoolean('autoJb', true);
     if (ui.autoJb) ui.autoJb.checked = autoJbChecked;
 
     // check if supported ps4

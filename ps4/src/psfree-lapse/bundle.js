@@ -4809,26 +4809,37 @@ async function kexSuccess() {
   if (sessionStorage.getItem('binloader')) {
     runBinLoader();
   } else {
-    // Check if nexHEN daemon is already active on port 9021
-    var isNexHenRunning = await probeElfLoader();
+    let payload_path = sessionStorage.getItem("payload_path");
+    if (isPayloadElf(payload_path)) payload_path = payload_path.replace('.bin', '.elf');
+    window.log("Payload path: " + payload_path);
 
-    if (!isNexHenRunning) {
-      log("Loading nexHEN...", "yellow");
-      const loadNexHen = await PayloadLoader('./includes/payloads/HEN/nexHEN-ps4.bin');
-      if (loadNexHen !== 1) {
-        log("Failed to load nexHEN!\nPlease restart console and try again...", "red");
+    if (payload_path && isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
+      // check if elfldr is listening
+      var elfLoaderAvailable = await probeElfLoader();
+      
+      if (!elfLoaderAvailable) {
+        log("elfldr is not running, starting elfldr...", "yellow");
+        const loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
+        if (loadElfldr !== 1) {
+          log("Failed to load elfldr!\nPlease restart console and try again...", "red");
+          return;
+        }
+      }
+
+      await new Promise(function(resolve) { setTimeout(resolve, 2000); });
+
+      // Sending to elfldr
+      Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
+    } else {
+      // Inject HEN payload
+      const jb_step_status = await PayloadLoader(sessionStorage.getItem('payload_path'));
+      if (jb_step_status !== 1) {
+        window.log("Failed to load HEN!\nPlease restart console and try again...", "red");
         return;
       }
-      await new Promise(function(resolve) { setTimeout(resolve, 1500); });
-      window.log("\nKernel exploit succeeded!", "green");
-      window.log("nexHEN loaded successfully!", "green");
-    } else {
-      window.log("\nKernel exploit succeeded!", "green");
-      window.log("nexHEN is already active!", "green");
+      
     }
-
-    sessionStorage.removeItem("payload_path");
-
+    window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
     if (typeof jailbreakSuccess === "function") {
       jailbreakSuccess();
     }

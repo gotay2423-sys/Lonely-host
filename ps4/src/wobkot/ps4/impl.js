@@ -154,13 +154,18 @@ async function post_jailbreak() {
 }
 
 async function load_payload(){
-  log("Loading nexHEN...", "yellow");
-  load_bin("./includes/payloads/HEN/nexHEN-ps4.bin");
-  sessionStorage.removeItem("payload_path");
-  log("Kernel exploit succeeded!", "green");
-  log("nexHEN loaded successfully!", "green");
-  if (typeof jailbreakSuccess === "function") {
-    jailbreakSuccess();
+  const payload_path = sessionStorage.getItem("payload_path");
+  if (isPayloadElf(payload_path)){
+    const elfLoaderAvailable = await probeElfLoader();
+
+    if (!elfLoaderAvailable) {
+      load_bin("./includes/payloads/Bins/elfldr.bin");
+    }
+
+    await new Promise(function(resolve) { setTimeout(resolve, 2000); });
+    Loadpayloadlocal(payload_path, getPayloadName(payload_path), "jailbreak");
+  }else {
+    load_bin();
   }
 }
 

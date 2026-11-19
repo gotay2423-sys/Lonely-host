@@ -246,7 +246,7 @@ function makeRpc(worker) {
                 : "no firmware key, so no blob name -- stage 9 will not run"));
 
         let payload = null;
-        let payloadSource = payload_path || './includes/payloads/HEN/nexHEN-ps4.bin';
+        let payloadSource = isElfPayload ? './includes/payloads/Bins/elfldr.bin' : payload_path;
         try {
             const prsp = await fetch(payloadSource);
             if (prsp.ok) payload = new Uint8Array(await prsp.arrayBuffer());
@@ -645,7 +645,9 @@ function makeRpc(worker) {
                 state("Already Jailbroken ...", "warn");
                 mark("Already Jailbroken ...");
                 log("<br>");
-                sessionStorage.removeItem('payload_path');
+                if (isElfPayload && elfLoaderAvailable) {
+                    Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');                
+                }
                 window.jailbreakSuccess();
                 return;
             }
@@ -3837,7 +3839,9 @@ function makeRpc(worker) {
                         : jailbroken ? "ROOT -- NO REBOOT NEEDED"
                             : "REPAIRED -- NO REBOOT NEEDED";
                 stateEl.className = "ok";
-                sessionStorage.removeItem('payload_path');
+                if (isElfPayload) {
+                    Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');                
+                }
                 window.jailbreakSuccess();
             } catch (e) { }
         }
