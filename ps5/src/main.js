@@ -275,7 +275,9 @@ async function main(userlandRW) {
   }
 }
 
+window.prepareRop = prepareRop;
+
 const fwScript = document.createElement("script");
 document.body.appendChild(fwScript);
 
-fwScript.setAttribute("src", `offsets/${window.fw_str}.js?v=` + Date.now());
+fwScript.setAttribute("src", `offsets/${window.fw_str}.js`);

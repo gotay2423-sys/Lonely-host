@@ -69,8 +69,38 @@ function writeEvent(name, detail, type) {
 window.writeLog = writeLog;
 window.jb = { mark: writeEvent };
 
+let ropInitPromise = null;
+async function ensureRopRuntime() {
+  if (window.ropRuntime && window.ropRuntime.p && window.ropRuntime.chain) {
+    return window.ropRuntime;
+  }
+  if (ropInitPromise) {
+    return await ropInitPromise;
+  }
+  ropInitPromise = (async () => {
+    try {
+      // Ensure offset file has finished parsing if loaded asynchronously
+      if (typeof OFFSET_wk_host_constructor_candidates === "undefined") {
+        for (let i = 0; i < 30; i++) {
+          if (typeof OFFSET_wk_host_constructor_candidates !== "undefined") break;
+          await new Promise((r) => setTimeout(r, 50));
+        }
+      }
+      writeLog("Starting WebKit userland bridge...", "info");
+      const primitive = await getPrimitive();
+      writeLog(`WebKit base: 0x${getWebKitBase().toString(16)}`, "info");
+      const { p, chain } = await window.prepareRop(primitive);
+      window.ropRuntime = { p, chain };
+      return window.ropRuntime;
+    } finally {
+      ropInitPromise = null;
+    }
+  })();
+  return await ropInitPromise;
+}
+
 /* ---------- Pre-Flight ELF Loader Probing ---------- */
-async function probeElfLoader() {
+async function probeElfLoader(autoInit = false) {
   // 1. If hosted with local server (serve.py), probe the server's API
   try {
     const probeReq = await fetch("/api/probe", { cache: "no-store", signal: AbortSignal.timeout(1500) });
@@ -78,6 +108,11 @@ async function probeElfLoader() {
       const data = await probeReq.json();
       if (data.online) {
         updateElfldrStatus(true);
+        setStatus("JAILBROKEN", "success");
+        if (runBtn) {
+          runBtn.textContent = "JAILBROKEN";
+          runBtn.classList.add("btn-success");
+        }
         return { online: true };
       }
     }
@@ -86,10 +121,19 @@ async function probeElfLoader() {
   }
 
   // 2. If running on public host (e.g. GitHub Pages), verify via ROP socket
-  const rop = window.ropRuntime;
+  let rop = window.ropRuntime;
   if (!rop || !rop.chain || !rop.p) {
-    updateElfldrStatus(false);
-    return { online: false, reason: "Kernel exploit has not been run yet. Click RUN EXPLOIT first." };
+    if (autoInit) {
+      try {
+        rop = await ensureRopRuntime();
+      } catch (err) {
+        updateElfldrStatus(false);
+        return { online: false, reason: "WebKit userland bridge failed: " + err.message };
+      }
+    } else {
+      updateElfldrStatus(false);
+      return { online: false, reason: "Kernel exploit has not been run yet. Click RUN EXPLOIT first." };
+    }
   }
 
   try {
@@ -111,6 +155,11 @@ async function probeElfLoader() {
       const connRes = await chain.syscall(SYS_CONNECT, fd, sockaddr, 0x10);
       if (connRes.low === 0) {
         updateElfldrStatus(true);
+        setStatus("JAILBROKEN", "success");
+        if (runBtn) {
+          runBtn.textContent = "JAILBROKEN";
+          runBtn.classList.add("btn-success");
+        }
         return { online: true };
       } else {
         updateElfldrStatus(false);
@@ -166,18 +215,37 @@ async function run() {
   writeLog(`Agent: ${navigator.userAgent}`, "info");
   writeLog(`Firmware: ${window.fw_str}`, "info");
 
-  const primitive = await getPrimitive();
-  writeLog(`WebKit base: 0x${getWebKitBase().toString(16)}`, "info");
+  const rop = await ensureRopRuntime();
+
+  // If elfldr is ALREADY running on port 9021, DO NOT run kernel exploit again!
+  const probe = await probeElfLoader(false);
+  if (probe.online) {
+    writeLog("[+] System is ALREADY jailbroken! (elfldr active on port 9021)", "success");
+    writeLog("[+] Kernel exploit skipped to protect system stability.", "info");
+    writeLog("[+] Select any payload below to dispatch.", "info");
+    setStatus("JAILBROKEN", "success");
+    updateElfldrStatus(true);
+    if (runBtn) {
+      runBtn.textContent = "JAILBROKEN";
+      runBtn.classList.add("btn-success");
+      runBtn.disabled = false;
+    }
+    return;
+  }
 
   setStatus("STAGE 2: KERNEL", "running");
-  await import("./relapse_exploit.js");
-  await main(primitive);
+  const { runKernelExploit } = await import("./relapse_exploit.js");
+  const result = await runKernelExploit(rop.p, rop.chain, writeLog);
+  if (!result || !result.done)
+    throw new Error("Kernel exploit did not finish");
 
+  writeLog("Kernel exploit complete! elfldr is listening on port 9021", "success");
   setStatus("JAILBROKEN", "success");
   updateElfldrStatus(true);
   if (runBtn) {
     runBtn.textContent = "JAILBROKEN";
     runBtn.classList.add("btn-success");
+    runBtn.disabled = false;
   }
 }
 
@@ -286,8 +354,8 @@ async function dispatchPayload(payloadName, btn) {
     btn.textContent = "PROBING...";
   }
 
-  // Pre-flight check: is port 9021 active?
-  const probe = await probeElfLoader();
+  // Pre-flight check: is port 9021 active? Auto-initializes userland bridge if needed!
+  const probe = await probeElfLoader(true);
   if (!probe.online) {
     writeLog(`Pre-flight probe failed: ${probe.reason}`, "error");
     if (btn) {
