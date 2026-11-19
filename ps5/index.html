@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lonely — PS5 Exploit &amp; Payload Host</title>
+  <title>Lonely - PS5 Exploit &amp; Payload Host</title>
   <style>
     :root {
       --neon-pink: #ff007f;
@@ -329,12 +329,6 @@
       box-shadow: 0 0 14px var(--neon-pink);
     }
 
-    .p-icon {
-      font-size: 24px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
     .p-info {
       flex-grow: 1;
       min-width: 0;
@@ -351,8 +345,9 @@
       font-size: 11px;
       color: #8fa0be;
       margin-top: 2px;
-      white-space: normal;
-      word-break: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .btn-send {
@@ -368,7 +363,6 @@
       cursor: pointer;
       transition: all 0.2s ease;
       flex-shrink: 0;
-      margin-left: auto;
     }
 
     .btn-send:hover {
@@ -545,11 +539,11 @@
 
     <div class="header">
       <h1>Lonely</h1>
-      <p>PlayStation 5 WebKit &amp; Kernel Exploit Host &middot; FW 7.00 – 13.60</p>
+      <p>PlayStation 5 WebKit &amp; Kernel Exploit Host &middot; FW 7.00 - 13.60</p>
     </div>
 
     <div class="status-container">
-      <div class="chip fw-chip">FW <span id="fwText">7.00 – 13.60</span></div>
+      <div class="chip fw-chip">FW <span id="fwText">7.00 - 13.60</span></div>
       <div class="chip status-chip">
         <span class="led" id="statusLed"></span>
         <span id="statusText">SYSTEM READY</span>

@@ -16,7 +16,7 @@ const cacheText = document.getElementById("cacheText");
 
 // Auto-display detected firmware on load
 if (fwText) {
-  fwText.textContent = window.fw_str ? window.fw_str : "7.00 – 13.60";
+  fwText.textContent = window.fw_str ? window.fw_str : "7.00 - 13.60";
 }
 
 function setStatus(text, state = "normal") {
