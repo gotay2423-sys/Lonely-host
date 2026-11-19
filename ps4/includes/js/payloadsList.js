@@ -113,7 +113,7 @@ var payloadsList = [
   {
     id: "BetterLAN",
     name: "BetterLAN",
-    author: "Dakota",
+    author: "by ItsJokerZz",
     description: "LAN multiplayer proxy & tunnel for PS4 games without PSN.",
     specificFW: "5.05 - latest",
     category: "tools",
