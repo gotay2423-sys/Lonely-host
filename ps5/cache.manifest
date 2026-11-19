@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# Lonely Host PS5 Offline Cache v2
-# 2026-11-17
+# Lonely Host PS5 Offline Cache v2.1 - BetterLAN addition
+# 2026-11-18
 
 CACHE:
 index.html
@@ -55,6 +55,7 @@ payloads/klogsrv-ps5.elf
 payloads/shsrv-ps5.elf
 payloads/websrv-ps5.elf
 payloads/gdbsrv-ps5.elf
+payloads/betterlan-ps5.elf
 payloads/elfldr-ps5-1360.elf
 payloads/kexp_2026_05_25.bin
 

@@ -46,6 +46,7 @@ CACHE:
 ../../../includes/payloads/Bins/elfldr.bin
 ../../../includes/payloads/Bins/elfldr.elf
 ../../../includes/payloads/Bins/np-fake-signin-ps4.elf
+../../../includes/payloads/Bins/betterlan-ps4.elf
 ../../../includes/payloads/Bins/ps4-app-dumper.bin
 ../../../includes/payloads/Bins/ps4-app2usb.bin
 ../../../includes/payloads/Bins/ps4-backup.bin

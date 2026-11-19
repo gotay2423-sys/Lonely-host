@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lonely-ps5-v2';
+const CACHE_NAME = 'lonely-ps5-v2.1';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -56,6 +56,7 @@ const ASSETS_TO_CACHE = [
   './payloads/shsrv-ps5.elf',
   './payloads/websrv-ps5.elf',
   './payloads/gdbsrv-ps5.elf',
+  './payloads/betterlan-ps5.elf',
   './payloads/elfldr-ps5-1360.elf',
   './payloads/kexp_2026_05_25.bin'
 ];

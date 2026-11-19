@@ -111,6 +111,16 @@ var payloadsList = [
     needsPayloadLoader: true
   },
   {
+    id: "BetterLAN",
+    name: "BetterLAN",
+    author: "Dakota",
+    description: "LAN multiplayer proxy & tunnel for PS4 games without PSN.",
+    specificFW: "5.05 - latest",
+    category: "tools",
+    src: payloadsPath + "betterlan-ps4.elf",
+    needsPayloadLoader: true
+  },
+  {
     id: "BackupDB",
     name: "Backup DB",
     author: "Stooged",

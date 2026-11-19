@@ -441,6 +441,7 @@ if (cacheChip) {
           "./payloads/shsrv-ps5.elf",
           "./payloads/websrv-ps5.elf",
           "./payloads/gdbsrv-ps5.elf",
+          "./payloads/betterlan-ps5.elf",
           "./payloads/elfldr-ps5-1360.elf",
           "./payloads/kexp_2026_05_25.bin"
         ];

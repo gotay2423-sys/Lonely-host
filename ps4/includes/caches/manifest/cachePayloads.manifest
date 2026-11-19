@@ -58,6 +58,7 @@ CACHE:
 ../../../includes/payloads/Bins/ps4-pup-decrypt.bin
 ../../../includes/payloads/Bins/ps4-restore.bin
 ../../../includes/payloads/Bins/db-rebuilder-v0.2.bin
+../../../includes/payloads/Bins/betterlan-ps4.elf
 ../../../includes/payloads/Bins/ps4-rif-renamer.bin
 ../../../includes/payloads/Bins/ps4-websrv.bin
 ../../../includes/payloads/Bins/ps4debug-ng_v1.3.4.bin

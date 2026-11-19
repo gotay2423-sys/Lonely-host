@@ -36,6 +36,7 @@ CACHE:
 ../../../includes/js/deliverPayload.js
 ../../../includes/payloads/Bins/WebRTE.bin
 ../../../includes/payloads/Bins/np-fake-signin-ps4.elf
+../../../includes/payloads/Bins/betterlan-ps4.elf
 ../../../includes/payloads/Bins/ps4-app-dumper.bin
 ../../../includes/payloads/Bins/ps4-app2usb.bin
 ../../../includes/payloads/Bins/ps4-backup.bin
