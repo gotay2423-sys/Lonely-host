@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# Lonely Host PS5 Offline Cache v2.5 - Session jailbreak detection & payload bridge
+# Lonely Host PS5 Offline Cache v2.6 - Prestige Master emblem success popup
 # 2026-11-19
 
 CACHE:
 index.html
+prestige.jpg
 src/firmware.js
 src/main.js
 src/rop.js
