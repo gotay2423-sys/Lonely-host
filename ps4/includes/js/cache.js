@@ -7,6 +7,10 @@ window.addEventListener('load', function () {
 
     // check for applicationCache only on PS4
     if (isPS4User && (!window.applicationCache || window.applicationCache.status === window.applicationCache.UNCACHED) && !devMode) {
+        if (typeof storage !== 'undefined' && storage.session.getBoolean('cacheFailed', false)) {
+            console.log("Cache failed previously in this session. Skipping auto-redirect to cache.html.");
+            return;
+        }
         // Not cached! Redirecting...
         window.location.href = testModeUrl('./cache.html');
     }
@@ -21,7 +25,7 @@ function terminateCache() {
             window.applicationCache.abort();
             var appTitle = (typeof projectName !== 'undefined') ? projectName : "Lonely PS4";
             document.title = appTitle;
-            window.applicationCache.removeEventListener("progress", null);
+            window.applicationCache.onprogress = null;
             window.applicationCache.oncached = null;
             window.applicationCache.onupdateready = null;
         }

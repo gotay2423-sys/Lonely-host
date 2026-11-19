@@ -60,6 +60,7 @@
             } else if (data.type === 'CACHE_COMPLETE') {
                 fillEl.style.width = '100%';
                 statusEl.textContent = 'Cache complete! Redirecting...';
+                if (typeof storage !== 'undefined') storage.session.remove('cacheFailed');
                 setTimeout(function () {
                     window.location.replace(mainPage);
                 }, 1000);
@@ -67,6 +68,7 @@
             } else if (data.type === 'CACHE_UPDATED') {
                 fillEl.style.width = '100%';
                 statusEl.textContent = 'Updated to latest version! Redirecting...';
+                if (typeof storage !== 'undefined') storage.session.remove('cacheFailed');
                 setTimeout(function () {
                     window.location.replace(mainPage);
                 }, 1000);
@@ -74,6 +76,7 @@
             } else if (data.type === 'CACHE_UP_TO_DATE') {
                 fillEl.style.width = '100%';
                 statusEl.textContent = 'Already up to date! Redirecting...';
+                if (typeof storage !== 'undefined') storage.session.remove('cacheFailed');
                 setTimeout(function () {
                     window.location.replace(mainPage);
                 }, 800);
@@ -81,6 +84,7 @@
             } else if (data.type === 'CACHE_ERROR') {
                 var reason = data.reason || 'Unknown error';
                 statusEl.textContent = 'Cache error: ' + reason;
+                if (typeof storage !== 'undefined') storage.session.set('cacheFailed', true);
                 setTimeout(function () {
                     window.location.replace(mainPage);
                 }, 3000);

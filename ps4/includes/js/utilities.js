@@ -45,23 +45,20 @@ function isHttps() {
 
 // Works in both index.html and exploit.html
 function log(message, color, consoleEl) {
-    var consoleEl = consoleEl ? consoleEl : ui.consoleElement;
-    var consoleEl = (typeof ui !== 'undefined' && ui.consoleElement)
-        ? ui.consoleElement
-        : document.getElementById('console');
+    var targetConsole = consoleEl || (typeof ui !== 'undefined' && ui.consoleElement) || document.getElementById('console');
 
-    if (typeof user !== 'undefined' && user.clearLog && consoleEl) {
-        consoleEl.textContent = '';
+    if (typeof user !== 'undefined' && user.clearLog && targetConsole) {
+        targetConsole.textContent = '';
         user.clearLog = false;
     }
-    if (!consoleEl) return;
+    if (!targetConsole) return;
 
     var span = document.createElement('span');
     // break text into a new line to keep it visible
     span.style.whiteSpace = "pre-wrap";
     span.textContent = message + '\n';
     if (color) span.style.color = color;
-    consoleEl.appendChild(span);
+    targetConsole.appendChild(span);
 }
 
 function getReloadAfterJbValue() {

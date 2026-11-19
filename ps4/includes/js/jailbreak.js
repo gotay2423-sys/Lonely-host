@@ -1,10 +1,13 @@
 // @ts-nocheck
 // Jailbreak-related functions
 async function jailbreak() {
-  if (!isPS4Console() && !devMode) return;
+  if (!isPS4Console() && !devMode) {
+    if (typeof user !== 'undefined') user.blockJailbreak = false;
+    return;
+  }
 
   // clear terminal
-  ui.consoleElement.textContent = '';
+  if (ui.consoleElement) ui.consoleElement.textContent = '';
   // stop counter
   if (autoJbInterval) clearInterval(autoJbInterval);
 
@@ -15,8 +18,10 @@ async function jailbreak() {
   // autoJbRetry will pickup on userland fail and reload
   storage.session.set('autoJb', false);
 
-  // Always load nexHEN for jailbreak
-  chooseHEN();
+  // Set default HEN only if no payload or binloader already set
+  if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
+    chooseHEN();
+  }
   var payloadPath = storage.session.getString('payload_path', null);
 
   cleanUp();
@@ -42,6 +47,7 @@ async function jailbreak() {
     handler();
   } else {
     log("Error: Invalid exploit chain selected", "red");
+    if (typeof user !== 'undefined') user.blockJailbreak = false;
   }
 }
 
@@ -56,7 +62,9 @@ async function psfreeLapse() {
   } else { // bundle lapse
     log("Loading Feyzee61's PSFree Lapse Bundle implementation..");
     try {
-      await loadScript('./src/psfree-lapse/bundle.js', false, devMode);
+      if (typeof doJailBreak !== "function") {
+        await loadScript('./src/psfree-lapse/bundle.js', false, devMode);
+      }
 
       if (typeof doJailBreak === "function") {
         doJailBreak();
@@ -109,7 +117,7 @@ async function badHoistJailbreak() {
   if (isElfPayload) {
     elfLoaderAvailable = await probeElfLoader();
     log("Waiting 600ms");
-    sleep(600);
+    await sleep(600);
     if (elfLoaderAvailable) {
       log("elfldr is already running. Skipping elfldr.bin boot.", "green");
     } else {
@@ -127,10 +135,15 @@ async function badHoistJailbreak() {
 
     // Inject either the binary payload or elfldr.bin
     log("Injecting payload: " + injectionPath);
-    getPayload672(injectionPath);
+    if (!isPayloadElf(injectionPath)) {
+      getPayload672(injectionPath);
+    }
     await sleep(1000);
 
     if (isElfPayload) {
+      if (!elfLoaderAvailable) {
+        elfLoaderAvailable = await probeElfLoader();
+      }
       if (elfLoaderAvailable) {
         log("Sending the ELF payload: " + payloadPath, "green");
         Loadpayloadlocal(payloadPath, getPayloadName(payloadPath), "jailbreak");
@@ -223,7 +236,6 @@ async function loadSettings() {
     await initLanguage();
     loadTheme();
     loadLayout();
-    renderPayloads(payloadsList);
     loadAdvancedPayloads();
     loadLastTab();
     loadGoldHENVer();

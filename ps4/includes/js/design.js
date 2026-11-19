@@ -52,16 +52,20 @@ function loadLayout() {
 }
 
 function loadTheme() {
-    var savedColor = storage.getString('color', 'default');
+    var savedColor = storage.getString('color', 'lonely');
 
     // Find the radio button matching the saved theme
     var radioElement = document.querySelector('input[name="colorTheme"][value="' + savedColor + '"]');
 
     // Fallback if the saved theme doesn't exist or is invalid
     if (!radioElement) {
-        savedColor = 'default';
-        radioElement = document.querySelector('input[name="colorTheme"][value="default"]');
-        storage.set('color', 'default');
+        savedColor = 'lonely';
+        radioElement = document.querySelector('input[name="colorTheme"][value="lonely"]');
+        if (!radioElement) {
+            savedColor = 'default';
+            radioElement = document.querySelector('input[name="colorTheme"][value="default"]');
+        }
+        storage.set('color', savedColor);
         setTheme(savedColor);
     }
     if (radioElement) {

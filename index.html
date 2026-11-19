@@ -9,8 +9,7 @@
     // Automatic Console Redirection
     (function() {
       var ua = navigator.userAgent;
-      var params = new URLSearchParams(window.location.search);
-      if (params.get('stay') === '1') return; // Debug override
+      if (window.location.search.indexOf('stay=1') !== -1) return; // Debug override
 
       if (ua.indexOf("PlayStation 5") !== -1) {
         window.location.replace("./ps5/");
@@ -285,7 +284,7 @@
       <div class="console-card card-ps5">
         <div>
           <div class="card-top">
-            <h2 class="card-title title-ps5"><span>🎮</span> PS5 Host</h2>
+            <h2 class="card-title title-ps5">PS5 Host</h2>
             <span class="fw-badge badge-ps5">FW 7.00 – 13.60</span>
           </div>
           <p class="card-desc">
@@ -298,14 +297,14 @@
             <li><b>Features:</b> Auto-Run on Load &amp; Offline PWA Caching</li>
           </ul>
         </div>
-        <a href="./ps5/" class="btn-launch btn-launch-ps5">Launch PS5 Host ➔</a>
+        <a href="./ps5/" class="btn-launch btn-launch-ps5">Launch PS5 Host &gt;</a>
       </div>
 
       <!-- PlayStation 4 Card -->
       <div class="console-card card-ps4">
         <div>
           <div class="card-top">
-            <h2 class="card-title title-ps4"><span>🎮</span> PS4 Host</h2>
+            <h2 class="card-title title-ps4">PS4 Host</h2>
             <span class="fw-badge badge-ps4">FW 4.50 – 14.02</span>
           </div>
           <p class="card-desc">
@@ -313,18 +312,18 @@
           </p>
           <ul class="feature-list">
             <li><b>Kernel Chains:</b> Lapse, Netctrl, Relapse, Afterglow</li>
-            <li><b>HEN Flavors:</b> nexHEN (nexHEN.bin), GoldHEN, PS4HEN</li>
+            <li><b>HEN Flavors:</b> nexHEN (EchoStretch), GoldHEN, PS4HEN</li>
             <li><b>Payloads:</b> BinLoader (:9020), FTP, DB-Rebuilder, Linux</li>
             <li><b>Vibe:</b> Lonely Cyberpunk Cobalt Edition</li>
           </ul>
         </div>
-        <a href="./ps4/" class="btn-launch btn-launch-ps4">Launch PS4 Host ➔</a>
+        <a href="./ps4/" class="btn-launch btn-launch-ps4">Launch PS4 Host &gt;</a>
       </div>
     </div>
 
     <!-- Unified Credits Section -->
     <div class="credits-container">
-      <div class="credits-header">⚡ ACKNOWLEDGEMENTS &amp; CREDITS ⚡</div>
+      <div class="credits-header">ACKNOWLEDGEMENTS &amp; CREDITS</div>
       <div class="credits-row">
         <span class="tag-highlight">PS5 Exploit:</span> Based on <b>Relapse-Exploit</b> by <b>Sonic_Iso</b> &amp; <b>ntfargo</b>. Research by <b>TheFlow, Dr. Yenyen, ufm42, Jordy, Sleirsgoevy, Flatz, Specter, EchoStretch</b>.
       </div>

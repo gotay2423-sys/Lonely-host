@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v10.0 - reverted to commit 2422b9e (before PS5 layout)
-# Updated on 2026-11-19T13:40:00
+# v11.0 - audit fixes (nexHEN, lonely theme, offline cache fixes)
+# Updated on 2026-11-19T17:40:00
 
 CACHE:
 ../../../
@@ -87,7 +87,6 @@ CACHE:
 ../../../includes/payloads/Linux/linux-512mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
 ../../../src/slopkit/core.js
-../../../src/slopkit/core.js?v=10
 ../../../src/slopkit/int64.js
 ../../../src/slopkit/mem.js
 ../../../src/slopkit/ps4_offsets.js
@@ -95,13 +94,11 @@ CACHE:
 ../../../src/slopkit/chain_lapse.js
 ../../../src/slopkit/chain_poops.js
 ../../../src/relapse/core.js
-../../../src/relapse/core.js?v=10
 ../../../src/relapse/int64.js
 ../../../src/relapse/mem.js
 ../../../src/relapse/ps4_offsets.js
 ../../../src/relapse/rpc_worker.js
 ../../../src/relapse/jb.js
-../../../src/relapse/jb.js?v=10
 ../../../src/wobkot/ps4/impl.js
 ../../../src/wobkot/kernel.js
 ../../../src/wobkot/lapse.js
@@ -112,6 +109,10 @@ CACHE:
 ../../../src/wobkot/worker.js
 ../../../src/kpatches/1200.bin
 ../../../src/kpatches/1250.bin
+../../../prestige.jpg
+../../../includes/css/colors/lonely.css
+../../../includes/payloads/HEN/nexHEN-ps4.bin
+../../../includes/payloads/HEN/nexHEN-ps4.elf
 
 NETWORK:
 *

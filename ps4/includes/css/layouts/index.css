@@ -347,17 +347,17 @@ html {
 }
 
 .space-y-1> :not([hidden])~ :not([hidden]) {
-    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
     /* 4px */
 }
 
 .space-y-2> :not([hidden])~ :not([hidden]) {
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
     /* 8px */
 }
 
 .space-y-3> :not([hidden])~ :not([hidden]) {
-    margin-bottom: 0.75rem;
+    margin-top: 0.75rem;
     /* 12px */
 }
 
@@ -741,8 +741,8 @@ section {
     /* If you had sm:rtl:gap-8, you'd define it here too */
     /* [dir="rtl"] .sm\:rtl\:gap-8 { ... } */
 }
-/* 2. Mobile configuration (Screens smaller than 768px) */
-@media (max-width: 708px) {
+/* 2. Mobile configuration (Screens smaller than 710px) */
+@media (max-width: 709px) {
     #exploit-status-panel {
         display: none !important; /* Completely hide exploit console on mobile */
     }
@@ -819,6 +819,7 @@ button {
 }
 
 #tools-tab,
+#homebrew-tab,
 #linux-tab,
 #advanced-tab,
 #custom-tab {
@@ -871,7 +872,7 @@ button {
     justify-content: space-around;
 }
 
-#default-tabs li {
+#default-tab li {
     width: 33%;
 }
 

@@ -39,22 +39,24 @@ function autoJailbreak() {
 
     // If auto jb retry is checked and previous jailbreak attempt was unsuccessful, retry jailbreak with a timer
     if (autoJbRetryChecked && autoJbRetrySessionChecked) {
-        autoJailbreakTimer();
-    }
-
-    // If auto jb is checked and autoJb session value is false, execute jailbreak with a timer
-    if (autoJbChecked && autoJbSessionChecked) {
+        autoJailbreakTimer(false);
+    } else if (autoJbChecked && autoJbSessionChecked) {
+        // If auto jb is checked and autoJb session value is false, execute jailbreak with a timer
         autoJailbreakTimer(true);
     }
 }
 
 // Storage retry value true but no sessionStorage value? use timer.
 function autoJailbreakTimer(permanentJb) {
-    var timer = 3; // Start a longer countdown immediately
-    if (ui.stopAutoJbBtn) toggleVisibility(ui.stopAutoJbBtn.id);
+    if (autoJbInterval) {
+        clearInterval(autoJbInterval);
+        autoJbInterval = null;
+    }
+    var timer = 3; // Start countdown
+    if (ui.stopAutoJbBtn) toggleVisibility(ui.stopAutoJbBtn.id, true);
     // check if language values are available, if not, use default values
-    var autoJbRetryText = lang.autoJbRetry || "Retrying in {seconds} seconds...";
-    var autoJbText = lang.autoJb || "Auto-Jailbreak enabled. Executing in {seconds} seconds...";
+    var autoJbRetryText = (typeof lang !== 'undefined' && lang.autoJbRetry) || (window.lang && window.lang.autoJbRetry) || "Retrying in {seconds} seconds...";
+    var autoJbText = (typeof lang !== 'undefined' && lang.autoJb) || (window.lang && window.lang.autoJb) || "Auto-Jailbreak enabled. Executing in {seconds} seconds...";
     var message = permanentJb ? autoJbText : autoJbRetryText;
 
     // paste this again so it displays immediately on page load
@@ -70,6 +72,7 @@ function autoJailbreakTimer(permanentJb) {
         }
         if (timer < 0) {
             clearInterval(autoJbInterval);
+            autoJbInterval = null;
             jailbreak();
         }
     }, 1000);

@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v10.0 - reverted to commit 2422b9e (before PS5 layout)
-# Updated on 2026-11-19T13:40:00
+# v11.0 - audit fixes (nexHEN, lonely theme, offline cache fixes)
+# Updated on 2026-11-19T17:40:00
 
 CACHE:
 ../../../
@@ -106,11 +106,15 @@ CACHE:
 ../../../src/kpatches/1000.bin
 ../../../src/kpatches/1050.bin
 ../../../src/slopkit/core.js
-../../../src/slopkit/core.js?v=10
 ../../../src/slopkit/int64.js
 ../../../src/slopkit/mem.js
 ../../../src/slopkit/ps4_offsets.js
 ../../../src/slopkit/rpc_worker.js
 ../../../src/slopkit/chain_lapse.js
+../../../prestige.jpg
+../../../includes/css/colors/lonely.css
+../../../includes/payloads/HEN/nexHEN-ps4.bin
+../../../includes/payloads/HEN/nexHEN-ps4.elf
+../../../includes/assets/icons/webkitty.svg
 NETWORK:
 *

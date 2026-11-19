@@ -11,7 +11,7 @@ var payloadsList = [
     description: "Homebrew Enabler & Debug Settings for PS4.",
     specificFW: "5.05 - latest",
     category: "tools",
-    src: "./includes/payloads/HEN/nexHEN-ps4.elf"
+    src: "./includes/payloads/HEN/nexHEN-ps4.bin"
   },
   {
     id: "FTP",
@@ -76,9 +76,10 @@ var payloadsList = [
     id: "EnableBrowser",
     name: "PS4 Enable Browser",
     author: "Scene Collective",
-    description: "Permenently activates the browser without needing to sign into PSN.",
+    description: "Permanently activates the browser without needing to sign into PSN.",
     specificFW: "4.50 - 5.07",
     category: "tools",
+    src: legacyPayloadsPath + "ps4-enable-browser-legacy.bin",
     legacySrc: legacyPayloadsPath + "ps4-enable-browser-legacy.bin"
   },
   {
@@ -124,7 +125,7 @@ var payloadsList = [
     id: "BackupDB",
     name: "Backup DB",
     author: "Stooged",
-    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitalize as your keys may change.",
+    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitialize as your keys may change.",
     specificFW: "4.73 - latest",
     category: "tools",
     src: payloadsPath + "ps4-backup.bin"
@@ -293,7 +294,7 @@ var payloadsList = [
     id: "PermanentUART",
     name: "Permanent UART",
     author: "JTAG7371",
-    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
+    description: "Enabled hardware based UART without a kernel patch, persists through updates.",
     specificFW: "4.73 - latest",
     category: "advanced",
     src: payloadsPath + "ps4-permanent-uart.bin"
@@ -341,14 +342,14 @@ var payloadsList = [
     id: "Itemzflow",
     name: "Itemzflow Installer",
     author: "LightningMods",
-    description: "Itemzflow is a Free and Open source PS4 home menu alternative Itemzflow expands the beyond limits of Sony's ShellUI.<br>You need an internet connection to use this payload.",
+    description: "Itemzflow is a Free and Open source PS4 home menu alternative. Itemzflow expands beyond the limits of Sony's ShellUI.<br>You need an internet connection to use this payload.",
     specificFW: "4.73 - latest",
     category: "homebrew",
     src: homebrewPath + "PS4-Itemzflow-v108.bin",
     needsPayloadLoader: true
   },
   {
-    id: "PS4Xplorer2.10",
+    id: "PS4Xplorer2-10",
     name: "File Xplorer 2.0",
     author: "Lapy",
     description: "A File Manager for the PlayStation 4 console.<br>You need an internet connection to use this payload.",

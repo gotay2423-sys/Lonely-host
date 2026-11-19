@@ -52,7 +52,8 @@ function loadLanguage() {
 }
 
 function isRtl() {
-        return rtlLangs.indexOf(user.currentLanguage) !== -1;
+    var rtlList = (typeof rtlLangs !== 'undefined') ? rtlLangs : ["ar", "fa"];
+    return rtlList.indexOf(user.currentLanguage) !== -1;
 }
 
 function saveLanguage(language) {
@@ -96,7 +97,7 @@ function applyLanguage(lang) {
     document.title = projectName;
     document.dir = isRtl() ? 'rtl' : 'ltr';
     if (ui.consoleElement) ui.consoleElement.dir = document.dir;
-    document.lang = user.currentLanguage;
+    document.documentElement.lang = user.currentLanguage;
 
     // PS4 Firmware Status
     var ps4Fw = window.ps4Fw;
@@ -119,7 +120,7 @@ function applyLanguage(lang) {
     // Main Screen Elements
     var currentTheme = storage.getString('theme', 'index');
     if (currentTheme == 'compact') {
-        updateText(ui.clickToStartText, projectName);
+        if (ui.clickToStartText) ui.clickToStartText.textContent = projectName;
     } else {
         updateText(ui.clickToStartText, 'clickToStart');
     }
@@ -128,8 +129,11 @@ function applyLanguage(lang) {
 
     // About Popup
     if (ui.aboutPopup) {
-        updateText(ui.aboutPopup.querySelector('h2'), 'aboutMenu');
-        if (projectName) ui.aboutPopup.querySelector('h2').textContent += ' ' + projectName;
+        var aboutHeading = ui.aboutPopup.querySelector('h2');
+        if (aboutHeading) {
+            updateText(aboutHeading, 'aboutMenu');
+            if (projectName) aboutHeading.textContent += ' ' + projectName;
+        }
 
         var aboutParagraphs = ui.aboutPopup.querySelectorAll('p');
         if (aboutParagraphs.length > 0) updateText(aboutParagraphs[0], 'aboutVersion');

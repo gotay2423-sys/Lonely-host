@@ -19,9 +19,12 @@ var user = {
   blockJailbreak: false,                                                    // Prevent double jailbreak execution
 };
 
-// Force nexHEN as the only jailbreak payload
-storage.set('jailbreakFlavor', 'nexHEN');
-storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.elf');
+// Set default jailbreak payload only if not already set by user selection or BinLoader
+if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
+  var defaultFlavor = storage.getString('jailbreakFlavor', 'nexHEN');
+  storage.set('jailbreakFlavor', defaultFlavor);
+  storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.bin');
+}
 
 var ui = {
   mainContainer: document.querySelector('.mainContainer'),

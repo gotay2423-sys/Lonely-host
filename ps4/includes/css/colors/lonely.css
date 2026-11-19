@@ -263,7 +263,7 @@ body {
 }
 
 /* Custom Highlight for nexHEN */
-.payload[data-id="nexHEN"], .payload[id*="nexHEN"], .payload[id*="nexhen"] {
+.payload[data-id="nexHEN"], .payload[data-payload-id="nexHEN"], .payload[id*="nexHEN"], .payload[id*="nexhen"] {
     border-color: rgba(0, 243, 255, 0.7) !important;
     background: linear-gradient(135deg, rgba(0, 128, 255, 0.35) 0%, rgba(8, 18, 42, 0.9) 100%) !important;
     box-shadow: 0 0 20px rgba(0, 243, 255, 0.35) !important;
@@ -456,4 +456,18 @@ body {
         max-width: none !important;
     }
 }
+
+/* Base utility fallbacks */
+.bg-gray-800 { background-color: #1f2937; }
+.bg-gray-700 { background-color: #374151; }
+.bg-blue-600 { background-color: #2563eb; }
+.bg-red-600 { background-color: #dc2626; }
+.bg-black\/50 { background-color: rgba(0, 0, 0, 0.5); }
+.border { border: 1px solid rgba(255, 255, 255, 0.1); }
+.text-white { color: #ffffff; }
+.tabs button[aria-selected="true"] {
+    border-bottom: 2px solid #00f3ff;
+    color: #ffffff;
+}
+
 

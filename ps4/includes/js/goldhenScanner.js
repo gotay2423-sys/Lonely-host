@@ -18,11 +18,10 @@ function guessIp() {
             if (ui.ps4IpInput && !ui.ps4IpInput.classList.contains("hidden")) {
                 ui.ps4IpInput.value = user.ip;
             }
-            return; // PS4 browsing its own local server
+            return Promise.resolve("127.0.0.1"); // PS4 browsing its own local server
         } else {
             // PC browsing a hosted site.
-            findPs4FromBaseIP(host);
-            return;
+            return findPs4FromBaseIP(host);
         }
     }
 
@@ -30,17 +29,23 @@ function guessIp() {
     var isLoopback = (host === "localhost" || host === "127.0.0.1");
     if (isLoopback) {
         if (isPS4) {
-            return host;
+            user.ip = "127.0.0.1";
+            return Promise.resolve("127.0.0.1");
         } else {
             // check if input has a valid ip that can be used to search for the ps4
-            if (inputIp !== 'localhost' && inputIp !== '127.0.0.1') {
-                findPs4FromBaseIP(inputIp);
+            if (inputIp !== 'localhost' && inputIp !== '127.0.0.1' && isLocalIP(inputIp)) {
+                return findPs4FromBaseIP(inputIp);
             } else {
                 alert("Can't scan for ip since its not provided");
+                return Promise.reject(new Error("IP not provided"));
             }
-            return;
         }
     }
+
+    if (inputIp && isLocalIP(inputIp)) {
+        return findPs4FromBaseIP(inputIp);
+    }
+    return Promise.resolve(user.ip || "127.0.0.1");
 }
 
 function findPs4FromBaseIP(ip) {
@@ -48,7 +53,7 @@ function findPs4FromBaseIP(ip) {
         log("Can't scan for ip using localhost (from url)", 'orange');
         log("Tipp: browse this website using your local ip. Example: 192.168.2.123");
         settingsPopup();
-        return;
+        return Promise.reject(new Error("Cannot scan localhost"));
     }
     return new Promise(function (resolve, reject) {
         var base = baseIp(ip);
@@ -61,7 +66,8 @@ function findPs4FromBaseIP(ip) {
         function onDone() {
             checked++;
             if (checked === total && !found) {
-                alert(window.lang.payloadLoaderNotFound);
+                alert((window.lang && window.lang.payloadLoaderNotFound) || "Payload Loader server not found on local network.");
+                reject(new Error("Payload loader not found"));
             }
         }
 

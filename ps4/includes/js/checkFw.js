@@ -26,8 +26,9 @@ function CheckFW() {
             var dotIndex = fwVersion.indexOf('.');
             var major = dotIndex !== -1 ? fwVersion.substring(0, dotIndex) : fwVersion;
             if (user.ps4Fw >= 4.50 && user.ps4Fw <= 5.07) major = '450-507';
+            if (user.ps4Fw >= 6.70 && user.ps4Fw <= 6.72) major = '67';
             if (user.ps4Fw == 14.00 || user.ps4Fw == 14.02) major = '140x';
-            var el = document.getElementById('fw' + major);
+            var el = document.getElementById('fw' + major) || (major === '6' ? document.getElementById('fw67') : null);
             if (el) el.classList.add('fwSelected');
 
             updateExploitChainVisibility(fwVersion);

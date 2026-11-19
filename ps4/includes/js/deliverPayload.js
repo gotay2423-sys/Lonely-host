@@ -99,9 +99,12 @@ function probeElfLoader() {
         xhr.timeout = 2000; // 2 second timeout
         
         xhr.onload = function () {
-            log("Elfldr probe response: " + xhr.status + " " + xhr.statusText);
-            // Even a 404 or connection response means something is listening on port 9021
-            resolve(true);
+            if (xhr.status > 0) {
+                log("Elfldr probe response: " + xhr.status + " " + xhr.statusText);
+                resolve(true);
+            } else {
+                resolve(false);
+            }
         };
         
         xhr.onerror = function () {
@@ -327,23 +330,27 @@ function Loadpayloadonline(PLfile) {
     }
 
     if (isPS4Console()) {
-        jailbreak();
+        location.reload();
     }
 }
 
 // Custom Uploaded Payload
 function customPayload(payloadFile) {
     if (!payloadFile) {
-        alert(window.lang.emptyPayloadFile);
+        alert((window.lang && window.lang.emptyPayloadFile) || "Please select a payload file.");
         return;
     }
-    Loadpayloadlocal(URL.createObjectURL(payloadFile), payloadFile.name, payloadFile.id);
-    log(window.lang.customPayloadLoaded + payloadFile.name);
+    var blobUrl = URL.createObjectURL(payloadFile);
+    Loadpayloadlocal(blobUrl, payloadFile.name, 'custom');
+    log(((window.lang && window.lang.customPayloadLoaded) || "Custom payload loaded: ") + payloadFile.name);
+    setTimeout(function () {
+        try { URL.revokeObjectURL(blobUrl); } catch (_) { }
+    }, 30000);
 }
 
 function payloadRouter(payload) {
     if (!isPayloadSupported(payload)) {
-        alert(window.lang.unsupportedFirmware + user.ps4Fw);
+        alert((window.lang && window.lang.unsupportedFirmware ? window.lang.unsupportedFirmware : "Unsupported firmware: ") + (user && user.ps4Fw ? user.ps4Fw : ""));
         return;
     }
     // If it's a HEN payload (nexHEN, GoldHEN, PS4HEN), run jailbreak directly with that payload
@@ -358,16 +365,25 @@ function payloadRouter(payload) {
     if (payload.src == undefined && payload.legacySrc == undefined) {
         Loadpayloadonline(undefined);
     } else {
-        // check for firmware to load a legacy payload instead
-        if (getPs4FwVersion() <= 4.74 && payload.legacySrc != undefined) {
-            payload.src = payload.legacySrc;
+        var fwRaw = getPs4FwVersion() || (typeof user !== 'undefined' ? user.ps4Fw : null);
+        var fwNum = (fwRaw !== null && fwRaw !== undefined) ? parseFloat(fwRaw) : NaN;
+        var targetSrc = payload.src;
+
+        if (!isNaN(fwNum) && fwNum <= 4.74 && payload.legacySrc !== undefined) {
+            targetSrc = payload.legacySrc;
+        } else if (targetSrc === undefined && payload.legacySrc !== undefined) {
+            targetSrc = payload.legacySrc;
         }
 
-        Loadpayloadlocal(payload.src, payload.name, payload.id, payload.needsPayloadLoader);
-        // install both base and update for psvue
-        if (payload.id == 'PSVue') {
-            payload.src = payload.src.replace('base', '124');
-            Loadpayloadlocal(payload.src, payload.name, payload.id, payload.needsPayloadLoader);
+        Loadpayloadlocal(targetSrc, payload.name, payload.id, payload.needsPayloadLoader);
+        // install both base and update for psvue without mutating original payload object
+        if (payload.id === 'PSVue' && typeof targetSrc === 'string') {
+            var updateSrc = targetSrc.replace('base', '124');
+            if (updateSrc !== targetSrc) {
+                setTimeout(function () {
+                    Loadpayloadlocal(updateSrc, payload.name + ' (Update)', payload.id, payload.needsPayloadLoader);
+                }, 2500);
+            }
         }
     }
 }
