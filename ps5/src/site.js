@@ -69,38 +69,6 @@ function writeEvent(name, detail, type) {
 window.writeLog = writeLog;
 window.jb = { mark: writeEvent };
 
-let isAlreadyJailbroken = false;
-
-function markJailbroken(reason) {
-  isAlreadyJailbroken = true;
-  sessionStorage.setItem("lonely_ps5_jailbroken", "1");
-  setStatus("ALREADY JAILBROKEN", "success");
-  updateElfldrStatus(true);
-  if (runBtn) {
-    runBtn.textContent = "JAILBROKEN ✓";
-    runBtn.classList.add("btn-success");
-    runBtn.disabled = false;
-  }
-  if (autoRunTimer) {
-    clearInterval(autoRunTimer);
-    autoRunTimer = null;
-  }
-  writeLog(`[+] System is already jailbroken (${reason || "active session"}).`, "success");
-  writeLog("[+] Kernel exploit locked to prevent kernel deadlock.", "info");
-  writeLog("[+] ELFLDR is active on port 9021. Select any payload below to dispatch.", "info");
-}
-
-async function ensureRopRuntime() {
-  if (window.ropRuntime && window.ropRuntime.p && window.ropRuntime.chain) {
-    return window.ropRuntime;
-  }
-  writeLog("Initializing userland ROP socket bridge...", "info");
-  const primitive = await getPrimitive();
-  const { p, chain } = await prepareRop(primitive);
-  window.ropRuntime = { p, chain };
-  return window.ropRuntime;
-}
-
 /* ---------- Pre-Flight ELF Loader Probing ---------- */
 async function probeElfLoader() {
   // 1. If hosted with local server (serve.py), probe the server's API
@@ -118,15 +86,7 @@ async function probeElfLoader() {
   }
 
   // 2. If running on public host (e.g. GitHub Pages), verify via ROP socket
-  let rop = window.ropRuntime;
-  if (!rop || !rop.chain || !rop.p) {
-    if (isAlreadyJailbroken || sessionStorage.getItem("lonely_ps5_jailbroken") === "1") {
-      try {
-        rop = await ensureRopRuntime();
-      } catch (_) {}
-    }
-  }
-
+  const rop = window.ropRuntime;
   if (!rop || !rop.chain || !rop.p) {
     updateElfldrStatus(false);
     return { online: false, reason: "Kernel exploit has not been run yet. Click RUN EXPLOIT first." };
@@ -191,13 +151,6 @@ function getWebKitBase() {
 }
 
 async function run() {
-  if (isAlreadyJailbroken || sessionStorage.getItem("lonely_ps5_jailbroken") === "1") {
-    writeLog("Console is already jailbroken! Re-running kernel exploit on an active kernel causes system crash / deadlock.", "error");
-    writeLog("Kernel exploit skipped. Select any payload below to dispatch.", "info");
-    markJailbroken("already active");
-    return;
-  }
-
   if (runBtn) {
     runBtn.disabled = true;
     runBtn.textContent = "EXPLOITING...";
@@ -222,8 +175,6 @@ async function run() {
 
   setStatus("JAILBROKEN", "success");
   updateElfldrStatus(true);
-  isAlreadyJailbroken = true;
-  sessionStorage.setItem("lonely_ps5_jailbroken", "1");
   if (runBtn) {
     runBtn.textContent = "JAILBROKEN ✓";
     runBtn.classList.add("btn-success");
@@ -290,9 +241,9 @@ if (isAutoRun && runBtn && !runBtn.disabled) {
 
 /* ---------- Dual-Mode Payload Dispatcher ---------- */
 async function sendPayloadViaRop(bytes, payloadName) {
-  const rop = await ensureRopRuntime();
+  const rop = window.ropRuntime;
   if (!rop || !rop.chain || !rop.p) {
-    throw new Error("ROP runtime unavailable. Could not establish socket bridge.");
+    throw new Error("ROP runtime unavailable. Run the exploit first.");
   }
   const { p, chain } = rop;
   // sockaddr_in for 127.0.0.1:9021
@@ -468,7 +419,7 @@ if (cacheChip) {
 
     if ("caches" in window) {
       try {
-        const cache = await caches.open("lonely-ps5-v2.2");
+        const cache = await caches.open("lonely-ps5-v2");
         const urlsToCache = [
           "./",
           "./index.html",
@@ -515,59 +466,4 @@ if (cacheChip) {
   });
 }
 
-/* ---------- Automatic Session Jailbreak Detection ---------- */
-async function detectJailbreakOnLoad() {
-  // 1. Check session storage (persists across reloads/navs in same browser session)
-  if (sessionStorage.getItem("lonely_ps5_jailbroken") === "1") {
-    markJailbroken("session detected");
-    return;
-  }
-
-  // 2. Check local server API if running via serve.py
-  try {
-    const probeReq = await fetch("/api/probe", { cache: "no-store", signal: AbortSignal.timeout(800) });
-    if (probeReq.ok) {
-      const data = await probeReq.json();
-      if (data.online) {
-        markJailbroken("daemon active");
-        return;
-      }
-    }
-  } catch (_) {}
-
-  // 3. Probe loopback port 9021 (elfldr)
-  try {
-    const isLocalElfldr = await new Promise((resolve) => {
-      let settled = false;
-      const done = (val) => {
-        if (!settled) {
-          settled = true;
-          resolve(val);
-        }
-      };
-      const start = performance.now();
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", "http://127.0.0.1:9021/status", true);
-      xhr.timeout = 1000;
-      xhr.onload = () => done(true);
-      xhr.onerror = () => {
-        const elapsed = performance.now() - start;
-        done(elapsed > 35);
-      };
-      xhr.ontimeout = () => done(true);
-      try {
-        xhr.send();
-      } catch (_) {
-        done(false);
-      }
-    });
-
-    if (isLocalElfldr) {
-      markJailbroken("port 9021 active");
-      return;
-    }
-  } catch (_) {}
-}
-
 initOfflineCache();
-detectJailbreakOnLoad();

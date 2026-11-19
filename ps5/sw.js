@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lonely-ps5-v2.2';
+const CACHE_NAME = 'lonely-ps5-v2.1';
 
 const ASSETS_TO_CACHE = [
   './',
