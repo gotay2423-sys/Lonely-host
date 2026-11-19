@@ -4818,17 +4818,27 @@ async function kexSuccess() {
       var elfLoaderAvailable = await probeElfLoader();
       
       if (!elfLoaderAvailable) {
-        log("elfldr is not running, starting elfldr...", "yellow");
+        log("Starting elfldr daemon...", "yellow");
         const loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
         if (loadElfldr !== 1) {
           log("Failed to load elfldr!\nPlease restart console and try again...", "red");
           return;
         }
+
+        // Poll port 9021 until elfldr daemon is actively listening
+        log("Waiting for elfldr on port 9021...", "yellow");
+        for (var attempt = 1; attempt <= 10; attempt++) {
+          await new Promise(function(resolve) { setTimeout(resolve, 600); });
+          elfLoaderAvailable = await probeElfLoader();
+          if (elfLoaderAvailable) {
+            log("elfldr is ready on port 9021", "green");
+            break;
+          }
+        }
       }
 
-      await new Promise(function(resolve) { setTimeout(resolve, 2000); });
-
-      // Sending to elfldr
+      // Sending nexHEN to elfldr
+      log("Dispatching nexHEN to elfldr...", "yellow");
       Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
     } else {
       // Inject HEN payload

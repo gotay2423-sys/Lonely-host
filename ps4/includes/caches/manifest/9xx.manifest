@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v2.9 - jb success popup with prestige emblem
-# Updated on 2026-11-18
+# v3.0 - exclusive nexHEN loader with active elfldr 9021 polling
+# Updated on 2026-11-19
 
 CACHE:
 ../../../
@@ -62,13 +62,6 @@ CACHE:
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold70.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold80.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold85.bin
-../../../includes/payloads/HEN/goldhen_v2.4b18.12.bin
-../../../includes/payloads/HEN/goldhen_v2.4b18.13.bin
-../../../includes/payloads/HEN/goldhen_v2.4b18.14.bin
-../../../includes/payloads/HEN/goldhen_v2.4b18.8.bin
-../../../includes/payloads/HEN/goldhen_v2.4b18.9.bin
-../../../includes/payloads/HEN/goldhen_v2.4b18.10.bin
-../../../includes/payloads/HEN/PS4HEN.bin
 ../../../includes/payloads/HEN/nexHEN-ps4.elf
 ../../../includes/payloads/Linux/linux-32mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
