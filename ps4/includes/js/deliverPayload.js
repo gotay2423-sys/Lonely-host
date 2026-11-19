@@ -321,12 +321,9 @@ function payloadRouter(payload) {
         alert(window.lang.unsupportedFirmware + user.ps4Fw);
         return;
     }
-    // If it's a HEN payload, run jailbreak directly with nexHEN
+    // If it's a HEN payload, dispatch directly to elfldr without re-running jailbreak
     if (payload.id === 'nexHEN' || payload.id === 'GoldHEN' || payload.id === 'PS4HEN') {
-        storage.set('jailbreakFlavor', 'nexHEN');
-        storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.elf');
-        user.currentJbFlavor = 'nexHEN';
-        jailbreak();
+        Loadpayloadlocal('./includes/payloads/HEN/nexHEN-ps4.elf', 'nexHEN', 'nexHEN');
         return;
     }
     // It's a BinLoader

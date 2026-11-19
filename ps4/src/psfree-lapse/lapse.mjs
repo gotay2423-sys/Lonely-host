@@ -1996,30 +1996,17 @@ async function kexSuccess() {
     doneSuccessfully();
     runBinLoader();
   } else {
-    let payload_path = sessionStorage.getItem("payload_path");
-    if (isPayloadElf(payload_path)) payload_path = payload_path.replace('.bin', '.elf');
-    log("Payload path: " + payload_path);
-
-    if (payload_path && isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
-      // check if elfldr is listening
-      var elfLoaderAvailable = await probeElfLoader();
-      
-      if (!elfLoaderAvailable) {
-        log("elfldr is not running, starting elfldr...", "yellow");
-        runPayload('./includes/payloads/Bins/elfldr.bin', true);
-        
-        await new Promise(function(resolve) { setTimeout(resolve, 2000); });
-      }
-
-      // Sending to elfldr
-      Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
-      doneSuccessfully();
-    } else {
-      // Inject HEN payload
-      runPayload(sessionStorage.getItem('payload_path'));
+    var elfLoaderAvailable = await probeElfLoader();
+    if (!elfLoaderAvailable) {
+      log("Starting elfldr daemon...", "yellow");
+      runPayload('./includes/payloads/Bins/elfldr.bin', true);
+      await new Promise(function(resolve) { setTimeout(resolve, 2000); });
     }
-    window.log("Payload loaded", "green");
-    window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
+
+    window.log("\nKernel exploit succeeded!", "green");
+    window.log("System Ready. Select a payload below to dispatch.", "cyan");
+    sessionStorage.removeItem("payload_path");
+    doneSuccessfully();
   }
 }
 

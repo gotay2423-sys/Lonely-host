@@ -4809,47 +4809,38 @@ async function kexSuccess() {
   if (sessionStorage.getItem('binloader')) {
     runBinLoader();
   } else {
-    let payload_path = sessionStorage.getItem("payload_path");
-    if (isPayloadElf(payload_path)) payload_path = payload_path.replace('.bin', '.elf');
-    window.log("Payload path: " + payload_path);
-
-    if (payload_path && isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
-      // check if elfldr is listening
-      var elfLoaderAvailable = await probeElfLoader();
-      
-      if (!elfLoaderAvailable) {
-        log("Starting elfldr daemon...", "yellow");
-        const loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
-        if (loadElfldr !== 1) {
-          log("Failed to load elfldr!\nPlease restart console and try again...", "red");
-          return;
-        }
-
-        // Poll port 9021 until elfldr daemon is actively listening
-        log("Waiting for elfldr on port 9021...", "yellow");
-        for (var attempt = 1; attempt <= 10; attempt++) {
-          await new Promise(function(resolve) { setTimeout(resolve, 600); });
-          elfLoaderAvailable = await probeElfLoader();
-          if (elfLoaderAvailable) {
-            log("elfldr is ready on port 9021", "green");
-            break;
-          }
-        }
-      }
-
-      // Sending nexHEN to elfldr
-      log("Dispatching nexHEN to elfldr...", "yellow");
-      Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
-    } else {
-      // Inject HEN payload
-      const jb_step_status = await PayloadLoader(sessionStorage.getItem('payload_path'));
-      if (jb_step_status !== 1) {
-        window.log("Failed to load HEN!\nPlease restart console and try again...", "red");
+    // Ensure elfldr daemon is running on port 9021 so user can dispatch payloads
+    var elfLoaderAvailable = await probeElfLoader();
+    
+    if (!elfLoaderAvailable) {
+      log("Starting elfldr daemon...", "yellow");
+      const loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
+      if (loadElfldr !== 1) {
+        log("Failed to load elfldr!\nPlease restart console and try again...", "red");
         return;
       }
-      
+
+      // Poll port 9021 until elfldr daemon is actively listening
+      log("Waiting for elfldr on port 9021...", "yellow");
+      for (var attempt = 1; attempt <= 10; attempt++) {
+        await new Promise(function(resolve) { setTimeout(resolve, 500); });
+        elfLoaderAvailable = await probeElfLoader();
+        if (elfLoaderAvailable) {
+          break;
+        }
+      }
     }
-    window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
+
+    if (elfLoaderAvailable) {
+      log("elfldr is active on port 9021", "green");
+    }
+
+    window.log("\nKernel exploit succeeded!", "green");
+    window.log("System Ready. Select a payload below to dispatch.", "cyan");
+
+    // Clear any queued payload path so nothing ever auto-loads
+    sessionStorage.removeItem("payload_path");
+
     if (typeof jailbreakSuccess === "function") {
       jailbreakSuccess();
     }

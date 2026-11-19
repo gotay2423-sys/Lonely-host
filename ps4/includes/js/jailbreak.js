@@ -15,14 +15,12 @@ async function jailbreak() {
   // autoJbRetry will pickup on userland fail and reload
   storage.session.set('autoJb', false);
 
-  // Always load nexHEN for jailbreak
-  chooseHEN();
-  var payloadPath = storage.session.getString('payload_path', null);
+  // Do not auto-load any payload on jailbreak
+  storage.session.remove('payload_path');
 
   cleanUp();
 
-  payloadPath = storage.session.getString('payload_path', null);
-  log("Loading: " + payloadPath);
+  log("Starting WebKit & Kernel Exploit...");
 
   // barebone exploit preferred? go to exploit file
   if (user.bareboneJB) {

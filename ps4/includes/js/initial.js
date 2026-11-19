@@ -21,7 +21,7 @@ var user = {
 
 // Force nexHEN as the only jailbreak payload
 storage.set('jailbreakFlavor', 'nexHEN');
-storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.elf');
+storage.session.remove('payload_path');
 
 var ui = {
   mainContainer: document.querySelector('.mainContainer'),
