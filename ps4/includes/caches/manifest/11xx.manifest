@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v1.4
-# Generated on 2026-11-16
+# v5.0 - strictly disabled all auto-loading of payloads, manual dispatch only
+# Updated 2026-11-19T12:35:00
 
 CACHE:
 ../../../

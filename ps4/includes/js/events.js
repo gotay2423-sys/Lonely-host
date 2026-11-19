@@ -4,7 +4,6 @@
 function triggerJailbreak() {
     if (user.blockJailbreak) return;
     user.blockJailbreak = true;
-    chooseHEN();
     jailbreak();
 }
 

@@ -19,8 +19,13 @@ var user = {
   blockJailbreak: false,                                                    // Prevent double jailbreak execution
 };
 
-// Force nexHEN as the only jailbreak payload
+// Clear any pending payload path and disable auto-jailbreak on initial load
 storage.set('jailbreakFlavor', 'nexHEN');
+storage.set('autoJb', false);
+storage.session.set('autoJb', false);
+storage.set('autoJbRetry', false);
+storage.session.set('autoJbRetry', false);
+storage.remove('payload_path');
 storage.session.remove('payload_path');
 
 var ui = {

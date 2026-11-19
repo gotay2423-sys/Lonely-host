@@ -1663,11 +1663,9 @@ async function attempt(ctx, opts) {
       say("  this kernel is already open -- a run has succeeded on this boot.");
       say("  Not firing again; reboot the console for a fresh one.");
 
-      // load payload
-      const payload_path = sessionStorage.getItem("payload_path");
-      const blob = await fetchBytes(payload_path, "p");
-      await loadPayload(payload_path, blob)
-      say("  Payload loaded successfully!");
+      // clear payload path and do not auto-load
+      sessionStorage.removeItem("payload_path");
+      say("  System Ready -- manual payload dispatch enabled");
       window.jailbreakSuccess();
       return false;
     }

@@ -585,6 +585,17 @@
             reportGlobalError('Unhandled Promise Rejection:', msg);
         });
 
+        // Ensure no leftover payload or auto-jailbreak state triggers on load
+        try {
+            sessionStorage.removeItem('payload_path');
+            sessionStorage.removeItem('jailbreakFlavor');
+            sessionStorage.removeItem('autoJbRetry');
+            sessionStorage.setItem('autoJb', 'false');
+            localStorage.removeItem('payload_path');
+            localStorage.setItem('autoJb', 'false');
+            localStorage.setItem('autoJbRetry', 'false');
+        } catch (e) {}
+
         var ua = navigator.userAgent;
         var isPS4 = ua.indexOf("PlayStation 4") !== -1;
         var is67x = ((ua.indexOf(" 6.70") !== -1) || (ua.indexOf(" 6.71") !== -1) || (ua.indexOf(" 6.72") !== -1));

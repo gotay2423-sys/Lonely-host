@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v3.0 - exclusive nexHEN loader with active elfldr 9021 polling
-# Updated on 2026-11-19
+# v5.0 - strictly disabled all auto-loading of payloads, manual dispatch only
+# Updated 2026-11-19T12:35:00
 
 CACHE:
 ../../../

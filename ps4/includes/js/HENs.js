@@ -8,9 +8,6 @@ function nexHEN() {
 
 function activateNexHEN(runNow) {
     nexHEN();
-    if (typeof Loadpayloadlocal === 'function') {
-        Loadpayloadlocal('./includes/payloads/HEN/nexHEN-ps4.elf', 'nexHEN', 'nexHEN');
-    }
 }
 
 function GoldHEN() {

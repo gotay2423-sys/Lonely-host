@@ -32,13 +32,13 @@ function _jailbreak() {
           // turn off auto-jailbreak for this session, so it doesn't loop forever
           // autoJbRetry will pickup on userland fail and reload
           storage.session.set('autoJb', false);
+          storage.set('autoJb', false);
 
-          // Always load nexHEN for jailbreak
-          chooseHEN();
-          payloadPath = storage.session.getString('payload_path', null);
+          // Do not auto-load any payload on jailbreak
+          storage.session.remove('payload_path');
+          storage.remove('payload_path');
           cleanUp();
-          payloadPath = storage.session.getString('payload_path', null);
-          log("Loading: " + payloadPath);
+          log("Starting WebKit & Kernel Exploit...");
 
           // barebone exploit preferred? go to exploit file
           if (!user.bareboneJB) {
@@ -205,16 +205,10 @@ function _badHoistJailbreak() {
           _context3.n = 10;
           return sleep(1000);
         case 10:
-          if (isElfPayload) {
-            if (elfLoaderAvailable) {
-              log("Sending the ELF payload: " + payloadPath, "green");
-              Loadpayloadlocal(payloadPath, getPayloadName(payloadPath), "jailbreak");
-            } else {
-              log("Error: Failed to connect to elfldr on port 9021.", "red");
-            }
-          }
           log("\nBad Hoist by Fire30, 6.7x Kernel Exploit by Sleirsgoevy");
           log("Implementation taken from Feyzee61");
+          log("System Ready. Select a payload below to dispatch.", "cyan");
+          sessionStorage.removeItem("payload_path");
           jailbreakSuccess();
           _context3.n = 12;
           break;

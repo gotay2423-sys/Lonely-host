@@ -645,9 +645,7 @@ function makeRpc(worker) {
                 state("Already Jailbroken ...", "warn");
                 mark("Already Jailbroken ...");
                 log("<br>");
-                if (isElfPayload && elfLoaderAvailable) {
-                    Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');                
-                }
+                sessionStorage.removeItem('payload_path');
                 window.jailbreakSuccess();
                 return;
             }
@@ -3839,9 +3837,7 @@ function makeRpc(worker) {
                         : jailbroken ? "ROOT -- NO REBOOT NEEDED"
                             : "REPAIRED -- NO REBOOT NEEDED";
                 stateEl.className = "ok";
-                if (isElfPayload) {
-                    Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');                
-                }
+                sessionStorage.removeItem('payload_path');
                 window.jailbreakSuccess();
             } catch (e) { }
         }

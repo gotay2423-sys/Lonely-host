@@ -414,9 +414,7 @@ let allDone = false;
                 state((window.lang.alreadyJailbroken || "Already Jailbroken ..."), "warn");
                 mark("Already Jailbroken ...");
                 log("<br>");
-                if (isElfPayload && elfLoaderAvailable) {
-                    Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');                
-                }
+                sessionStorage.removeItem('payload_path');
                 window.jailbreakSuccess();
                 return;
             }
@@ -2325,9 +2323,7 @@ let allDone = false;
                                     if (payloadRunning){
                                         mark("PAYLOAD-RUNNING",
                                         "bytes=" + payload.length + " entry=" + entry);
-                                        if (isElfPayload) {
-                                            Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
-                                        }
+                                        sessionStorage.removeItem('payload_path');
                                         window.jailbreakSuccess();
                                     } 
                                 }

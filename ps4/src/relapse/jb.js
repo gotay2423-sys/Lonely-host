@@ -65,15 +65,7 @@ async function finishUI(ok) {
   document.body.className = ok ? "done" : "fail";
   
   if (ok) {
-    if (isElfPayload) {
-        elfLoaderAvailable = await probeElfLoader();
-        setTimeout(function (){
-            mark("ELFLDR-SEND", "Sending the elf payload: " + payload_path);
-            // 3. Send the actual ELF/nexHEN payload
-            if (window.log) log("<br>");
-            Loadpayloadlocal(payload_path, getPayloadName(payload_path), "jailbreak");
-        },2000);
-    }
+    sessionStorage.removeItem("payload_path");
     if (typeof jailbreakSuccess == "function") jailbreakSuccess();
   }
   state(result);
