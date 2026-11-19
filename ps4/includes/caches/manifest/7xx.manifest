@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v6.0 - load nexHEN-ps4.bin directly without elfldr, elfldr bundled inside nexHEN
-# Updated 2026-11-19T12:55:00
+# v7.0 - actively load nexHEN-ps4.bin into kernel and probe elfldr on 9021
+# Updated 2026-11-19T13:08:00
 
 CACHE:
 ../../../

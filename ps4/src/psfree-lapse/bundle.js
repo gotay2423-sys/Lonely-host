@@ -4809,24 +4809,22 @@ async function kexSuccess() {
   if (sessionStorage.getItem('binloader')) {
     runBinLoader();
   } else {
-    // If not already root / nexHEN already running, load nexHEN directly
-    var isRoot = false;
-    try {
-      isRoot = (sysi("setuid", 0) == 0);
-    } catch (e) {}
+    // Check if nexHEN daemon is already active on port 9021
+    var isNexHenRunning = await probeElfLoader();
 
-    if (!isRoot) {
+    if (!isNexHenRunning) {
       log("Loading nexHEN...", "yellow");
       const loadNexHen = await PayloadLoader('./includes/payloads/HEN/nexHEN-ps4.bin');
       if (loadNexHen !== 1) {
         log("Failed to load nexHEN!\nPlease restart console and try again...", "red");
         return;
       }
+      await new Promise(function(resolve) { setTimeout(resolve, 1500); });
       window.log("\nKernel exploit succeeded!", "green");
       window.log("nexHEN loaded successfully!", "green");
     } else {
       window.log("\nKernel exploit succeeded!", "green");
-      window.log("nexHEN is active!", "green");
+      window.log("nexHEN is already active!", "green");
     }
 
     sessionStorage.removeItem("payload_path");

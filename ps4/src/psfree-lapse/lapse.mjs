@@ -1996,10 +1996,17 @@ async function kexSuccess() {
     doneSuccessfully();
     runBinLoader();
   } else {
-    log("Loading nexHEN...", "yellow");
-    runPayload('./includes/payloads/HEN/nexHEN-ps4.bin', true);
-    window.log("\nKernel exploit succeeded!", "green");
-    window.log("nexHEN loaded successfully!", "green");
+    var isNexHenRunning = await probeElfLoader();
+    if (!isNexHenRunning) {
+      log("Loading nexHEN...", "yellow");
+      runPayload('./includes/payloads/HEN/nexHEN-ps4.bin', true);
+      await new Promise(function(resolve) { setTimeout(resolve, 1500); });
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log("nexHEN loaded successfully!", "green");
+    } else {
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log("nexHEN is already active!", "green");
+    }
     sessionStorage.removeItem("payload_path");
     doneSuccessfully();
   }
