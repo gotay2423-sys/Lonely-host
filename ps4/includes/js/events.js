@@ -1,22 +1,11 @@
 // DOM event listeners and popup toggle functions.
 
-// Scroll snap (PS4 only)
-ui.mainContainer.addEventListener('scroll', function () {
-    if (!isPS4Console() || !ui.initialScreen) return;
-
-    if (ui.mainContainer.scrollTop > lastScrollY) {
-        if (lastSection !== 'exploit') {
-            document.getElementById('exploitContainer').scrollIntoView({ block: 'end' });
-            lastSection = 'exploit';
-        }
-    } else if (ui.mainContainer.scrollTop < lastScrollY) {
-        if (lastSection !== 'initial') {
-            ui.initialScreen.scrollIntoView({ block: 'end' });
-            lastSection = 'initial';
-        }
-    }
-    lastScrollY = ui.mainContainer.scrollTop;
-});
+// Smooth scrolling (unified layout - no snap jump)
+if (ui.mainContainer) {
+    ui.mainContainer.addEventListener('scroll', function () {
+        lastScrollY = ui.mainContainer.scrollTop;
+    });
+}
 
 // Jailbreak launch
 ui.exploitRunBtn.addEventListener('click', function () {
