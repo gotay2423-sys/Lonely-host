@@ -706,11 +706,6 @@ section {
     #henSelection {
         display: contents;
     }
-
-    #exploitRun{
-        width: 100% !important;
-    }
-    
 }
 
 /* Small devices (sm) */
@@ -847,15 +842,6 @@ button {
 #defaultTempDiv {
     width: 75%;
     float: right;
-}
-
-#exploitRun {
-    width: 50%;
-}
-
-#exploitRun svg{
-    width: 100%;
-    text-align: center;
 }
 
 #DebugConsole:hover {

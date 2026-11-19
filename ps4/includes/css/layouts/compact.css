@@ -939,11 +939,6 @@ html {
     #henSelection {
         display: contents;
     }
-
-    #exploitRun{
-        width: 100% !important;
-    }
-    
 }
 
 /* --- Media Queries for Responsive Classes --- */
@@ -1216,19 +1211,4 @@ html, body {
     flex-grow: 1 !important;
     max-height: calc(100vh - 280px) !important; /* Locks list viewport from expanding out of boundaries */
     overflow-y: auto !important;
-}
-
-#click-to-start-text{
-    width: 20%;
-    text-align: center;
-    margin: 0;
-}
-
-#exploitRun{
-    width: 50%;
-}
-
-#exploitRun svg{
-    width: 100%;
-    text-align: center;
 }

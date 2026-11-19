@@ -194,39 +194,48 @@ button.chip:hover, button.chip:focus {
 }
 
 /* ---------- Prestige Hero Controls ---------- */
-.prestige-controls {
-    text-align: center;
-    margin-bottom: 26px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+.controls, .prestige-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin-bottom: 24px !important;
 }
 
-.ps-logo-btn {
+.hero-action-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    margin: 0 auto 12px auto !important;
+}
+
+.hero-logo-btn, .ps-logo-btn {
     background: transparent !important;
     border: none !important;
     padding: 0 !important;
     cursor: pointer !important;
     outline: none !important;
     display: inline-block !important;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease !important;
 }
 
+.hero-logo-btn:focus, .hero-logo-btn:focus-visible,
 .ps-logo-btn:focus, .ps-logo-btn:focus-visible {
     outline: 3px solid #00f3ff !important;
-    outline-offset: 8px !important;
+    outline-offset: 6px !important;
     border-radius: 50% !important;
 }
 
-.ps-logo-container {
-    width: 180px !important;
-    height: 180px !important;
-    max-width: 180px !important;
-    max-height: 180px !important;
-    min-width: 180px !important;
-    min-height: 180px !important;
+#ps-logo-container, .hero-logo-container, .ps-logo-container {
+    width: 88px !important;
+    height: 88px !important;
+    max-width: 88px !important;
+    max-height: 88px !important;
+    min-width: 88px !important;
+    min-height: 88px !important;
     margin: 0 auto !important;
     padding: 0 !important;
     box-sizing: border-box !important;
@@ -234,8 +243,8 @@ button.chip:hover, button.chip:focus {
     align-items: center !important;
     justify-content: center !important;
     background: #000 !important;
-    border: 3px solid #ef4444 !important;
-    box-shadow: 0 0 40px rgba(239, 68, 68, 0.8), inset 0 0 20px rgba(239, 68, 68, 0.4) !important;
+    border: 2.5px solid #ef4444 !important;
+    box-shadow: 0 0 28px rgba(239, 68, 68, 0.75), inset 0 0 14px rgba(239, 68, 68, 0.35) !important;
     transition: all 0.3s ease !important;
     border-radius: 50% !important;
     overflow: hidden !important;
@@ -244,38 +253,44 @@ button.chip:hover, button.chip:focus {
 
 @keyframes prestigePulse {
     0%, 100% {
-        box-shadow: 0 0 35px rgba(239, 68, 68, 0.75), inset 0 0 18px rgba(239, 68, 68, 0.35);
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.7), inset 0 0 12px rgba(239, 68, 68, 0.3);
     }
     50% {
-        box-shadow: 0 0 55px rgba(239, 68, 68, 0.95), inset 0 0 28px rgba(239, 68, 68, 0.55);
+        box-shadow: 0 0 40px rgba(239, 68, 68, 0.95), inset 0 0 20px rgba(239, 68, 68, 0.5);
     }
 }
 
-.ps-logo-container:hover {
+#ps-logo-container:hover, .hero-logo-container:hover, .ps-logo-container:hover {
     border-color: #ff4d4d !important;
-    box-shadow: 0 0 65px rgba(255, 77, 77, 1), inset 0 0 30px rgba(255, 77, 77, 0.6) !important;
-    transform: scale(1.04) !important;
+    box-shadow: 0 0 50px rgba(255, 77, 77, 1), inset 0 0 24px rgba(255, 77, 77, 0.6) !important;
+    transform: scale(1.05) !important;
 }
 
-#ps-logo {
+#ps-logo, .hero-logo-img {
     width: 100% !important;
     height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
     object-fit: cover !important;
     border-radius: 50% !important;
     display: block !important;
-    filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.85)) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.85)) !important;
 }
 
 .click-to-start {
     color: rgba(255, 255, 255, 0.9);
-    font-size: 15px;
-    font-weight: 800;
-    letter-spacing: 2.5px;
-    margin-top: 14px;
-    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 4px 0 10px 0;
     text-transform: uppercase;
     text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
     font-family: inherit;
+    text-align: center;
 }
 
 .auto-run-bar {
@@ -617,30 +632,16 @@ button.chip:hover, button.chip:focus {
     border-bottom: 1px solid rgba(0, 243, 255, 0.2) !important;
 }
 
-/* ---------- Hero Exploit Run Button (Matching PS5 Layout with Prestige Emblem) ---------- */
-.controls {
-    text-align: center !important;
-    margin-bottom: 24px !important;
-}
-
-#ps-logo-container {
-    display: inline-block !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    width: auto !important;
-    height: auto !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-}
-
+/* ---------- Hero Exploit Run Button (Aligned with Prestige Logo, No Solid Cyan Bar) ---------- */
 .run-btn, #exploitRun {
     background: rgba(0, 128, 255, 0.15) !important;
     color: var(--lonely-ps4-cyan) !important;
     border: 2px solid var(--lonely-ps4-cyan) !important;
-    padding: 14px 44px !important;
-    font-size: 17px !important;
+    padding: 12px 38px !important;
+    width: auto !important;
+    min-width: 190px !important;
+    max-width: 240px !important;
+    font-size: 16px !important;
     font-weight: 800 !important;
     font-family: inherit !important;
     letter-spacing: 2.5px !important;
@@ -648,12 +649,13 @@ button.chip:hover, button.chip:focus {
     cursor: pointer !important;
     box-shadow: 0 0 18px rgba(0, 243, 255, 0.35), inset 0 0 12px rgba(0, 128, 255, 0.15) !important;
     transition: all 0.2s ease !important;
-    position: relative;
-    overflow: hidden;
+    position: relative !important;
+    overflow: hidden !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 12px !important;
+    margin: 0 auto !important;
+    text-decoration: none !important;
 }
 
 .run-btn::after, #exploitRun::after {
@@ -671,29 +673,20 @@ button.chip:hover, button.chip:focus {
 }
 
 .run-btn:hover, #exploitRun:hover {
-    background: var(--lonely-ps4-cyan) !important;
-    color: #040814 !important;
-    box-shadow: 0 0 30px var(--lonely-ps4-cyan) !important;
-    transform: translateY(-1px);
+    background: rgba(0, 243, 255, 0.25) !important;
+    border-color: #00f3ff !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 24px rgba(0, 243, 255, 0.6), inset 0 0 15px rgba(0, 243, 255, 0.2) !important;
+    transform: translateY(-1px) !important;
+}
+
+.run-btn:focus, #exploitRun:focus {
+    outline: 3px solid #00f3ff !important;
+    outline-offset: 4px !important;
 }
 
 .run-btn:active, #exploitRun:active {
-    transform: scale(0.98);
-}
-
-.run-btn-emblem, #ps-logo {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
-    min-height: 26px !important;
-    border-radius: 50% !important;
-    object-fit: cover !important;
-    border: 1.5px solid #ef4444 !important;
-    box-shadow: 0 0 8px rgba(239, 68, 68, 0.7) !important;
-    display: inline-block !important;
-    vertical-align: middle !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    transform: scale(0.97) !important;
 }
 
 .mainContainer {

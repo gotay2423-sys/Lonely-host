@@ -107,16 +107,19 @@
             </button>
         </div>
 
-        <!-- Hero Start Section Matching PS5 Layout -->
+        <!-- Hero Start Section Matching PS5 Layout with Proportional Prestige Logo -->
         <div id="initial-screen" class="controls">
-            <div id="ps-logo-container" style="display: inline-block;">
+            <div class="hero-action-wrap">
+                <button id="pslogo" type="button" class="hero-logo-btn" tabindex="0" title="Click to Run Exploit">
+                    <div id="ps-logo-container" class="hero-logo-container">
+                        <img id="ps-logo" src="./prestige.jpg" alt="Prestige Master" class="hero-logo-img">
+                    </div>
+                </button>
                 <button id="exploitRun" type="button" class="run-btn" tabindex="0" title="Click to Run Exploit">
-                    <img id="ps-logo" src="./prestige.jpg" alt="Prestige Master" class="run-btn-emblem">
                     <span>RUN EXPLOIT</span>
                 </button>
             </div>
-            <button id="pslogo" style="display: none;" tabindex="-1" aria-hidden="true"></button>
-            <h3 id="click-to-start-text" style="display: none;" aria-hidden="true"></h3>
+            <h3 id="click-to-start-text" class="click-to-start" style="display: none;" aria-hidden="true">CLICK TO START</h3>
 
             <div class="auto-run-bar" id="autoJbContainer">
                 <label class="toggle-wrap" id="autoJbOption" title="Automatically run exploit on page load">
