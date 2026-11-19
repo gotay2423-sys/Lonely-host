@@ -28,7 +28,7 @@ body {
 
 .container, .mainContainer {
     width: 100% !important;
-    max-width: 860px !important;
+    max-width: 960px !important;
     margin: 0 auto !important;
     padding: 24px 16px 60px 16px !important;
     box-sizing: border-box !important;
@@ -678,13 +678,35 @@ button.chip:hover, button.chip:focus {
     font-family: inherit !important;
 }
 
-/* Panels */
-#exploit-status-panel, #payloadsSection, .settings-popup-content {
+/* Exploit container: Single column stacked layout (Matching PS5) */
+#exploitContainer {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+#exploit-status-panel {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 26px 0 !important;
+    flex: none !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Payloads and Modals Panels */
+#payloadsSection, .settings-popup-content {
     background: rgba(8, 18, 42, 0.92) !important;
     border: 1px solid rgba(0, 243, 255, 0.35) !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 128, 255, 0.12) !important;
     backdrop-filter: blur(12px) !important;
     border-radius: 14px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    flex: none !important;
 }
 
 /* Cyber macOS Console Window */

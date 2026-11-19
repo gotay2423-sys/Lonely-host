@@ -734,58 +734,26 @@ section {
     /* If you had sm:rtl:gap-8, you'd define it here too */
     /* [dir="rtl"] .sm\:rtl\:gap-8 { ... } */
 }
-/* 2. Mobile configuration (Screens smaller than 768px) */
-@media (max-width: 708px) {
-    #exploit-status-panel {
-        display: none !important; /* Completely hide exploit console on mobile */
-    }
-    
-    #payloadsSection {
-        width: 100% !important;
-        height: 100% !important;
-        margin: 0 !important;     /* Ensure zero off-center displacement */
-    }
+/* Exploit container: Single column stacked layout (Matching PS5 layout) */
+#exploitContainer {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-/* 3. Desktop configuration (Screens 768px and up) */
-@media (min-width: 710px) {
-    #exploitContainer {
-        flex-direction: row !important; /* Side by side panels */
-        flex-wrap: nowrap;
-    }
+#exploit-status-panel {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 24px 0 !important;
+    flex: none !important;
+}
 
-    #exploit-status-panel, 
-    #payloadsSection {
-        /* Force each panel to take exactly 50% minus half of the total middle gap (16px total gap) */
-        flex: 1 !important;
-        width: 50%;
-        height: 100% !important;
-    }
-
-    /* Left panel spaces only to the right */
-    html[dir="ltr"] #exploit-status-panel {
-        margin-right: 8px !important;
-        margin-left: 0 !important;
-    }
-
-    /* Right panel spaces only to the left */
-    html[dir="ltr"] #payloadsSection {
-        margin-left: 8px !important;
-        margin-right: 0 !important;
-    }
-
-    /* Same, but for rtl */
-    /* Left panel spaces only to the left */
-    html[dir="rtl"] #exploit-status-panel {
-        margin-left: 8px !important;
-        margin-right: 0 !important;
-    }
-
-    /* Right panel spaces only to the right */
-    html[dir="rtl"] #payloadsSection {
-        margin-right: 8px !important;
-        margin-left: 0 !important;
-    }
+#payloadsSection {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    flex: none !important;
 }
 
 
