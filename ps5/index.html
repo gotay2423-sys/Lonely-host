@@ -351,9 +351,8 @@
       font-size: 11px;
       color: #8fa0be;
       margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .btn-send {
@@ -369,6 +368,7 @@
       cursor: pointer;
       transition: all 0.2s ease;
       flex-shrink: 0;
+      margin-left: auto;
     }
 
     .btn-send:hover {
@@ -539,8 +539,8 @@
 <body>
   <div class="container">
     <div class="top-nav-hub">
-      <a href="../index.html" class="nav-hub-link">⚡ LONELY HUB</a>
-      <a href="../ps4/index.html" class="nav-hub-link nav-ps4">🎮 PS4 HOST</a>
+      <a href="../index.html" class="nav-hub-link">LONELY HUB</a>
+      <a href="../ps4/index.html" class="nav-hub-link nav-ps4">PS4 HOST</a>
     </div>
 
     <div class="header">
@@ -596,7 +596,6 @@
 
       <div class="payload-grid">
         <div class="payload-card card-featured">
-          <span class="p-icon">⚡</span>
           <div class="p-info">
             <div class="p-name">nexHEN</div>
             <div class="p-desc">Homebrew Enabler &amp; Debug Settings</div>
@@ -605,7 +604,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">📁</span>
           <div class="p-info">
             <div class="p-name">zftpd</div>
             <div class="p-desc">High-speed FTP server (Port 21 / 1337)</div>
@@ -614,7 +612,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🐞</span>
           <div class="p-info">
             <div class="p-name">MemDBG</div>
             <div class="p-desc">Memory debugger &amp; trainer daemon</div>
@@ -623,7 +620,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">📡</span>
           <div class="p-info">
             <div class="p-name">klogsrv</div>
             <div class="p-desc">Real-time kernel log server</div>
@@ -632,7 +628,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">💻</span>
           <div class="p-info">
             <div class="p-name">shsrv</div>
             <div class="p-desc">Interactive system shell daemon</div>
@@ -641,7 +636,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🌐</span>
           <div class="p-info">
             <div class="p-name">websrv</div>
             <div class="p-desc">Web-based file manager</div>
@@ -650,7 +644,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🛠️</span>
           <div class="p-info">
             <div class="p-name">gdbsrv</div>
             <div class="p-desc">GDB remote debugger stub</div>
@@ -659,7 +652,6 @@
         </div>
 
         <div class="payload-card">
-          <span class="p-icon">🎮</span>
           <div class="p-info">
             <div class="p-name">BetterLAN</div>
             <div class="p-desc">LAN multiplayer bridge &amp; tunnel</div>

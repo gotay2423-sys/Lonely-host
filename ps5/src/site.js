@@ -176,7 +176,7 @@ async function run() {
   setStatus("JAILBROKEN", "success");
   updateElfldrStatus(true);
   if (runBtn) {
-    runBtn.textContent = "JAILBROKEN ✓";
+    runBtn.textContent = "JAILBROKEN";
     runBtn.classList.add("btn-success");
   }
 }
@@ -341,7 +341,7 @@ async function dispatchPayload(payloadName, btn) {
       writeLog(msg, "success");
       if (btn) {
         btn.dataset.state = "sent";
-        btn.textContent = "SENT ✓";
+        btn.textContent = "SENT";
       }
     }
   } catch (err) {
