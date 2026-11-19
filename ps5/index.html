@@ -94,6 +94,31 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.08);
     }
 
+    button.chip {
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .reset-chip {
+      color: #ff3366;
+      border-color: rgba(255, 51, 102, 0.45);
+      background: rgba(30, 8, 20, 0.85);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 51, 102, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .reset-chip:hover, .reset-chip:focus {
+      background: rgba(255, 51, 102, 0.2);
+      border-color: #ff3366;
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(255, 51, 102, 0.6);
+      outline: none;
+    }
+
+    .reset-chip:active {
+      transform: scale(0.97);
+    }
+
     .led {
       width: 8px;
       height: 8px;
@@ -712,6 +737,10 @@
         <span class="led" id="cacheLed"></span>
         <span id="cacheText">CACHE OFFLINE</span>
       </div>
+      <button type="button" class="chip reset-chip" id="resetCacheBtn" title="Reset offline cache and reload fresh">
+        <span class="led led-red" id="resetCacheLed"></span>
+        <span id="resetCacheText">RESET CACHE</span>
+      </button>
     </div>
 
     <div class="controls">

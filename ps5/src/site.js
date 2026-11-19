@@ -13,6 +13,9 @@ const elfldrText = document.getElementById("elfldrText");
 const cacheChip = document.getElementById("cacheChip");
 const cacheLed = document.getElementById("cacheLed");
 const cacheText = document.getElementById("cacheText");
+const resetCacheBtn = document.getElementById("resetCacheBtn");
+const resetCacheLed = document.getElementById("resetCacheLed");
+const resetCacheText = document.getElementById("resetCacheText");
 
 // Auto-display detected firmware on load
 if (fwText) {
@@ -496,7 +499,7 @@ if (cacheChip) {
 
     if ("caches" in window) {
       try {
-        const cache = await caches.open("lonely-ps5-v2");
+        const cache = await caches.open("lonely-ps5-v2.7");
         const urlsToCache = [
           "./",
           "./index.html",
@@ -540,6 +543,53 @@ if (cacheChip) {
       }
     } else {
       writeLog("Browser Cache API not supported on this userland.", "error");
+    }
+  });
+}
+
+if (resetCacheBtn) {
+  resetCacheBtn.addEventListener("click", async () => {
+    if (resetCacheText) resetCacheText.textContent = "RESETTING...";
+    if (resetCacheLed) resetCacheLed.className = "led led-yellow";
+    writeLog("Clearing offline caches and service worker...", "warn");
+
+    try {
+      // 1. Delete all CacheStorage entries
+      if ("caches" in window) {
+        const keys = await caches.keys();
+        for (const key of keys) {
+          await caches.delete(key);
+        }
+      }
+
+      // 2. Unregister all service workers
+      if ("serviceWorker" in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const reg of regs) {
+          await reg.unregister();
+        }
+      }
+
+      // 3. Clear storage (preserve auto-run setting)
+      const autoJbPref = localStorage.getItem("lonely_ps5_autojb");
+      localStorage.clear();
+      sessionStorage.clear();
+      if (autoJbPref !== null) {
+        localStorage.setItem("lonely_ps5_autojb", autoJbPref);
+      }
+
+      if (resetCacheText) resetCacheText.textContent = "CLEARED!";
+      if (resetCacheLed) resetCacheLed.className = "led led-green";
+      writeLog("Cache cleared! Reloading fresh from server...", "success");
+
+      setTimeout(() => {
+        const baseUrl = window.location.origin + window.location.pathname;
+        window.location.replace(baseUrl + "?nocache=" + Date.now());
+      }, 700);
+    } catch (err) {
+      writeLog(`Failed to reset cache: ${err.message}`, "error");
+      if (resetCacheText) resetCacheText.textContent = "RESET ERROR";
+      if (resetCacheLed) resetCacheLed.className = "led led-red";
     }
   });
 }
