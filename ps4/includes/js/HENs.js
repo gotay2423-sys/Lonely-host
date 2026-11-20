@@ -3,7 +3,7 @@ var DEFAULT_HEN   = "nexHEN";
 
 function nexHEN() {
     storage.set('jailbreakFlavor', 'nexHEN');
-    storage.session.set('payload_path', HEN_BASE_PATH + 'nexHEN-ps4.elf');
+    storage.session.set('payload_path', HEN_BASE_PATH + 'nexHEN-ps4.bin');
     user.currentJbFlavor = 'nexHEN';
 }
 
@@ -11,7 +11,7 @@ function activateNexHEN(runNow) {
     if (runNow && typeof user !== 'undefined' && user.blockJailbreak) return;
     nexHEN();
     if (typeof log === 'function') {
-        log('nexHEN selected: ' + HEN_BASE_PATH + 'nexHEN-ps4.elf', 'green');
+        log('nexHEN selected: ' + HEN_BASE_PATH + 'nexHEN-ps4.bin', 'green');
     }
     if (runNow) {
         if (typeof user !== 'undefined') user.blockJailbreak = true;

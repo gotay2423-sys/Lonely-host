@@ -23,7 +23,7 @@ var user = {
 if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
   var defaultFlavor = storage.getString('jailbreakFlavor', 'nexHEN');
   storage.set('jailbreakFlavor', defaultFlavor);
-  storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.elf');
+  storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.bin');
 }
 
 var ui = {

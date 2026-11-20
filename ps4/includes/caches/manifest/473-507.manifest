@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v12.0 - Option 2: nexHEN detached daemon via elfldr (FW 9.00-14.02)
-# Updated on 2026-11-19T21:42:00
+# v13.0 - nexHEN pure kernel bootstrap with native daemons (FW 9.00-14.02)
+# Updated on 2026-11-19T22:41:00
 
 CACHE:
 ../../../
