@@ -6,16 +6,10 @@
   <title>Lonely — Unified PlayStation Exploit Hub</title>
   <meta name="description" content="Unified PlayStation 4 & PlayStation 5 WebKit and Kernel Exploit Host.">
   <script>
-    // Automatic Console Redirection
+    // Automatic Console Redirection to PS5 Host
     (function() {
-      var ua = navigator.userAgent;
       if (window.location.search.indexOf('stay=1') !== -1) return; // Debug override
-
-      if (ua.indexOf("PlayStation 5") !== -1) {
-        window.location.replace("./ps5/");
-      } else if (ua.indexOf("PlayStation 4") !== -1) {
-        window.location.replace("./ps4/");
-      }
+      window.location.replace("./ps5/");
     })();
   </script>
   <style>
@@ -304,20 +298,20 @@
       <div class="console-card card-ps4">
         <div>
           <div class="card-top">
-            <h2 class="card-title title-ps4">PS4 Host</h2>
-            <span class="fw-badge badge-ps4">FW 4.50 – 14.02</span>
+            <h2 class="card-title title-ps4">PS4 Host (Lonely2)</h2>
+            <span class="fw-badge badge-ps4">FW 9.00 – 12.02</span>
           </div>
           <p class="card-desc">
-            Multi-firmware PS4 exploit engine powered by WebKitty &amp; PSFree modular chains.
+            Standalone clean Wobkot engine dedicated to PlayStation 4 running nexHEN.
           </p>
           <ul class="feature-list">
-            <li><b>Kernel Chains:</b> Lapse, Netctrl, Relapse, Afterglow</li>
-            <li><b>Mode:</b> Pure BinLoader (:9020), No Auto-HEN</li>
-            <li><b>Payloads:</b> BinLoader (:9020), FTP, DB-Rebuilder, Linux</li>
-            <li><b>Vibe:</b> Lonely Cyberpunk Cobalt Edition</li>
+            <li><b>Engine:</b> Pure Wobkot + Lapse</li>
+            <li><b>Payload:</b> nexHEN PS4 v1.00 (build 243)</li>
+            <li><b>Host:</b> lonely2-host.duckdns.org</li>
+            <li><b>Features:</b> Direct memory execution, no bloat</li>
           </ul>
         </div>
-        <a href="./ps4/" class="btn-launch btn-launch-ps4">Launch PS4 Host &gt;</a>
+        <a href="http://lonely2-host.duckdns.org/" class="btn-launch btn-launch-ps4">Visit Lonely2 (PS4) &gt;</a>
       </div>
     </div>
 
