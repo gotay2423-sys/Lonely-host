@@ -80,10 +80,10 @@ function sendElfToElfldr(url, payloadName, onDone, args) {
 }
 
 /**
- * Returns true if the payload path contains an elf extension.
+ * Returns true if the payload path contains an elf extension or is nexHEN.
  */
 function isPayloadElf(path) {
-    return path.indexOf('.elf') !== -1;
+    return (path.indexOf('.elf') != -1) || (path.indexOf('nexHEN') != -1);
 }
 
 /**
@@ -99,12 +99,9 @@ function probeElfLoader() {
         xhr.timeout = 2000; // 2 second timeout
         
         xhr.onload = function () {
-            if (xhr.status > 0) {
-                log("Elfldr probe response: " + xhr.status + " " + xhr.statusText);
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+            log("Elfldr probe response: " + xhr.status + " " + xhr.statusText);
+            // Even a 404 or connection response means something is listening on port 9021
+            resolve(true);
         };
         
         xhr.onerror = function () {
@@ -186,7 +183,8 @@ function sendPayloadWithTimeout(url, data, timeoutMs, onResult) {
 /**
  * Sends a payload to the PS4.
  *  - .elf: elfldr on port 9021 (POST binary upload)
- *  - .bin: BinLoader on port 9020.
+ *            If elfldr isn't running yet, boots it first via GoldHEN (port 9090).
+ *  - .bin: GoldHEN / nexHEN binloader on port 9090.
  */
 function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
     var ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
@@ -216,14 +214,14 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
         }
     };
 
-    // fetch payload binary and send via BinLoader port 9020
+    // fetch payload binary and send via GoldHEN port 9090
     var sendViaBinLoader = function (binPath, onComplete) {
         getPayload(binPath, function (fetchReq) {
             if (!fetchReq || (fetchReq.status !== 200 && fetchReq.status !== 304) || !fetchReq.response) {
                 onComplete(false);
                 return;
             }
-            var targetPort = customPort || 9020;
+            var targetPort = customPort || 9090;
             var targetUrl = "http://" + ps4Ip + ":" + targetPort + "/";
             sendPayloadWithTimeout(targetUrl, fetchReq.response, 5000, function (success) {
                 onComplete(success);
@@ -238,32 +236,46 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
         (resolvedName && resolvedName.toLowerCase().endsWith(".elf"));
 
     if (isElf && cleanPath.indexOf('linux') == -1) {
-        ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
-        ELFLDR = "http://" + ps4Ip + ":9021";
+        var checkAndBootElfldr = function () {
+            ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
+            ELFLDR = "http://" + ps4Ip + ":9021";
 
-        var attempts = 0;
-        var maxAttempts = 5;
-
-        function trySendElf() {
-            sendElfToElfldr(PLfile, name, function (success) {
-                if (success) {
-                    return;
-                }
-                attempts++;
-                if (attempts < maxAttempts) {
-                    log("Waiting for elfldr on port 9021 (attempt " + attempts + "/" + maxAttempts + ")...", "yellow");
-                    setTimeout(trySendElf, 1000);
-                } else {
-                    if (id === "jailbreak") {
-                        log("Could not reach elfldr on port 9021. Please restart console and try again.", "red");
-                        return;
+            log(window.lang.elfLoaderStarting || "Starting Elf Loader...");
+            sendViaBinLoader("./includes/payloads/Bins/elfldr.elf", function (goldHenSuccess) {
+                if (!goldHenSuccess) {
+                    if (!needsPayloadLoader) {
+                        log(window.lang.binLoaderNotResponding, "red");
                     }
                     handleFallback();
+                    return;
                 }
-            });
-        }
 
-        trySendElf();
+                // Wait 5 s for elfldr to boot on port 9021, then retry sending the ELF
+                setTimeout(function () {
+                    log(window.lang.elfLoaderSending || "Sending payload to the Elf Loader...");
+                    sendElfToElfldr(PLfile, name, function (retrySuccess) {
+                        if (!retrySuccess) handleFallback();
+                    });
+                }, 3000);
+            });
+        };
+
+        // First, check if elfldr is already running on port 9021
+        sendElfToElfldr(PLfile, name, function (success) {
+            if (success) return;
+
+            // If not running, boot it via GoldHEN binloader
+            if (ps4Ip === "127.0.0.1" && !isPS4Console() && !isLocalIP(window.location.hostname)) {
+                guessIp().then(function () {
+                    checkAndBootElfldr();
+                }).catch(function () {
+                    handleFallback();
+                });
+            } else {
+                checkAndBootElfldr();
+            }
+        });
+
     } else {
         getPayload(PLfile, function (fetchReq) {
             if (fetchReq && fetchReq.status === 404) {
@@ -278,8 +290,8 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
 
             log(window.lang.payloadLoaderSending.replace("{payload}", name));
 
-            var targetPort = customPort || 9020;
-            var targetName = customPort ? window.lang.customPort : "BinLoader (9020)";
+            var targetPort = customPort || 9090;
+            var targetName = customPort ? window.lang.customPort : "GoldHEN / nexHEN";
             var targetUrl = "http://" + ps4Ip + ":" + targetPort + "/";
 
             sendPayloadWithTimeout(targetUrl, fetchReq.response, 5000, function (success) {
@@ -309,60 +321,45 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
 function Loadpayloadonline(PLfile) {
     if (PLfile == undefined || PLfile == null) {
         // Run BinLoader
-        storage.session.set("binloader", true);
-        storage.session.remove("payload_path");
+        storage.session.set("binloader", 1);
     } else {
         storage.session.set("payload_path", PLfile);
-        storage.session.remove("binloader");
     }
 
     if (isPS4Console()) {
-        location.reload();
+        jailbreak();
     }
 }
 
 // Custom Uploaded Payload
 function customPayload(payloadFile) {
     if (!payloadFile) {
-        alert((window.lang && window.lang.emptyPayloadFile) || "Please select a payload file.");
+        alert(window.lang.emptyPayloadFile);
         return;
     }
-    var blobUrl = URL.createObjectURL(payloadFile);
-    Loadpayloadlocal(blobUrl, payloadFile.name, 'custom');
-    log(((window.lang && window.lang.customPayloadLoaded) || "Custom payload loaded: ") + payloadFile.name);
-    setTimeout(function () {
-        try { URL.revokeObjectURL(blobUrl); } catch (_) { }
-    }, 30000);
+    Loadpayloadlocal(URL.createObjectURL(payloadFile), payloadFile.name, payloadFile.id);
+    log(window.lang.customPayloadLoaded + payloadFile.name);
 }
 
 function payloadRouter(payload) {
     if (!isPayloadSupported(payload)) {
-        alert((window.lang && window.lang.unsupportedFirmware ? window.lang.unsupportedFirmware : "Unsupported firmware: ") + (user && user.ps4Fw ? user.ps4Fw : ""));
+        alert(window.lang.unsupportedFirmware + user.ps4Fw);
         return;
     }
-    // If it's a BinLoader request
-    if (payload.id === 'BinLoader' || (payload.src == undefined && payload.legacySrc == undefined)) {
+    // It's a BinLoader
+    if (payload.src == undefined && payload.legacySrc == undefined) {
         Loadpayloadonline(undefined);
     } else {
-        var fwRaw = getPs4FwVersion() || (typeof user !== 'undefined' ? user.ps4Fw : null);
-        var fwNum = (fwRaw !== null && fwRaw !== undefined) ? parseFloat(fwRaw) : NaN;
-        var targetSrc = payload.src;
-
-        if (!isNaN(fwNum) && fwNum <= 4.74 && payload.legacySrc !== undefined) {
-            targetSrc = payload.legacySrc;
-        } else if (targetSrc === undefined && payload.legacySrc !== undefined) {
-            targetSrc = payload.legacySrc;
+        // check for firmware to load a legacy payload instead
+        if (getPs4FwVersion() <= 4.74 && payload.legacySrc != undefined) {
+            payload.src = payload.legacySrc;
         }
 
-        Loadpayloadlocal(targetSrc, payload.name, payload.id, payload.needsPayloadLoader);
-        // install both base and update for psvue without mutating original payload object
-        if (payload.id === 'PSVue' && typeof targetSrc === 'string') {
-            var updateSrc = targetSrc.replace('base', '124');
-            if (updateSrc !== targetSrc) {
-                setTimeout(function () {
-                    Loadpayloadlocal(updateSrc, payload.name + ' (Update)', payload.id, payload.needsPayloadLoader);
-                }, 2500);
-            }
+        Loadpayloadlocal(payload.src, payload.name, payload.id, payload.needsPayloadLoader);
+        // install both base and update for psvue
+        if (payload.id == 'PSVue') {
+            payload.src = payload.src.replace('base', '124');
+            Loadpayloadlocal(payload.src, payload.name, payload.id, payload.needsPayloadLoader);
         }
     }
 }

@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v14.0 - Pure BinLoader mode (port 9020), no auto-HEN (FW 9.00-14.02)
-# Updated on 2026-11-20T07:15:00
+# v4
+# Generated on 2026-11-18
 
 CACHE:
 ../../../
@@ -45,6 +45,8 @@ CACHE:
 ../../../includes/payloads/Legacy/ps4-disable-updates-legacy.bin
 ../../../includes/payloads/Legacy/ps4-enable-browser-legacy.bin
 ../../../includes/payloads/Legacy/ps4-ftp-legacy.bin
+../../../includes/payloads/HEN/PS4HEN-474.bin
+../../../includes/payloads/HEN/PS4HEN-455.bin
 ../../../src/bpf-double-free/common.js
 ../../../src/bpf-double-free/kernelExploit_bpf_double_free.js
 ../../../src/bpf-double-free/main.js
@@ -53,10 +55,6 @@ CACHE:
 ../../../src/bpf-double-free/userland.js
 ../../../src/bpf-double-free/webkitExploit_haveABadTime.js
 ../../../src/bpf-double-free/webkitExploit_stackUnitializedRead.js
-../../../prestige.jpg
-../../../includes/css/colors/lonely.css
 
 NETWORK:
 *
-../../../includes/payloads/Bins/elfldr.bin
-../../../includes/payloads/Bins/elfldr.elf

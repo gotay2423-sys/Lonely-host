@@ -1,13 +1,10 @@
 // @ts-nocheck
 // Jailbreak-related functions
 async function jailbreak() {
-  if (!isPS4Console() && !devMode) {
-    if (typeof user !== 'undefined') user.blockJailbreak = false;
-    return;
-  }
+  if (!isPS4Console() && !devMode) return;
 
   // clear terminal
-  if (ui.consoleElement) ui.consoleElement.textContent = '';
+  ui.consoleElement.textContent = '';
   // stop counter
   if (autoJbInterval) clearInterval(autoJbInterval);
 
@@ -18,21 +15,17 @@ async function jailbreak() {
   // autoJbRetry will pickup on userland fail and reload
   storage.session.set('autoJb', false);
 
-  // Set default mode only if no payload or binloader already set
-  if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
-    storage.set('jailbreakFlavor', 'BinLoader');
-    storage.session.set('binloader', true);
-  }
+  // Skip if payload was chosen, useful when a payload was chosen from deliverPayload.js
   var payloadPath = storage.session.getString('payload_path', null);
+  if (!payloadPath || payloadPath == null) {
+    // Choose HEN
+    chooseHEN();
+  }
 
   cleanUp();
 
   payloadPath = storage.session.getString('payload_path', null);
-  if (payloadPath) {
-    log("Loading: " + payloadPath);
-  } else {
-    log("Mode: BinLoader (Port 9020)");
-  }
+  log("Loading: " + payloadPath);
 
   // barebone exploit preferred? go to exploit file
   if (user.bareboneJB) {
@@ -52,7 +45,6 @@ async function jailbreak() {
     handler();
   } else {
     log("Error: Invalid exploit chain selected", "red");
-    if (typeof user !== 'undefined') user.blockJailbreak = false;
   }
 }
 
@@ -67,9 +59,7 @@ async function psfreeLapse() {
   } else { // bundle lapse
     log("Loading Feyzee61's PSFree Lapse Bundle implementation..");
     try {
-      if (typeof doJailBreak !== "function") {
-        await loadScript('./src/psfree-lapse/bundle.js', false, devMode);
-      }
+      await loadScript('./src/psfree-lapse/bundle.js', false, devMode);
 
       if (typeof doJailBreak === "function") {
         doJailBreak();
@@ -122,7 +112,7 @@ async function badHoistJailbreak() {
   if (isElfPayload) {
     elfLoaderAvailable = await probeElfLoader();
     log("Waiting 600ms");
-    await sleep(600);
+    sleep(600);
     if (elfLoaderAvailable) {
       log("elfldr is already running. Skipping elfldr.bin boot.", "green");
     } else {
@@ -140,15 +130,10 @@ async function badHoistJailbreak() {
 
     // Inject either the binary payload or elfldr.bin
     log("Injecting payload: " + injectionPath);
-    if (!isPayloadElf(injectionPath)) {
-      getPayload672(injectionPath);
-    }
+    getPayload672(injectionPath);
     await sleep(1000);
 
     if (isElfPayload) {
-      if (!elfLoaderAvailable) {
-        elfLoaderAvailable = await probeElfLoader();
-      }
       if (elfLoaderAvailable) {
         log("Sending the ELF payload: " + payloadPath, "green");
         Loadpayloadlocal(payloadPath, getPayloadName(payloadPath), "jailbreak");
@@ -241,6 +226,7 @@ async function loadSettings() {
     await initLanguage();
     loadTheme();
     loadLayout();
+    renderPayloads(payloadsList);
     loadAdvancedPayloads();
     loadLastTab();
     loadGoldHENVer();

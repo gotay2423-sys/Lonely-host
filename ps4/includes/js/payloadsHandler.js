@@ -4,7 +4,7 @@ function loadLastTab() {
     if (user.lastTab == "advanced" && !user.advancedPayloads) {
         // set last tab to tools
         user.lastTab = "tools";
-        if (ui.toolsTab) ui.toolsTab.click();
+        if (ui.toolsSection) ui.toolsSection.click();
     }
     var targetEl = document.getElementById(user.lastTab);
     if (targetEl) toggleVisibility(targetEl.id, 1);
@@ -207,7 +207,7 @@ function isPayloadSupported(payload) {
     if (!userFW) return false;
 
     // If payload has explicit specificFW string
-    if (!payload.specificFW || payload.specificFW.trim() === "") return true;
+    if (payload.specificFW.trim() == "") return true;
     // Replace 'latest' with max firmware supported
     var rawStr = payload.specificFW.replace(/latest/gi, commonMax);
     var rules = rawStr.split(',');

@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v14.0 - Pure BinLoader mode (port 9020), no auto-HEN (FW 9.00-14.02)
-# Updated on 2026-11-20T07:15:00
+# v4
+# Generated on 2026-11-18
 
 CACHE:
 ../../../
@@ -46,7 +46,6 @@ CACHE:
 ../../../includes/payloads/Bins/elfldr.bin
 ../../../includes/payloads/Bins/elfldr.elf
 ../../../includes/payloads/Bins/np-fake-signin-ps4.elf
-../../../includes/payloads/Bins/betterlan-ps4.elf
 ../../../includes/payloads/Bins/ps4-app-dumper.bin
 ../../../includes/payloads/Bins/ps4-app2usb.bin
 ../../../includes/payloads/Bins/ps4-backup.bin
@@ -70,6 +69,13 @@ CACHE:
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold70.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold80.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold85.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.10.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.12.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.13.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.14.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.8.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.9.bin
+../../../includes/payloads/HEN/PS4HEN.bin
 ../../../includes/payloads/Linux/linux-1024mb.elf
 ../../../includes/payloads/Linux/linux-128mb.elf
 ../../../includes/payloads/Linux/linux-2048mb.elf
@@ -80,6 +86,7 @@ CACHE:
 ../../../includes/payloads/Linux/linux-512mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
 ../../../src/slopkit/core.js
+../../../src/slopkit/core.js?v=10
 ../../../src/slopkit/int64.js
 ../../../src/slopkit/mem.js
 ../../../src/slopkit/ps4_offsets.js
@@ -87,11 +94,13 @@ CACHE:
 ../../../src/slopkit/chain_lapse.js
 ../../../src/slopkit/chain_poops.js
 ../../../src/relapse/core.js
+../../../src/relapse/core.js?v=10
 ../../../src/relapse/int64.js
 ../../../src/relapse/mem.js
 ../../../src/relapse/ps4_offsets.js
 ../../../src/relapse/rpc_worker.js
 ../../../src/relapse/jb.js
+../../../src/relapse/jb.js?v=10
 ../../../src/wobkot/ps4/impl.js
 ../../../src/wobkot/kernel.js
 ../../../src/wobkot/lapse.js
@@ -102,8 +111,6 @@ CACHE:
 ../../../src/wobkot/worker.js
 ../../../src/kpatches/1200.bin
 ../../../src/kpatches/1250.bin
-../../../prestige.jpg
-../../../includes/css/colors/lonely.css
 
 NETWORK:
 *

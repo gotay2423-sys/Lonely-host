@@ -45,20 +45,23 @@ function isHttps() {
 
 // Works in both index.html and exploit.html
 function log(message, color, consoleEl) {
-    var targetConsole = consoleEl || (typeof ui !== 'undefined' && ui.consoleElement) || document.getElementById('console');
+    var consoleEl = consoleEl ? consoleEl : ui.consoleElement;
+    var consoleEl = (typeof ui !== 'undefined' && ui.consoleElement)
+        ? ui.consoleElement
+        : document.getElementById('console');
 
-    if (typeof user !== 'undefined' && user.clearLog && targetConsole) {
-        targetConsole.textContent = '';
+    if (typeof user !== 'undefined' && user.clearLog && consoleEl) {
+        consoleEl.textContent = '';
         user.clearLog = false;
     }
-    if (!targetConsole) return;
+    if (!consoleEl) return;
 
     var span = document.createElement('span');
     // break text into a new line to keep it visible
     span.style.whiteSpace = "pre-wrap";
     span.textContent = message + '\n';
     if (color) span.style.color = color;
-    targetConsole.appendChild(span);
+    consoleEl.appendChild(span);
 }
 
 function getReloadAfterJbValue() {
@@ -123,26 +126,6 @@ function jailbreakSuccess(statusMessage) {
         if (stateEl && statusMessage) {
             stateEl.textContent = statusMessage;
         }
-    }
-
-    // Trigger small popup message with Prestige image
-    showJbSuccessPopup();
-}
-
-function showJbSuccessPopup() {
-    var popup = document.getElementById('jb-success-popup');
-    if (!popup) return;
-    popup.classList.add('jb-popup-show');
-    if (window._jbPopupTimer) clearTimeout(window._jbPopupTimer);
-    window._jbPopupTimer = setTimeout(function () {
-        closeJbSuccessPopup();
-    }, 8000);
-}
-
-function closeJbSuccessPopup() {
-    var popup = document.getElementById('jb-success-popup');
-    if (popup) {
-        popup.classList.remove('jb-popup-show');
     }
 }
 

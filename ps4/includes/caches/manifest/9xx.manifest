@@ -1,12 +1,11 @@
 CACHE MANIFEST
-# v14.0 - Pure BinLoader mode (port 9020), no auto-HEN (FW 9.00-14.02)
-# Updated on 2026-11-20T07:15:00
+# v2.6
+# Generated on 2026-11-18
 
 CACHE:
 ../../../
 ../../../index.html
 ../../../exploit.html
-../../../prestige.jpg
 ../../../includes/js/HENs.js
 ../../../includes/js/design.js
 ../../../includes/js/autoJbRetry.js
@@ -36,7 +35,6 @@ CACHE:
 ../../../includes/js/deliverPayload.js
 ../../../includes/payloads/Bins/WebRTE.bin
 ../../../includes/payloads/Bins/np-fake-signin-ps4.elf
-../../../includes/payloads/Bins/betterlan-ps4.elf
 ../../../includes/payloads/Bins/ps4-app-dumper.bin
 ../../../includes/payloads/Bins/ps4-app2usb.bin
 ../../../includes/payloads/Bins/ps4-backup.bin
@@ -62,6 +60,14 @@ CACHE:
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold70.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold80.bin
 ../../../includes/payloads/Bins/fan-thresholds/ps4-fan-threshold85.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.12.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.13.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.14.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.8.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.9.bin
+../../../includes/payloads/HEN/goldhen_v2.4b18.10.bin
+../../../includes/payloads/HEN/PS4HEN.bin
+../../../includes/payloads/HEN/nexHEN-ps4.elf
 ../../../includes/payloads/Linux/linux-32mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
 ../../../includes/payloads/Linux/linux-128mb.elf
@@ -135,7 +141,6 @@ CACHE:
 ../../../src/kpatches/900.bin
 ../../../src/kpatches/903.bin
 ../../../src/kpatches/950.bin
-../../../includes/css/colors/lonely.css
 
 NETWORK:
 *

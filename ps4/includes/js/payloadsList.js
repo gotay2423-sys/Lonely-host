@@ -20,7 +20,7 @@ var payloadsList = [
     name: "Bin Loader",
     author: "Exploit",
     description: "Launches BinLoader server on port 9020 to send bin payloads.",
-    specificFW: "4.50 - latest",
+    specificFW: "4.50 - 5.07, 7.00 - 9.60",
     category: "tools",
     src: undefined,
     legacySrc: undefined
@@ -67,10 +67,9 @@ var payloadsList = [
     id: "EnableBrowser",
     name: "PS4 Enable Browser",
     author: "Scene Collective",
-    description: "Permanently activates the browser without needing to sign into PSN.",
+    description: "Permenently activates the browser without needing to sign into PSN.",
     specificFW: "4.50 - 5.07",
     category: "tools",
-    src: legacyPayloadsPath + "ps4-enable-browser-legacy.bin",
     legacySrc: legacyPayloadsPath + "ps4-enable-browser-legacy.bin"
   },
   {
@@ -103,20 +102,10 @@ var payloadsList = [
     needsPayloadLoader: true
   },
   {
-    id: "BetterLAN",
-    name: "BetterLAN",
-    author: "by ItsJokerZz",
-    description: "LAN multiplayer proxy & tunnel for PS4 games without PSN.",
-    specificFW: "5.05 - latest",
-    category: "tools",
-    src: payloadsPath + "betterlan-ps4.elf",
-    needsPayloadLoader: true
-  },
-  {
     id: "BackupDB",
     name: "Backup DB",
     author: "Stooged",
-    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitialize as your keys may change.",
+    description: "Backs up your PS4's databases, licenses, and user data. Note this may not be useful if you have to reinitalize as your keys may change.",
     specificFW: "4.73 - latest",
     category: "tools",
     src: payloadsPath + "ps4-backup.bin"
@@ -285,7 +274,7 @@ var payloadsList = [
     id: "PermanentUART",
     name: "Permanent UART",
     author: "JTAG7371",
-    description: "Enabled hardware based UART without a kernel patch, persists through updates.",
+    description: "Enabled hardware based UART without a kernel patch, persists though updates.",
     specificFW: "4.73 - latest",
     category: "advanced",
     src: payloadsPath + "ps4-permanent-uart.bin"
@@ -333,14 +322,14 @@ var payloadsList = [
     id: "Itemzflow",
     name: "Itemzflow Installer",
     author: "LightningMods",
-    description: "Itemzflow is a Free and Open source PS4 home menu alternative. Itemzflow expands beyond the limits of Sony's ShellUI.<br>You need an internet connection to use this payload.",
+    description: "Itemzflow is a Free and Open source PS4 home menu alternative Itemzflow expands the beyond limits of Sony's ShellUI.<br>You need an internet connection to use this payload.",
     specificFW: "4.73 - latest",
     category: "homebrew",
     src: homebrewPath + "PS4-Itemzflow-v108.bin",
     needsPayloadLoader: true
   },
   {
-    id: "PS4Xplorer2-10",
+    id: "PS4Xplorer2.10",
     name: "File Xplorer 2.0",
     author: "Lapy",
     description: "A File Manager for the PlayStation 4 console.<br>You need an internet connection to use this payload.",

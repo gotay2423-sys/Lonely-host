@@ -8,7 +8,7 @@ function setLayout(theme) {
 
         if (theme == 'compact') {
             ui.initialScreen.classList.add('compact');
-            ui.clickToStartText.innerText = projectName;
+            ui.clickToStartText.innerText = getChainLabel(user.exploitChain);
         } else {
             ui.initialScreen.classList.remove('compact');
             ui.clickToStartText.innerText = (window.lang && window.lang.clickToStart) || 'Click to Start';
@@ -41,7 +41,7 @@ function loadLayout() {
 
     if (radioElement && radioElement.value == 'compact') {
         ui.initialScreen.classList.add('compact');
-        ui.clickToStartText.textContent = projectName;
+        ui.clickToStartText.textContent = getChainLabel(user.exploitChain);
     } else {
         ui.initialScreen.classList.remove('compact');
         ui.clickToStartText.textContent = (window.lang && window.lang.clickToStart) || 'Click to Start';
@@ -52,20 +52,16 @@ function loadLayout() {
 }
 
 function loadTheme() {
-    var savedColor = storage.getString('color', 'lonely');
+    var savedColor = storage.getString('color', 'default');
 
     // Find the radio button matching the saved theme
     var radioElement = document.querySelector('input[name="colorTheme"][value="' + savedColor + '"]');
 
     // Fallback if the saved theme doesn't exist or is invalid
     if (!radioElement) {
-        savedColor = 'lonely';
-        radioElement = document.querySelector('input[name="colorTheme"][value="lonely"]');
-        if (!radioElement) {
-            savedColor = 'default';
-            radioElement = document.querySelector('input[name="colorTheme"][value="default"]');
-        }
-        storage.set('color', savedColor);
+        savedColor = 'default';
+        radioElement = document.querySelector('input[name="colorTheme"][value="default"]');
+        storage.set('color', 'default');
         setTheme(savedColor);
     }
     if (radioElement) {

@@ -33,11 +33,12 @@ function _jailbreak() {
           // autoJbRetry will pickup on userland fail and reload
           storage.session.set('autoJb', false);
 
-          // Set default HEN only if no payload or binloader already set
-          if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
+          // Skip if payload was chosen, useful when a payload was chosen from deliverPayload.js
+          payloadPath = storage.session.getString('payload_path', null);
+          if (!payloadPath || payloadPath == null) {
+            // Choose HEN
             chooseHEN();
           }
-          payloadPath = storage.session.getString('payload_path', null);
           cleanUp();
           payloadPath = storage.session.getString('payload_path', null);
           log("Loading: " + payloadPath);
@@ -101,10 +102,6 @@ function _psfreeLapse() {
           // bundle lapse
           log("Loading Feyzee61's PSFree Lapse Bundle implementation..");
           _context2.p = 6;
-          if (typeof doJailBreak === "function") {
-            _context2.n = 7;
-            break;
-          }
           _context2.n = 7;
           return loadScript('./src/psfree-lapse/bundle.js', false, devMode);
         case 7:
@@ -207,9 +204,7 @@ function _badHoistJailbreak() {
 
           // Inject either the binary payload or elfldr.bin
           log("Injecting payload: " + injectionPath);
-          if (!isPayloadElf(injectionPath)) {
-            getPayload672(injectionPath);
-          }
+          getPayload672(injectionPath);
           _context3.n = 10;
           return sleep(1000);
         case 10:
@@ -447,6 +442,7 @@ function _loadSettings() {
         case 1:
           loadTheme();
           loadLayout();
+          renderPayloads(payloadsList);
           loadAdvancedPayloads();
           loadLastTab();
           loadGoldHENVer();

@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v14.0 - Pure BinLoader mode (port 9020), no auto-HEN (FW 9.00-14.02)
-# Updated on 2026-11-20T07:15:00
+# v4
+# Generated on 2026-11-18
 
 CACHE:
 ../../../
@@ -58,7 +58,6 @@ CACHE:
 ../../../includes/payloads/Bins/ps4-pup-decrypt.bin
 ../../../includes/payloads/Bins/ps4-restore.bin
 ../../../includes/payloads/Bins/db-rebuilder-v0.2.bin
-../../../includes/payloads/Bins/betterlan-ps4.elf
 ../../../includes/payloads/Bins/ps4-rif-renamer.bin
 ../../../includes/payloads/Bins/ps4-websrv.bin
 ../../../includes/payloads/Bins/ps4debug-ng_v1.3.4.bin
@@ -76,10 +75,6 @@ CACHE:
 ../../../includes/payloads/Linux/linux-4096mb.elf
 ../../../includes/payloads/Linux/linux-512mb.elf
 ../../../includes/payloads/Linux/linux-64mb.elf
-../../../prestige.jpg
-../../../includes/css/colors/lonely.css
-../../../includes/payloads/Bins/elfldr.elf
-../../../includes/payloads/Bins/np-fake-signin-ps4.elf
 
 NETWORK:
 *

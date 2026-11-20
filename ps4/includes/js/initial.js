@@ -1,13 +1,13 @@
 var autoJbInterval;
 var lastScrollY = 0;
 var lastSection = "initial";           // For custom snap scroll on the PS4
-var projectName = "Lonely PS4";
+var projectName = "WebKitty";
 var hideUnsupportedPayloads = false;
 var commonMax = 14.02;                 // max supported paylaods
 
 var user = {
   currentLanguage: storage.getString('language', 'en'),
-  currentJbFlavor: 'BinLoader',
+  currentJbFlavor: storage.getString('jailbreakFlavor', DEFAULT_HEN),
   platform: "PS4",                                                          // PS4/PC/Mobile etc..
   lastTab: storage.getString('lastTab', 'tools'),
   advancedPayloads: storage.getBoolean('advancedPayloads', false),          // true/false
@@ -18,12 +18,6 @@ var user = {
   exploitChain: storage.getNumber('exploitChain', null),                    // Exploit chain method
   blockJailbreak: false,                                                    // Prevent double jailbreak execution
 };
-
-// Default jailbreak mode: Pure BinLoader on port 9020 (no auto-HEN)
-if (!storage.session.getString('payload_path', null)) {
-  storage.set('jailbreakFlavor', 'BinLoader');
-  storage.session.set('binloader', true);
-}
 
 var ui = {
   mainContainer: document.querySelector('.mainContainer'),
@@ -39,6 +33,7 @@ var ui = {
   psLogoContainer: document.getElementById('ps-logo-container'),
   clickToStartText: document.getElementById('click-to-start-text'),
   ps4FwStatus: document.getElementById('PS4FW'),
+  exploitChainLabel: document.getElementById('exploitChainLabel'),
   stopAutoJbBtn: document.getElementById('stopAutoJb'),
   updateCacheBtn: document.getElementById("updateCache"),
 
