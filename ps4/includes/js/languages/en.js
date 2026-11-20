@@ -41,7 +41,7 @@ window.lang = {
     "payloadLoaderNotFound": "Payload Loader server not found. Is it running?",
     "ps4IpInvalid": "Invalid PS4 IP address",
     // deliverPayload.js
-    "payloadRequiresPayloadLoader": "This payload can only be loaded through an active Payload Loader server, such as GoldHEN or nexHEN.",
+    "payloadRequiresPayloadLoader": "This payload can only be loaded through an active Payload Loader server, such as BinLoader (port 9020).",
     "busyBinLoader": "Cannot load the payload because the Payload Loader server is busy.",
     "binLoaderNotDetected": "Payload Loader server not detected. Is it running?",
     "disabledBinloader": "Payload Loader server is not running. Load the payload using the exploit instead?",

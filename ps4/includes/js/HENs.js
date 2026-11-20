@@ -1,17 +1,17 @@
-var HEN_BASE_PATH = './includes/payloads/HEN/';
-var DEFAULT_HEN   = "nexHEN";
+// Pure BinLoader mode - nexHEN and GoldHEN completely eliminated
 
-function nexHEN() {
-    storage.set('jailbreakFlavor', 'nexHEN');
-    storage.session.set('payload_path', HEN_BASE_PATH + 'nexHEN-ps4.bin');
-    user.currentJbFlavor = 'nexHEN';
+function BinLoader() {
+    storage.set('jailbreakFlavor', 'BinLoader');
+    storage.session.remove('payload_path');
+    storage.session.set('binloader', true);
+    if (typeof user !== 'undefined') user.currentJbFlavor = 'BinLoader';
 }
 
-function activateNexHEN(runNow) {
+function activateBinLoader(runNow) {
     if (runNow && typeof user !== 'undefined' && user.blockJailbreak) return;
-    nexHEN();
+    BinLoader();
     if (typeof log === 'function') {
-        log('nexHEN selected: ' + HEN_BASE_PATH + 'nexHEN-ps4.bin', 'green');
+        log('BinLoader selected (Port 9020)', 'green');
     }
     if (runNow) {
         if (typeof user !== 'undefined') user.blockJailbreak = true;
@@ -19,37 +19,20 @@ function activateNexHEN(runNow) {
     }
 }
 
-function GoldHEN() {
-    nexHEN();
-}
-
-function PS4HEN() {
-    nexHEN();
-}
-
-function chooseHEN() {
-    nexHEN();
-}
-
-function setGoldHENVer(value) {
-    // Deprecated - nexHEN is the exclusive payload
-}
-
-function loadGoldHENVer() {
-    // Deprecated - nexHEN is the exclusive payload
-}
-
-function saveJbFlavor(name, value) {
-    nexHEN();
-}
-
-function loadJbFlavor() {
-    nexHEN();
-}
+// Compatibility stubs routing all legacy HEN references to BinLoader
+function nexHEN() { BinLoader(); }
+function activateNexHEN(runNow) { activateBinLoader(runNow); }
+function GoldHEN() { BinLoader(); }
+function PS4HEN() { BinLoader(); }
+function chooseHEN() { BinLoader(); }
+function setGoldHENVer(value) {}
+function loadGoldHENVer() {}
+function saveJbFlavor(name, value) { BinLoader(); }
+function loadJbFlavor() { BinLoader(); }
 
 function updateHenFlavorVisibility(fwVersion) {
-    var nexHENInputInitial = document.getElementById('nexHEN-btn-initial') || document.getElementById('nexHEN-label-initial');
-    var nexHENInputExploit = document.getElementById('nexHEN-label-exploit');
-    if (nexHENInputInitial) toggleVisibility(nexHENInputInitial.id, true);
-    if (nexHENInputExploit) toggleVisibility(nexHENInputExploit.id, true);
+    var bldrInputInitial = document.getElementById('nexHEN-btn-initial') || document.getElementById('binloader-btn-initial');
+    var bldrInputExploit = document.getElementById('nexHEN-label-exploit') || document.getElementById('binloader-label-exploit');
+    if (bldrInputInitial) toggleVisibility(bldrInputInitial.id, true);
+    if (bldrInputExploit) toggleVisibility(bldrInputExploit.id, true);
 }

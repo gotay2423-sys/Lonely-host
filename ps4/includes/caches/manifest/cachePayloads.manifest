@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v13.0 - nexHEN pure kernel bootstrap with native daemons (FW 9.00-14.02)
-# Updated on 2026-11-19T22:41:00
+# v14.0 - Pure BinLoader mode (port 9020), no auto-HEN (FW 9.00-14.02)
+# Updated on 2026-11-20T07:15:00
 
 CACHE:
 ../../../
@@ -78,8 +78,6 @@ CACHE:
 ../../../includes/payloads/Linux/linux-64mb.elf
 ../../../prestige.jpg
 ../../../includes/css/colors/lonely.css
-../../../includes/payloads/HEN/nexHEN-ps4.bin
-../../../includes/payloads/HEN/nexHEN-ps4.elf
 ../../../includes/payloads/Bins/elfldr.elf
 ../../../includes/payloads/Bins/np-fake-signin-ps4.elf
 

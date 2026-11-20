@@ -5,15 +5,6 @@ var linuxPath = "./includes/payloads/Linux/";
 
 var payloadsList = [
   {
-    id: "nexHEN",
-    name: "nexHEN",
-    author: "EchoStretch",
-    description: "Homebrew Enabler & Debug Settings for PS4.",
-    specificFW: "5.05 - latest",
-    category: "tools",
-    src: "./includes/payloads/HEN/nexHEN-ps4.bin"
-  },
-  {
     id: "FTP",
     name: "FTP",
     author: "Scene Collective",
@@ -29,7 +20,7 @@ var payloadsList = [
     name: "Bin Loader",
     author: "Exploit",
     description: "Launches BinLoader server on port 9020 to send bin payloads.",
-    specificFW: "4.50 - 5.07, 7.00 - 9.60",
+    specificFW: "4.50 - latest",
     category: "tools",
     src: undefined,
     legacySrc: undefined

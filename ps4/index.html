@@ -5,24 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <title>Lonely — PS4 Exploit &amp; Payload Host</title>
-    <meta name="description" content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring nexHEN." />
+    <meta name="description" content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring pure BinLoader (:9020)." />
     <meta name="author" content="Lonely">
     <meta name="keywords"
-        content="PS4, PlayStation 4, webkit exploit, jailbreak, nexHEN, psfree lapse, cssfontface, Lonely, lapse, netctrl, slopkit, relapse">
+        content="PS4, PlayStation 4, webkit exploit, jailbreak, binloader, psfree lapse, cssfontface, Lonely, lapse, netctrl, slopkit, relapse">
 
 
     <!-- Facebook / Discord / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Lonely PS4 Exploit Host">
     <meta property="og:description"
-        content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring nexHEN.">
+        content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring pure BinLoader (:9020).">
     <meta property="og:url" content="http://lonely-host.duckdns.org/ps4/">
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Lonely PS4 Exploit Host">
     <meta name="twitter:description"
-        content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring nexHEN.">
+        content="Lonely PS4 is a cyberpunk PS4 exploit host for 4.50-5.07 & 6.70 - 14.02 featuring pure BinLoader (:9020).">
     <link rel="icon" href="./includes/assets/icons/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" id="main-stylesheet" href="">
     <link rel="stylesheet" id="color-stylesheet" href="">
@@ -59,7 +59,7 @@
                     <span class="jb-popup-time">Just now</span>
                 </div>
                 <div class="jb-popup-title">Jailbreak Success!</div>
-                <div class="jb-popup-subtitle">nexHEN Active &bull; System Ready</div>
+                <div class="jb-popup-subtitle">BinLoader Active &bull; Port 9020 Ready</div>
             </div>
             <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
         </div>
@@ -128,7 +128,7 @@
             <!-- Compatibility message -->
             <p id="PS4FW" class="text-white/70 text-lg mt-3 mb-5 font-mono z-10">-</p>
 
-            <!-- Primary HEN Selection (nexHEN Only) -->
+            <!-- Primary Exploit Mode (BinLoader Only) -->
             <div id="choosejb-initial" class="p-5 rounded-xl shadow-xl text-center mac-card z-10" style="max-width: 480px; width: 100%;">
                 <div class="mac-card-titlebar flex items-center justify-between pb-3 mb-4 border-b border-white/10">
                     <div class="mac-traffic-dots flex items-center space-x-1.5">
@@ -136,19 +136,19 @@
                         <span class="mac-dot mac-dot-yellow"></span>
                         <span class="mac-dot mac-dot-green"></span>
                     </div>
-                    <span class="text-xs uppercase font-bold tracking-widest text-emerald-400 font-mono" style="text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);">ACTIVE JAILBREAK PAYLOAD</span>
-                    <span class="text-xs text-gray-400 font-mono">v2.4</span>
+                    <span class="text-xs uppercase font-bold tracking-widest text-emerald-400 font-mono" style="text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);">ACTIVE JAILBREAK MODE</span>
+                    <span class="text-xs text-gray-400 font-mono">:9020</span>
                 </div>
                 <div class="flex justify-center mb-2">
-                    <button id="nexHEN-btn-initial" onclick="activateNexHEN(true)"
+                    <button id="nexHEN-btn-initial" onclick="activateBinLoader(true)"
                         class="flex items-center justify-center space-x-3 px-8 py-3 rounded-xl shadow-lg border-2 cursor-pointer transition-all duration-200 hover:scale-105 active:scale-95"
                         style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.25)); border-color: #10b981; box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); min-width: 240px;">
                         <span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-400" style="box-shadow: 0 0 10px #10b981;"></span>
-                        <span class="text-xl font-extrabold select-none tracking-wide text-white" style="text-shadow: 0 0 10px #10b981;">nexHEN</span>
+                        <span class="text-xl font-extrabold select-none tracking-wide text-white" style="text-shadow: 0 0 10px #10b981;">BinLoader :9020</span>
                         <span class="text-xs font-mono uppercase font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-2 py-0.5 rounded ml-2">Selected</span>
                     </button>
                 </div>
-                <p class="text-xs text-gray-400 mt-2 font-mono">Homebrew Enabler &amp; Debug Settings (EchoStretch)</p>
+                <p class="text-xs text-gray-400 mt-2 font-mono">Native Exploit &amp; BinLoader Server on Port 9020</p>
             </div>
 
             <!-- Scroll Down Icon -->
@@ -186,12 +186,12 @@
                         dir="ltr">
                         <pre id='console'><center>--</center></pre>
                     </div>
-                    <!-- HEN Indicator (nexHEN Active) -->
+                    <!-- Payload Indicator (BinLoader Active) -->
                     <div id="henSelection" class="flex items-center justify-center gap-3">
-                        <button id="nexHEN-label-exploit" onclick="activateNexHEN(true)"
+                        <button id="nexHEN-label-exploit" onclick="activateBinLoader(true)"
                             class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-emerald-950/60 shadow border border-emerald-400 cursor-pointer hover:bg-emerald-900/80 transition-all">
                             <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400" style="box-shadow: 0 0 8px #10b981;"></span>
-                            <span class="text-sm font-bold text-white select-none">nexHEN</span>
+                            <span class="text-sm font-bold text-white select-none">BinLoader :9020</span>
                             <span class="text-xs font-mono text-emerald-300 font-semibold">[Active]</span>
                         </button>
                         <button id="exploitRun"
@@ -399,7 +399,7 @@
                 <p class="mb-1">Based on <b class="text-blue-400">WebKitty</b> created by <span class="text-white">ArabPixel</span> and the <span class="text-white">PSFree Team</span>.</p>
                 <p class="text-gray-400 leading-relaxed">
                     <b>Kernel Exploits:</b> Lapse, Netctrl, Relapse (PS4 port), Afterglow, sleirsgoevy, ChendoChap, theflow0, Specter, flatz, fail0verflow, CTurt.<br>
-                    <b>HEN &amp; Payloads:</b> SiSTRo (GoldHEN), EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.
+                    <b>Payloads &amp; Tools:</b> John T&ouml;rnblom (elfldr), Scene Collective, CTurt, ChendoChap.
                 </p>
             </div>
         </section>

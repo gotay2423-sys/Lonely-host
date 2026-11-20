@@ -7,7 +7,7 @@ var commonMax = 14.02;                 // max supported paylaods
 
 var user = {
   currentLanguage: storage.getString('language', 'en'),
-  currentJbFlavor: 'nexHEN',
+  currentJbFlavor: 'BinLoader',
   platform: "PS4",                                                          // PS4/PC/Mobile etc..
   lastTab: storage.getString('lastTab', 'tools'),
   advancedPayloads: storage.getBoolean('advancedPayloads', false),          // true/false
@@ -19,11 +19,10 @@ var user = {
   blockJailbreak: false,                                                    // Prevent double jailbreak execution
 };
 
-// Set default jailbreak payload only if not already set by user selection or BinLoader
-if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
-  var defaultFlavor = storage.getString('jailbreakFlavor', 'nexHEN');
-  storage.set('jailbreakFlavor', defaultFlavor);
-  storage.session.set('payload_path', './includes/payloads/HEN/nexHEN-ps4.bin');
+// Default jailbreak mode: Pure BinLoader on port 9020 (no auto-HEN)
+if (!storage.session.getString('payload_path', null)) {
+  storage.set('jailbreakFlavor', 'BinLoader');
+  storage.session.set('binloader', true);
 }
 
 var ui = {

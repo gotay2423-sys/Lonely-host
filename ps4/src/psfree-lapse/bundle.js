@@ -4806,13 +4806,9 @@ async function doJailBreak() {
 }
 
 async function kexSuccess() {
-  if (sessionStorage.getItem('binloader')) {
-    runBinLoader();
-  } else {
-    var payload_path = sessionStorage.getItem("payload_path");
-    if (!payload_path || payload_path.indexOf('nexHEN') !== -1) {
-      payload_path = './includes/payloads/HEN/nexHEN-ps4.bin';
-    }
+  var payload_path = sessionStorage.getItem("payload_path");
+  if (payload_path && payload_path.indexOf('nexHEN') === -1 && payload_path.indexOf('goldhen') === -1 && payload_path.indexOf('HEN') === -1) {
+    sessionStorage.removeItem("payload_path");
     window.log("Loading " + getPayloadName(payload_path) + "...", "yellow");
 
     var jb_step_status = await PayloadLoader(payload_path);
@@ -4823,13 +4819,16 @@ async function kexSuccess() {
 
     await new Promise(function(resolve) { setTimeout(resolve, 1500); });
     window.log("\nKernel exploit succeeded!", "green");
-    window.log("nexHEN loaded successfully!", "green");
+    window.log(getPayloadName(payload_path) + " loaded successfully!", "green");
 
-    sessionStorage.removeItem("payload_path");
     window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
     if (typeof jailbreakSuccess === "function") {
       jailbreakSuccess();
     }
+  } else {
+    sessionStorage.removeItem("payload_path");
+    window.log("\nKernel exploit succeeded!", "green");
+    runBinLoader();
   }
 }
 //================================================================================================

@@ -30,7 +30,7 @@
 
 ### Interface & Customization
 - **Themes & Layouts:** Customizable layout modes with independent theme options.
-- **HEN Flavor Selector:** Toggle between **HEN** and **GoldHEN**, with integrated GoldHEN version selection.
+- **BinLoader Mode:** Pure BinLoader on port 9020 without auto-HEN.
 - **Descriptive Payload Selection:** Clear descriptions and unsupported payload loading protection.
 - **Multilingual Support:** Dynamic language switcher.
 

@@ -186,8 +186,7 @@ function sendPayloadWithTimeout(url, data, timeoutMs, onResult) {
 /**
  * Sends a payload to the PS4.
  *  - .elf: elfldr on port 9021 (POST binary upload)
- *            If elfldr isn't running yet, boots it first via GoldHEN (port 9090).
- *  - .bin: GoldHEN / nexHEN binloader on port 9090.
+ *  - .bin: BinLoader on port 9020.
  */
 function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
     var ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
@@ -217,14 +216,14 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
         }
     };
 
-    // fetch payload binary and send via GoldHEN port 9090
+    // fetch payload binary and send via BinLoader port 9020
     var sendViaBinLoader = function (binPath, onComplete) {
         getPayload(binPath, function (fetchReq) {
             if (!fetchReq || (fetchReq.status !== 200 && fetchReq.status !== 304) || !fetchReq.response) {
                 onComplete(false);
                 return;
             }
-            var targetPort = customPort || 9090;
+            var targetPort = customPort || 9020;
             var targetUrl = "http://" + ps4Ip + ":" + targetPort + "/";
             sendPayloadWithTimeout(targetUrl, fetchReq.response, 5000, function (success) {
                 onComplete(success);
@@ -279,8 +278,8 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
 
             log(window.lang.payloadLoaderSending.replace("{payload}", name));
 
-            var targetPort = customPort || 9090;
-            var targetName = customPort ? window.lang.customPort : "GoldHEN / nexHEN";
+            var targetPort = customPort || 9020;
+            var targetName = customPort ? window.lang.customPort : "BinLoader (9020)";
             var targetUrl = "http://" + ps4Ip + ":" + targetPort + "/";
 
             sendPayloadWithTimeout(targetUrl, fetchReq.response, 5000, function (success) {
@@ -310,9 +309,11 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
 function Loadpayloadonline(PLfile) {
     if (PLfile == undefined || PLfile == null) {
         // Run BinLoader
-        storage.session.set("binloader", 1);
+        storage.session.set("binloader", true);
+        storage.session.remove("payload_path");
     } else {
         storage.session.set("payload_path", PLfile);
+        storage.session.remove("binloader");
     }
 
     if (isPS4Console()) {
@@ -339,16 +340,8 @@ function payloadRouter(payload) {
         alert((window.lang && window.lang.unsupportedFirmware ? window.lang.unsupportedFirmware : "Unsupported firmware: ") + (user && user.ps4Fw ? user.ps4Fw : ""));
         return;
     }
-    // If it's a HEN payload (nexHEN, GoldHEN, PS4HEN), run jailbreak directly with that payload
-    if (payload.id === 'nexHEN' || payload.id === 'GoldHEN' || payload.id === 'PS4HEN') {
-        storage.set('jailbreakFlavor', payload.id);
-        storage.session.set('payload_path', payload.src);
-        user.currentJbFlavor = payload.id;
-        jailbreak();
-        return;
-    }
-    // It's a BinLoader
-    if (payload.src == undefined && payload.legacySrc == undefined) {
+    // If it's a BinLoader request
+    if (payload.id === 'BinLoader' || (payload.src == undefined && payload.legacySrc == undefined)) {
         Loadpayloadonline(undefined);
     } else {
         var fwRaw = getPs4FwVersion() || (typeof user !== 'undefined' ? user.ps4Fw : null);

@@ -18,16 +18,21 @@ async function jailbreak() {
   // autoJbRetry will pickup on userland fail and reload
   storage.session.set('autoJb', false);
 
-  // Set default HEN only if no payload or binloader already set
+  // Set default mode only if no payload or binloader already set
   if (!storage.session.getString('payload_path', null) && !storage.session.getBoolean('binloader', false)) {
-    chooseHEN();
+    storage.set('jailbreakFlavor', 'BinLoader');
+    storage.session.set('binloader', true);
   }
   var payloadPath = storage.session.getString('payload_path', null);
 
   cleanUp();
 
   payloadPath = storage.session.getString('payload_path', null);
-  log("Loading: " + payloadPath);
+  if (payloadPath) {
+    log("Loading: " + payloadPath);
+  } else {
+    log("Mode: BinLoader (Port 9020)");
+  }
 
   // barebone exploit preferred? go to exploit file
   if (user.bareboneJB) {
