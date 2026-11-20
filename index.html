@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lonely — Unified PlayStation Exploit Hub</title>
-  <meta name="description" content="Unified PlayStation 4 & PlayStation 5 WebKit and Kernel Exploit Host.">
+  <title>Lonely VI — PlayStation Exploit Hub (Vice City Edition)</title>
+  <meta name="description" content="PlayStation 5 WebKit & Kernel Exploit Suite with PS4 Companion Hub.">
   <script>
     // Automatic Console Redirection to PS5 Host
     (function() {
@@ -14,27 +14,35 @@
   </script>
   <style>
     :root {
-      --neon-pink: #ff007f;
-      --neon-cyan: #00f3ff;
-      --neon-blue: #0080ff;
-      --neon-purple: #9d4edd;
-      --neon-green: #39ff14;
-      --bg-dark: #05020a;
-      --panel-bg: rgba(14, 7, 30, 0.9);
-      --border-cyan: rgba(0, 243, 255, 0.45);
+      --gta-pink: #ff2a8d;
+      --gta-magenta: #e024c3;
+      --gta-purple: #8c1bab;
+      --gta-orange: #ff7e29;
+      --gta-gold: #ffc233;
+      --gta-cyan: #00f0ff;
+      --gta-mint: #0df5c4;
+      --gta-red: #ff3366;
+      --gta-bg-dark: #08020e;
+      --gta-panel-bg: rgba(18, 7, 34, 0.9);
+      --gta-border-pink: rgba(255, 42, 141, 0.45);
+      --gta-border-cyan: rgba(0, 240, 255, 0.4);
+      --gta-border-gold: rgba(255, 194, 51, 0.45);
     }
 
     * { box-sizing: border-box; }
 
     body {
-      background: 
-        linear-gradient(rgba(0, 243, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.035) 1px, transparent 1px),
-        radial-gradient(circle at top, #1a0b2e 0%, #080312 60%, var(--bg-dark) 100%);
-      background-size: 34px 34px, 34px 34px, 100% 100%;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(224, 36, 195, 0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(255, 126, 41, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 15% 25%, rgba(0, 240, 255, 0.16) 0%, transparent 50%),
+        linear-gradient(rgba(255, 42, 141, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, #160628 0%, #0c0316 45%, #05010a 100%);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px, 100% 100%;
       background-attachment: fixed;
-      color: var(--neon-cyan);
-      font-family: 'Consolas', 'Courier New', monospace;
+      color: #f3effc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
       padding: 30px 16px;
       min-height: 100vh;
@@ -46,69 +54,108 @@
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 920px;
     }
 
+    /* ---------- GTA VI Header ---------- */
     .header {
       text-align: center;
       margin-bottom: 30px;
     }
 
-    .header h1 {
-      color: var(--neon-pink);
-      text-shadow: 0 0 12px var(--neon-pink), 0 0 25px var(--neon-pink), 0 0 45px rgba(255, 0, 127, 0.45);
-      font-size: 46px;
-      font-weight: 800;
-      letter-spacing: 6px;
-      margin: 0;
+    .gta-art-wrap {
+      margin-bottom: -10px;
+      opacity: 0.95;
+      display: flex;
+      justify-content: center;
+    }
+
+    .gta-logo-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .gta-title {
+      font-family: 'Montserrat', 'Trebuchet MS', 'Impact', sans-serif;
+      font-size: 56px;
+      font-weight: 900;
+      letter-spacing: 8px;
       text-transform: uppercase;
+      margin: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #ffd4e8 30%, #ff2a8d 68%, #ff7e29 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 18px rgba(255, 42, 141, 0.8)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.9));
+      line-height: 1.1;
+    }
+
+    .vi-badge {
+      font-family: 'Arial Black', 'Impact', sans-serif;
+      font-style: italic;
+      font-size: 62px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #00f0ff 0%, #ff2a8d 50%, #ff7e29 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 16px rgba(255, 42, 141, 0.85)) drop-shadow(0 0 28px rgba(0, 240, 255, 0.65));
+      transform: skewX(-7deg);
+      line-height: 1;
     }
 
     .header p {
-      color: var(--neon-cyan);
-      text-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
-      font-size: 14px;
-      letter-spacing: 2.5px;
+      color: var(--gta-cyan);
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
       margin-top: 8px;
+      text-transform: uppercase;
     }
 
+    /* ---------- Hub Grid & Cards ---------- */
     .hub-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 22px;
+      gap: 24px;
       margin-bottom: 28px;
     }
 
     .console-card {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-cyan);
-      border-radius: 14px;
-      padding: 24px;
+      background: var(--gta-panel-bg);
+      border: 1px solid var(--gta-border-cyan);
+      border-radius: 18px;
+      padding: 26px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       transition: all 0.25s ease;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 0 15px rgba(0, 243, 255, 0.06);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.06);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .card-ps5 {
-      border-color: rgba(255, 0, 127, 0.45);
+      border-color: var(--gta-border-pink);
     }
     .card-ps5:hover {
-      border-color: var(--neon-pink);
+      border-color: var(--gta-pink);
       transform: translateY(-4px);
-      box-shadow: 0 16px 45px rgba(255, 0, 127, 0.3), inset 0 0 20px rgba(255, 0, 127, 0.12);
+      box-shadow: 0 18px 48px rgba(255, 42, 141, 0.35), inset 0 0 25px rgba(255, 42, 141, 0.15);
     }
 
     .card-ps4 {
-      border-color: rgba(0, 128, 255, 0.45);
+      border-color: rgba(255, 126, 41, 0.45);
     }
     .card-ps4:hover {
-      border-color: #00f3ff;
+      border-color: var(--gta-gold);
       transform: translateY(-4px);
-      box-shadow: 0 16px 45px rgba(0, 128, 255, 0.35), inset 0 0 20px rgba(0, 243, 255, 0.12);
+      box-shadow: 0 18px 48px rgba(255, 126, 41, 0.35), inset 0 0 25px rgba(255, 194, 51, 0.12);
     }
 
     .card-top {
@@ -120,7 +167,7 @@
 
     .card-title {
       font-size: 24px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 2px;
       margin: 0;
       display: flex;
@@ -129,39 +176,39 @@
     }
 
     .title-ps5 {
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
+      color: #ffc233;
+      text-shadow: 0 0 12px rgba(255, 194, 51, 0.6);
     }
 
     .title-ps4 {
-      color: #38bdf8;
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+      color: #ff9d5c;
+      text-shadow: 0 0 12px rgba(255, 157, 92, 0.6);
     }
 
     .fw-badge {
-      padding: 4px 12px;
-      border-radius: 12px;
+      padding: 5px 14px;
+      border-radius: 14px;
       font-size: 11px;
-      letter-spacing: 1px;
-      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-weight: 800;
       text-transform: uppercase;
     }
 
     .badge-ps5 {
-      background: rgba(255, 0, 127, 0.15);
-      border: 1px solid var(--neon-pink);
-      color: var(--neon-pink);
+      background: rgba(255, 42, 141, 0.18);
+      border: 1px solid var(--gta-pink);
+      color: var(--gta-pink);
     }
 
     .badge-ps4 {
-      background: rgba(0, 128, 255, 0.15);
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
+      background: rgba(255, 126, 41, 0.18);
+      border: 1px solid var(--gta-orange);
+      color: var(--gta-orange);
     }
 
     .card-desc {
-      font-size: 12.5px;
-      color: #9d83c7;
+      font-size: 13px;
+      color: #bfa5dc;
       line-height: 1.6;
       margin-bottom: 18px;
     }
@@ -169,83 +216,90 @@
     .feature-list {
       list-style: none;
       padding: 0;
-      margin: 0 0 22px 0;
-      font-size: 12px;
-      color: #c4b5fd;
+      margin: 0 0 24px 0;
+      font-size: 12.5px;
+      color: #d8caf2;
     }
 
     .feature-list li {
-      padding: 4px 0;
+      padding: 5px 0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .feature-list li::before {
       content: "▹";
-      color: var(--neon-cyan);
+      color: var(--gta-cyan);
+      font-size: 14px;
     }
 
     .btn-launch {
       display: block;
       width: 100%;
       text-align: center;
-      padding: 13px 20px;
-      font-size: 15px;
-      font-weight: 800;
+      padding: 15px 24px;
+      font-size: 16px;
+      font-weight: 900;
       font-family: inherit;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      border-radius: 8px;
+      border-radius: 10px;
       text-decoration: none;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
     }
 
     .btn-launch-ps5 {
-      background: rgba(255, 0, 127, 0.18);
-      border: 2px solid var(--neon-pink);
-      color: var(--neon-pink);
-      box-shadow: 0 0 15px rgba(255, 0, 127, 0.25);
+      background: linear-gradient(135deg, rgba(255, 42, 141, 0.25) 0%, rgba(255, 126, 41, 0.25) 100%);
+      border: 2px solid var(--gta-pink);
+      color: #ffffff;
+      box-shadow: 0 0 18px rgba(255, 42, 141, 0.35);
     }
     .btn-launch-ps5:hover {
-      background: var(--neon-pink);
-      color: #05020a;
-      box-shadow: 0 0 25px var(--neon-pink);
+      background: linear-gradient(135deg, #ff2a8d 0%, #ff7e29 100%);
+      color: #07020d;
+      box-shadow: 0 0 30px var(--gta-pink);
+      transform: translateY(-2px);
     }
 
     .btn-launch-ps4 {
-      background: rgba(0, 128, 255, 0.18);
-      border: 2px solid #38bdf8;
-      color: #38bdf8;
-      box-shadow: 0 0 15px rgba(0, 128, 255, 0.25);
+      background: linear-gradient(135deg, rgba(255, 126, 41, 0.25) 0%, rgba(255, 194, 51, 0.25) 100%);
+      border: 2px solid var(--gta-orange);
+      color: #ffffff;
+      box-shadow: 0 0 18px rgba(255, 126, 41, 0.35);
     }
     .btn-launch-ps4:hover {
-      background: #38bdf8;
-      color: #05020a;
-      box-shadow: 0 0 25px #38bdf8;
+      background: linear-gradient(135deg, #ff7e29 0%, #ffc233 100%);
+      color: #07020d;
+      box-shadow: 0 0 30px var(--gta-gold);
+      transform: translateY(-2px);
     }
 
+    /* ---------- Unified Credits Section ---------- */
     .credits-container {
-      background: rgba(10, 4, 22, 0.88);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 12px;
-      padding: 18px 22px;
+      background: rgba(15, 5, 30, 0.9);
+      border: 1px solid rgba(255, 42, 141, 0.28);
+      border-radius: 14px;
+      padding: 20px 24px;
       text-align: center;
       font-size: 11.5px;
-      color: #9d83c7;
+      color: #bfa5dc;
       line-height: 1.6;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .credits-header {
-      color: var(--neon-cyan);
-      font-weight: 800;
+      color: var(--gta-gold);
+      font-weight: 900;
       letter-spacing: 2px;
       margin-bottom: 8px;
       text-transform: uppercase;
-      font-size: 12.5px;
+      font-size: 13px;
+      text-shadow: 0 0 10px rgba(255, 194, 51, 0.5);
     }
 
     .credits-row {
@@ -253,15 +307,15 @@
     }
 
     .credits-row b {
-      color: #fff;
+      color: #ffffff;
     }
 
     .tag-highlight {
-      color: var(--neon-pink);
+      color: var(--gta-pink);
       font-weight: bold;
     }
     .tag-ps4 {
-      color: #38bdf8;
+      color: var(--gta-orange);
       font-weight: bold;
     }
   </style>
@@ -269,8 +323,31 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Lonely</h1>
-      <p>UNIFIED PLAYSTATION EXPLOIT HUB</p>
+      <!-- Vice City Sunset & Palms SVG Art -->
+      <div class="gta-art-wrap">
+        <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="110" cy="38" r="24" fill="url(#sun-grad-root)" />
+          <line x1="84" y1="32" x2="136" y2="32" stroke="#160628" stroke-width="2.5" />
+          <line x1="86" y1="38" x2="134" y2="38" stroke="#160628" stroke-width="2.5" />
+          <line x1="90" y1="44" x2="130" y2="44" stroke="#160628" stroke-width="2.5" />
+          <line x1="96" y1="50" x2="124" y2="50" stroke="#160628" stroke-width="2.5" />
+          <path d="M46 60 Q52 40 50 25 Q45 15 32 18 Q45 22 47 26 Q42 22 28 28 Q44 30 47 34 Q34 38 25 45 Q44 40 48 42 L46 60 Z" fill="#ff2a8d" opacity="0.85"/>
+          <path d="M174 60 Q168 40 170 25 Q175 15 188 18 Q175 22 173 26 Q178 22 192 28 Q176 30 173 34 Q186 38 195 45 Q176 40 172 42 L174 60 Z" fill="#ff2a8d" opacity="0.85"/>
+          <defs>
+            <linearGradient id="sun-grad-root" x1="110" y1="14" x2="110" y2="62" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffc233"/>
+              <stop offset="50%" stop-color="#ff7e29"/>
+              <stop offset="100%" stop-color="#ff2a8d"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="gta-logo-container">
+        <h1 class="gta-title">LONELY</h1>
+        <span class="vi-badge">VI</span>
+      </div>
+      <p>VICE CITY EDITION &bull; UNIFIED PLAYSTATION EXPLOIT HUB</p>
     </div>
 
     <div class="hub-grid">
@@ -278,14 +355,14 @@
       <div class="console-card card-ps5">
         <div>
           <div class="card-top">
-            <h2 class="card-title title-ps5">PS5 Host</h2>
-            <span class="fw-badge badge-ps5">FW 7.00 – 13.60</span>
+            <h2 class="card-title title-ps5">PS5 Host (Vice City)</h2>
+            <span class="fw-badge badge-ps5">FW 7.00 &ndash; 13.60</span>
           </div>
           <p class="card-desc">
-            Full WebKit ROP &amp; Relapse kernel exploit engine tailored for PS5 Prospero OS.
+            Full WebKit ROP &amp; Relapse kernel exploit suite tailored for PS5 Prospero OS.
           </p>
           <ul class="feature-list">
-            <li><b>Kernel Chain:</b> Relapse Exploit</li>
+            <li><b>Kernel Chain:</b> Relapse Exploit Engine</li>
             <li><b>Payloads:</b> nexHEN (EchoStretch), zftpd, MemDBG, websrv</li>
             <li><b>Elf Loader:</b> Port 9021 with Pre-flight Probe</li>
             <li><b>Features:</b> Auto-Run on Load &amp; Offline PWA Caching</li>
@@ -299,7 +376,7 @@
         <div>
           <div class="card-top">
             <h2 class="card-title title-ps4">PS4 Host (Lonely2)</h2>
-            <span class="fw-badge badge-ps4">FW 9.00 – 12.02</span>
+            <span class="fw-badge badge-ps4">FW 9.00 &ndash; 12.02</span>
           </div>
           <p class="card-desc">
             Standalone clean Wobkot engine dedicated to PlayStation 4 running nexHEN.

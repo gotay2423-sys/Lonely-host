@@ -4,30 +4,38 @@
   <meta charset="utf-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lonely - PS5 Exploit &amp; Payload Host</title>
+  <title>Lonely VI — PS5 Exploit Host (Vice City Edition)</title>
   <style>
     :root {
-      --neon-pink: #ff007f;
-      --neon-cyan: #00f3ff;
-      --neon-green: #39ff14;
-      --neon-yellow: #ffd000;
-      --neon-red: #ff2a55;
-      --bg-dark: #05020a;
-      --panel-bg: rgba(13, 6, 28, 0.88);
-      --border-cyan: rgba(0, 243, 255, 0.45);
+      --gta-pink: #ff2a8d;
+      --gta-magenta: #e024c3;
+      --gta-purple: #8c1bab;
+      --gta-orange: #ff7e29;
+      --gta-gold: #ffc233;
+      --gta-cyan: #00f0ff;
+      --gta-mint: #0df5c4;
+      --gta-red: #ff3366;
+      --gta-bg-dark: #08020e;
+      --gta-panel-bg: rgba(18, 7, 34, 0.88);
+      --gta-border-pink: rgba(255, 42, 141, 0.4);
+      --gta-border-cyan: rgba(0, 240, 255, 0.35);
+      --gta-border-gold: rgba(255, 194, 51, 0.45);
     }
 
     * { box-sizing: border-box; }
 
     html, body {
-      background: 
-        linear-gradient(rgba(0, 243, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 243, 255, 0.035) 1px, transparent 1px),
-        radial-gradient(circle at top, #1a0b2e 0%, #080312 60%, var(--bg-dark) 100%);
-      background-size: 34px 34px, 34px 34px, 100% 100%;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(224, 36, 195, 0.28) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(255, 126, 41, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 15% 25%, rgba(0, 240, 255, 0.16) 0%, transparent 50%),
+        linear-gradient(rgba(255, 42, 141, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(180deg, #160628 0%, #0c0316 45%, #05010a 100%);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px, 100% 100%;
       background-attachment: fixed;
-      color: var(--neon-cyan);
-      font-family: 'Consolas', 'Courier New', monospace;
+      color: #f3effc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
       padding: 24px 16px;
       min-height: 100vh;
@@ -38,32 +46,70 @@
 
     .container {
       width: 100%;
-      max-width: 840px;
+      max-width: 860px;
+      position: relative;
+      z-index: 2;
     }
 
-    /* ---------- Header ---------- */
+    /* ---------- GTA VI Header ---------- */
     .header {
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
+      position: relative;
     }
 
-    .header h1 {
-      color: var(--neon-pink);
-      text-shadow: 0 0 10px var(--neon-pink), 0 0 22px var(--neon-pink), 0 0 40px rgba(255, 0, 127, 0.4);
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: 5px;
-      margin: 0;
+    .gta-art-wrap {
+      margin-bottom: -10px;
+      opacity: 0.95;
+      display: flex;
+      justify-content: center;
+    }
+
+    .gta-logo-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .gta-title {
+      font-family: 'Montserrat', 'Trebuchet MS', 'Impact', sans-serif;
+      font-size: 54px;
+      font-weight: 900;
+      letter-spacing: 8px;
       text-transform: uppercase;
+      margin: 0;
+      background: linear-gradient(180deg, #ffffff 0%, #ffd4e8 30%, #ff2a8d 68%, #ff7e29 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 16px rgba(255, 42, 141, 0.75)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.9));
+      line-height: 1.1;
     }
 
-    .header p {
-      color: var(--neon-cyan);
-      text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
-      font-size: 13.5px;
-      letter-spacing: 2px;
-      margin-top: 6px;
-      opacity: 0.9;
+    .vi-badge {
+      font-family: 'Arial Black', 'Impact', sans-serif;
+      font-style: italic;
+      font-size: 60px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #00f0ff 0%, #ff2a8d 50%, #ff7e29 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 16px rgba(255, 42, 141, 0.85)) drop-shadow(0 0 28px rgba(0, 240, 255, 0.65));
+      transform: skewX(-7deg);
+      line-height: 1;
+    }
+
+    .gta-subtitle {
+      color: var(--gta-cyan);
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.4);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      margin-top: 8px;
+      text-transform: uppercase;
+      opacity: 0.95;
     }
 
     /* ---------- Status Chips ---------- */
@@ -76,22 +122,26 @@
     }
 
     .chip {
-      background: rgba(18, 8, 36, 0.85);
-      border: 1px solid var(--border-cyan);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 12px;
+      background: rgba(22, 9, 42, 0.85);
+      border: 1px solid var(--gta-border-cyan);
+      padding: 7px 18px;
+      border-radius: 22px;
+      font-size: 11.5px;
+      font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(0, 243, 255, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
+      color: #f1ecff;
     }
 
     .fw-chip {
-      color: var(--neon-pink);
-      border-color: rgba(255, 0, 127, 0.4);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 0, 127, 0.08);
+      color: var(--gta-gold);
+      border-color: var(--gta-border-gold);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 194, 51, 0.12);
     }
 
     button.chip {
@@ -100,18 +150,18 @@
     }
 
     .reset-chip {
-      color: #ff3366;
+      color: var(--gta-red);
       border-color: rgba(255, 51, 102, 0.45);
-      background: rgba(30, 8, 20, 0.85);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 51, 102, 0.1);
+      background: rgba(35, 8, 24, 0.85);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 51, 102, 0.12);
       transition: all 0.2s ease;
     }
 
     .reset-chip:hover, .reset-chip:focus {
-      background: rgba(255, 51, 102, 0.2);
-      border-color: #ff3366;
+      background: rgba(255, 51, 102, 0.25);
+      border-color: var(--gta-red);
       color: #ffffff;
-      box-shadow: 0 0 16px rgba(255, 51, 102, 0.6);
+      box-shadow: 0 0 18px rgba(255, 51, 102, 0.7);
       outline: none;
     }
 
@@ -125,48 +175,51 @@
       border-radius: 50%;
       display: inline-block;
       margin-right: 8px;
-      background: var(--neon-cyan);
-      box-shadow: 0 0 8px var(--neon-cyan);
+      background: var(--gta-cyan);
+      box-shadow: 0 0 8px var(--gta-cyan);
       animation: pulse 1.8s ease-in-out infinite;
     }
 
-    .led.led-yellow { background: var(--neon-yellow); box-shadow: 0 0 8px var(--neon-yellow); }
-    .led.led-green  { background: var(--neon-green); box-shadow: 0 0 8px var(--neon-green); }
-    .led.led-red    { background: var(--neon-red); box-shadow: 0 0 8px var(--neon-red); }
+    .led.led-yellow { background: var(--gta-gold); box-shadow: 0 0 8px var(--gta-gold); }
+    .led.led-green  { background: var(--gta-mint); box-shadow: 0 0 8px var(--gta-mint); }
+    .led.led-red    { background: var(--gta-red);  box-shadow: 0 0 8px var(--gta-red); }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.35; transform: scale(0.85); }
     }
 
-    /* ---------- Run Button ---------- */
+    /* ---------- GTA VI Action Controls ---------- */
     .controls {
       text-align: center;
       margin-bottom: 24px;
     }
 
     #runBtn {
-      background: rgba(255, 0, 127, 0.15);
-      color: var(--neon-pink);
-      border: 2px solid var(--neon-pink);
-      padding: 14px 44px;
-      font-size: 17px;
-      font-weight: 800;
+      background: linear-gradient(135deg, rgba(255, 42, 141, 0.25) 0%, rgba(255, 126, 41, 0.25) 100%);
+      color: #ffffff;
+      border: 2px solid var(--gta-pink);
+      padding: 16px 54px;
+      font-size: 18px;
+      font-weight: 900;
       font-family: inherit;
-      letter-spacing: 2.5px;
-      border-radius: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 0 18px rgba(255, 0, 127, 0.35), inset 0 0 12px rgba(255, 0, 127, 0.15);
-      transition: all 0.2s ease;
+      box-shadow: 0 0 24px rgba(255, 42, 141, 0.45), 0 0 45px rgba(255, 126, 41, 0.25), inset 0 0 16px rgba(255, 42, 141, 0.2);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     #runBtn::after {
       content: "";
       position: absolute;
       top: 0; left: -100%; width: 50%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
       transform: skewX(-20deg);
       animation: shine 4.5s ease-in-out infinite;
     }
@@ -177,254 +230,36 @@
     }
 
     #runBtn:hover {
-      background: var(--neon-pink);
-      color: #05020a;
-      box-shadow: 0 0 30px var(--neon-pink);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg, #ff2a8d 0%, #ff7e29 100%);
+      color: #07020d;
+      box-shadow: 0 0 35px rgba(255, 42, 141, 0.85), 0 0 65px rgba(255, 126, 41, 0.6);
+      transform: translateY(-2px) scale(1.02);
     }
 
     #runBtn:focus, #runBtn:focus-visible {
-      outline: 3px solid var(--neon-cyan);
+      outline: 3px solid var(--gta-cyan);
       outline-offset: 4px;
     }
 
     #runBtn:disabled {
-      border-color: #444;
-      color: #777;
-      background: rgba(40, 40, 40, 0.2);
+      border-color: #554460;
+      color: #887799;
+      background: rgba(40, 25, 55, 0.3);
       box-shadow: none;
       cursor: not-allowed;
       transform: none;
     }
 
     #runBtn.btn-success {
-      border-color: var(--neon-green);
-      color: var(--neon-green);
-      box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
-    }
-
-    /* ---------- Terminal Chrome Bar ---------- */
-    .terminal-bar {
-      background: #110722;
-      border: 1px solid var(--border-cyan);
-      border-bottom: 1px solid rgba(0, 243, 255, 0.2);
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      padding: 9px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    .terminal-dots { display: flex; gap: 7px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .dot-red { background: var(--neon-red); box-shadow: 0 0 6px var(--neon-red); }
-    .dot-yellow { background: var(--neon-yellow); box-shadow: 0 0 6px var(--neon-yellow); }
-    .dot-green { background: var(--neon-green); box-shadow: 0 0 6px var(--neon-green); }
-
-    .terminal-title {
-      color: #9d83c7;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-
-    .terminal-port {
-      color: var(--neon-cyan);
-      opacity: 0.85;
-      font-size: 11px;
-      letter-spacing: 1px;
-    }
-
-    /* ---------- Console Window ---------- */
-    #console {
-      background: var(--panel-bg);
-      border: 1px solid var(--border-cyan);
-      border-top: none;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      padding: 16px 18px;
-      height: 280px;
-      overflow-y: auto;
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: var(--neon-cyan);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 0, 127, 0.12);
-    }
-
-    /* Custom WebKit Scrollbar */
-    #console::-webkit-scrollbar, .payload-grid::-webkit-scrollbar {
-      width: 7px;
-    }
-    #console::-webkit-scrollbar-track, .payload-grid::-webkit-scrollbar-track {
-      background: rgba(5, 2, 10, 0.5);
-      border-radius: 4px;
-    }
-    #console::-webkit-scrollbar-thumb, .payload-grid::-webkit-scrollbar-thumb {
-      background: var(--neon-pink);
-      border-radius: 4px;
-      box-shadow: 0 0 8px var(--neon-pink);
-    }
-    #console::-webkit-scrollbar-thumb:hover, .payload-grid::-webkit-scrollbar-thumb:hover {
-      background: var(--neon-cyan);
-      box-shadow: 0 0 10px var(--neon-cyan);
-    }
-
-    /* Log Message Typography */
-    .log-info { color: var(--neon-cyan); text-shadow: 0 0 5px rgba(0, 243, 255, 0.4); }
-    .log-success { color: var(--neon-green); text-shadow: 0 0 6px rgba(57, 255, 20, 0.5); font-weight: bold; }
-    .log-error { color: var(--neon-red); text-shadow: 0 0 6px rgba(255, 42, 85, 0.6); font-weight: bold; }
-
-    /* ---------- Payload Host Menu ---------- */
-    .payload-section {
-      margin-top: 26px;
-      background: rgba(14, 7, 30, 0.85);
-      border: 1px solid var(--border-cyan);
-      border-radius: 14px;
-      padding: 20px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55), inset 0 0 15px rgba(0, 243, 255, 0.06);
-    }
-
-    .payload-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.18);
-    }
-
-    .payload-title {
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      color: var(--neon-pink);
-      text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
-    }
-
-    .payload-subtitle {
-      font-size: 11.5px;
-      color: #8c72b2;
-      letter-spacing: 1px;
-    }
-
-    .payload-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-
-    .payload-card {
-      background: linear-gradient(140deg, rgba(25, 12, 45, 0.8) 0%, rgba(10, 4, 20, 0.95) 100%);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 10px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-    }
-
-    .payload-card:hover {
-      border-color: var(--neon-pink);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 0, 127, 0.25);
-    }
-
-    .card-featured {
-      border-color: rgba(255, 0, 127, 0.55);
-      background: linear-gradient(140deg, rgba(45, 12, 50, 0.85) 0%, rgba(16, 4, 25, 0.95) 100%);
-      box-shadow: 0 4px 18px rgba(255, 0, 127, 0.2);
-    }
-    .card-featured .p-name {
-      color: var(--neon-pink);
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
-    }
-    .btn-featured {
-      background: rgba(255, 0, 127, 0.15);
-      border-color: var(--neon-pink);
-      color: var(--neon-pink);
-    }
-    .btn-featured:hover {
-      background: var(--neon-pink);
-      color: #05020a;
-      box-shadow: 0 0 14px var(--neon-pink);
-    }
-
-    .p-info {
-      flex-grow: 1;
-      min-width: 0;
-    }
-
-    .p-name {
-      font-size: 14.5px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 1px;
-    }
-
-    .p-desc {
-      font-size: 11px;
-      color: #8fa0be;
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .btn-send {
-      background: rgba(0, 243, 255, 0.12);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-size: 12px;
-      font-family: inherit;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .btn-send:hover {
-      background: var(--neon-cyan);
-      color: #05020a;
-      box-shadow: 0 0 12px var(--neon-cyan);
-    }
-
-    .btn-send:focus-visible {
-      outline: 3px solid var(--neon-pink);
-      outline-offset: 2px;
-    }
-
-    .btn-send[data-state="sending"] {
-      border-color: var(--neon-yellow);
-      color: var(--neon-yellow);
-      background: rgba(255, 208, 0, 0.15);
-      animation: pulse 1s infinite;
-      pointer-events: none;
-    }
-
-    .btn-send[data-state="sent"] {
-      border-color: var(--neon-green);
-      color: var(--neon-green);
-      background: rgba(57, 255, 20, 0.15);
-      box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
-    }
-
-    .btn-send[data-state="failed"] {
-      border-color: var(--neon-red);
-      color: var(--neon-red);
-      background: rgba(255, 42, 85, 0.15);
+      border-color: var(--gta-mint);
+      background: linear-gradient(135deg, rgba(13, 245, 196, 0.2) 0%, rgba(0, 240, 255, 0.2) 100%);
+      color: var(--gta-mint);
+      box-shadow: 0 0 25px rgba(13, 245, 196, 0.5);
     }
 
     /* Auto-Run Toggle */
     .auto-run-bar {
-      margin-top: 12px;
+      margin-top: 14px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -437,13 +272,14 @@
       cursor: pointer;
       user-select: none;
       font-size: 12px;
+      font-weight: 700;
       letter-spacing: 1.5px;
-      color: #9d83c7;
+      color: #bfa5dc;
       transition: all 0.2s ease;
     }
 
     .toggle-wrap:hover {
-      color: var(--neon-cyan);
+      color: var(--gta-cyan);
     }
 
     .toggle-wrap input {
@@ -451,10 +287,10 @@
     }
 
     .toggle-slider {
-      width: 34px;
-      height: 18px;
-      background: rgba(18, 8, 36, 0.9);
-      border: 1px solid var(--border-cyan);
+      width: 38px;
+      height: 20px;
+      background: rgba(22, 9, 42, 0.9);
+      border: 1px solid var(--gta-border-cyan);
       border-radius: 20px;
       position: relative;
       transition: all 0.25s ease;
@@ -464,31 +300,264 @@
     .toggle-slider::after {
       content: "";
       position: absolute;
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       top: 2px;
       left: 2px;
       border-radius: 50%;
-      background: var(--neon-cyan);
-      box-shadow: 0 0 6px var(--neon-cyan);
+      background: var(--gta-cyan);
+      box-shadow: 0 0 6px var(--gta-cyan);
       transition: all 0.25s ease;
     }
 
     .toggle-wrap input:checked + .toggle-slider {
-      background: rgba(255, 0, 127, 0.25);
-      border-color: var(--neon-pink);
-      box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+      background: rgba(255, 42, 141, 0.3);
+      border-color: var(--gta-pink);
+      box-shadow: 0 0 12px rgba(255, 42, 141, 0.5);
     }
 
     .toggle-wrap input:checked + .toggle-slider::after {
-      left: 18px;
-      background: var(--neon-pink);
-      box-shadow: 0 0 8px var(--neon-pink);
+      left: 20px;
+      background: var(--gta-pink);
+      box-shadow: 0 0 8px var(--gta-pink);
     }
 
     .toggle-wrap input:checked ~ .toggle-text {
-      color: var(--neon-pink);
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
+      color: var(--gta-pink);
+      text-shadow: 0 0 8px rgba(255, 42, 141, 0.6);
+    }
+
+    /* ---------- Terminal Chrome Bar ---------- */
+    .terminal-bar {
+      background: #15062a;
+      border: 1px solid var(--gta-border-pink);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.25);
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .terminal-dots { display: flex; gap: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: var(--gta-red); box-shadow: 0 0 6px var(--gta-red); }
+    .dot-yellow { background: var(--gta-gold); box-shadow: 0 0 6px var(--gta-gold); }
+    .dot-green { background: var(--gta-mint); box-shadow: 0 0 6px var(--gta-mint); }
+
+    .terminal-title {
+      color: var(--gta-orange);
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 11.5px;
+    }
+
+    .terminal-port {
+      color: var(--gta-cyan);
+      opacity: 0.9;
+      font-size: 11.5px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    /* ---------- Console Window ---------- */
+    #console {
+      background: var(--gta-panel-bg);
+      border: 1px solid var(--gta-border-pink);
+      border-top: none;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+      padding: 18px 20px;
+      height: 280px;
+      overflow-y: auto;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--gta-mint);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), inset 0 0 25px rgba(255, 42, 141, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* WebKit Scrollbar */
+    #console::-webkit-scrollbar, .payload-grid::-webkit-scrollbar {
+      width: 7px;
+    }
+    #console::-webkit-scrollbar-track, .payload-grid::-webkit-scrollbar-track {
+      background: rgba(8, 2, 14, 0.6);
+      border-radius: 4px;
+    }
+    #console::-webkit-scrollbar-thumb, .payload-grid::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--gta-pink), var(--gta-orange));
+      border-radius: 4px;
+      box-shadow: 0 0 8px var(--gta-pink);
+    }
+    #console::-webkit-scrollbar-thumb:hover, .payload-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--gta-cyan);
+      box-shadow: 0 0 10px var(--gta-cyan);
+    }
+
+    /* Log Typography */
+    .log-info { color: var(--gta-cyan); text-shadow: 0 0 5px rgba(0, 240, 255, 0.4); }
+    .log-success { color: var(--gta-mint); text-shadow: 0 0 6px rgba(13, 245, 196, 0.5); font-weight: bold; }
+    .log-error { color: var(--gta-red); text-shadow: 0 0 6px rgba(255, 51, 102, 0.6); font-weight: bold; }
+
+    /* ---------- Payload Section ---------- */
+    .payload-section {
+      margin-top: 28px;
+      background: var(--gta-panel-bg);
+      border: 1px solid var(--gta-border-pink);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 42, 141, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .payload-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 42, 141, 0.25);
+    }
+
+    .payload-title {
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #ffffff 0%, #ff2a8d 50%, #ff7e29 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 10px rgba(255, 42, 141, 0.5));
+    }
+
+    .payload-subtitle {
+      font-size: 11.5px;
+      color: #bfa5dc;
+      letter-spacing: 1px;
+    }
+
+    .payload-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .payload-card {
+      background: linear-gradient(140deg, rgba(30, 12, 54, 0.85) 0%, rgba(14, 5, 26, 0.95) 100%);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+
+    .payload-card:hover {
+      border-color: var(--gta-pink);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 42, 141, 0.3);
+    }
+
+    .card-featured {
+      border-color: var(--gta-pink);
+      background: linear-gradient(140deg, rgba(65, 14, 75, 0.9) 0%, rgba(22, 6, 38, 0.95) 100%);
+      box-shadow: 0 6px 22px rgba(255, 42, 141, 0.35), inset 0 0 15px rgba(255, 126, 41, 0.15);
+    }
+
+    .card-featured .p-name {
+      color: #ffc233;
+      text-shadow: 0 0 10px rgba(255, 194, 51, 0.6);
+    }
+
+    .btn-featured {
+      background: linear-gradient(135deg, rgba(255, 42, 141, 0.25) 0%, rgba(255, 126, 41, 0.25) 100%);
+      border: 1px solid var(--gta-pink);
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .btn-featured:hover {
+      background: linear-gradient(135deg, #ff2a8d 0%, #ff7e29 100%);
+      color: #07020d;
+      box-shadow: 0 0 16px var(--gta-pink);
+    }
+
+    .p-info {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .p-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 1px;
+    }
+
+    .p-desc {
+      font-size: 11px;
+      color: #a894c2;
+      margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-send {
+      background: rgba(0, 240, 255, 0.12);
+      border: 1px solid var(--gta-cyan);
+      color: var(--gta-cyan);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-family: inherit;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-send:hover {
+      background: var(--gta-cyan);
+      color: #07020d;
+      box-shadow: 0 0 14px var(--gta-cyan);
+    }
+
+    .btn-send:focus-visible {
+      outline: 3px solid var(--gta-pink);
+      outline-offset: 2px;
+    }
+
+    .btn-send[data-state="sending"] {
+      border-color: var(--gta-gold);
+      color: var(--gta-gold);
+      background: rgba(255, 194, 51, 0.2);
+      animation: pulse 1s infinite;
+      pointer-events: none;
+    }
+
+    .btn-send[data-state="sent"] {
+      border-color: var(--gta-mint);
+      color: var(--gta-mint);
+      background: rgba(13, 245, 196, 0.2);
+      box-shadow: 0 0 12px rgba(13, 245, 196, 0.5);
+    }
+
+    .btn-send[data-state="failed"] {
+      border-color: var(--gta-red);
+      color: var(--gta-red);
+      background: rgba(255, 51, 102, 0.2);
     }
 
     /* Top Nav Hub */
@@ -496,71 +565,74 @@
       width: 100%;
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .nav-hub-link {
-      background: rgba(18, 8, 36, 0.85);
-      border: 1px solid var(--border-cyan);
-      color: var(--neon-cyan);
-      padding: 6px 14px;
-      border-radius: 16px;
+      background: rgba(22, 9, 42, 0.85);
+      border: 1px solid var(--gta-border-cyan);
+      color: var(--gta-cyan);
+      padding: 7px 16px;
+      border-radius: 18px;
       font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
       text-decoration: none;
       transition: all 0.2s ease;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .nav-hub-link:hover {
-      border-color: var(--neon-pink);
-      color: var(--neon-pink);
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+      border-color: var(--gta-pink);
+      color: var(--gta-pink);
+      box-shadow: 0 0 14px rgba(255, 42, 141, 0.5);
     }
 
     .nav-hub-link.nav-ps4 {
-      border-color: rgba(0, 128, 255, 0.5);
-      color: #38bdf8;
+      border-color: rgba(255, 126, 41, 0.5);
+      color: #ff9d5c;
     }
 
     .nav-hub-link.nav-ps4:hover {
-      border-color: #00f3ff;
-      color: #00f3ff;
-      box-shadow: 0 0 12px rgba(0, 243, 255, 0.5);
+      border-color: var(--gta-gold);
+      color: var(--gta-gold);
+      box-shadow: 0 0 14px rgba(255, 194, 51, 0.6);
     }
 
+    /* Credits Footer */
     .credits-box {
-      margin-top: 24px;
-      padding: 14px 18px;
-      background: rgba(10, 4, 22, 0.85);
-      border: 1px solid rgba(0, 243, 255, 0.25);
-      border-radius: 10px;
+      margin-top: 26px;
+      padding: 16px 20px;
+      background: rgba(15, 5, 30, 0.88);
+      border: 1px solid rgba(255, 42, 141, 0.28);
+      border-radius: 12px;
       text-align: center;
-      font-size: 11px;
-      color: #9d83c7;
+      font-size: 11.5px;
+      color: #bfa5dc;
       line-height: 1.6;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
     }
 
     .credits-title {
-      color: var(--neon-pink);
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      margin: 0 0 4px 0;
-      font-size: 12px;
+      color: var(--gta-gold);
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 0 0 6px 0;
+      font-size: 12.5px;
       text-transform: uppercase;
-      text-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+      text-shadow: 0 0 10px rgba(255, 194, 51, 0.5);
     }
 
-    /* ---------- Jailbreak Success Small Popup Notification ---------- */
+    /* ---------- GTA VI Mission Notification Popup ---------- */
     #jb-success-popup {
       position: fixed;
       top: 24px;
       right: 24px;
       z-index: 99999;
-      max-width: 360px;
+      max-width: 380px;
       width: calc(100% - 48px);
       pointer-events: none;
       opacity: 0;
@@ -578,14 +650,14 @@
       position: relative;
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      background: rgba(13, 6, 28, 0.96);
-      border: 2px solid var(--neon-pink, #ff007f);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 0, 127, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      gap: 15px;
+      padding: 14px 18px;
+      background: rgba(18, 6, 34, 0.97);
+      border: 2px solid var(--gta-pink);
+      border-radius: 18px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 42, 141, 0.5), inset 0 0 15px rgba(255, 126, 41, 0.2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       overflow: hidden;
       cursor: pointer;
     }
@@ -596,21 +668,21 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at 20% 50%, rgba(255, 0, 127, 0.22), transparent 60%);
+      background: radial-gradient(circle at 20% 50%, rgba(255, 42, 141, 0.25), transparent 60%);
       pointer-events: none;
     }
 
     .jb-popup-img {
-      width: 50px;
-      height: 50px;
-      min-width: 50px;
-      min-height: 50px;
-      max-width: 50px;
-      max-height: 50px;
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      min-height: 52px;
+      max-width: 52px;
+      max-height: 52px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--neon-pink, #ff007f);
-      box-shadow: 0 0 12px rgba(255, 0, 127, 0.75);
+      border: 2px solid var(--gta-gold);
+      box-shadow: 0 0 14px rgba(255, 194, 51, 0.8);
       flex-shrink: 0;
       z-index: 1;
     }
@@ -633,37 +705,38 @@
     .jb-popup-badge {
       font-family: inherit;
       font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--neon-green, #39ff14);
-      text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      color: var(--gta-gold);
+      text-shadow: 0 0 8px rgba(255, 194, 51, 0.7);
       text-transform: uppercase;
     }
 
     .jb-popup-time {
       font-family: inherit;
       font-size: 10px;
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .jb-popup-title {
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 800;
-      letter-spacing: 0.05em;
+      font-family: 'Montserrat', 'Trebuchet MS', sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
       color: #ffffff;
-      text-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+      text-shadow: 0 0 10px rgba(255, 42, 141, 0.8);
       line-height: 1.2;
     }
 
     .jb-popup-subtitle {
       font-family: inherit;
-      font-size: 11px;
-      color: rgba(255, 255, 255, 0.75);
-      margin-top: 2px;
+      font-size: 11.5px;
+      color: var(--gta-mint);
+      margin-top: 3px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-shadow: 0 0 6px rgba(13, 245, 196, 0.5);
     }
 
     .jb-popup-close {
@@ -681,10 +754,12 @@
 
     .jb-popup-close:hover {
       color: #ffffff;
-      text-shadow: 0 0 8px var(--neon-pink, #ff007f);
+      text-shadow: 0 0 8px var(--gta-pink);
     }
 
     @media (max-width: 640px) {
+      .gta-title { font-size: 40px; letter-spacing: 5px; }
+      .vi-badge { font-size: 46px; }
       #jb-success-popup {
         top: 16px;
         right: 16px;
@@ -703,7 +778,7 @@
       <img src="./prestige.jpg" alt="Prestige Master" class="jb-popup-img">
       <div class="jb-popup-content">
         <div class="jb-popup-header">
-          <span class="jb-popup-badge">STATUS: ONLINE</span>
+          <span class="jb-popup-badge">&#9733; EXPLOIT COMPLETE &#9733;</span>
           <span class="jb-popup-time">Just now</span>
         </div>
         <div class="jb-popup-title">Jailbreak Success!</div>
@@ -712,15 +787,42 @@
       <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
     </div>
   </div>
+
   <div class="container">
     <div class="top-nav-hub">
       <a href="../index.html" class="nav-hub-link">LONELY HUB</a>
-      <a href="../ps4/index.html" class="nav-hub-link nav-ps4">PS4 HOST</a>
+      <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2)</a>
     </div>
 
     <div class="header">
-      <h1>Lonely</h1>
-      <p>PlayStation 5 WebKit &amp; Kernel Exploit Host &middot; FW 7.00 - 13.60</p>
+      <!-- Vice City Sunset & Palms SVG Art -->
+      <div class="gta-art-wrap">
+        <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sun with horizontal scanlines -->
+          <circle cx="110" cy="38" r="24" fill="url(#sun-grad)" />
+          <line x1="84" y1="32" x2="136" y2="32" stroke="#160628" stroke-width="2.5" />
+          <line x1="86" y1="38" x2="134" y2="38" stroke="#160628" stroke-width="2.5" />
+          <line x1="90" y1="44" x2="130" y2="44" stroke="#160628" stroke-width="2.5" />
+          <line x1="96" y1="50" x2="124" y2="50" stroke="#160628" stroke-width="2.5" />
+          <!-- Left Palm Tree -->
+          <path d="M46 60 Q52 40 50 25 Q45 15 32 18 Q45 22 47 26 Q42 22 28 28 Q44 30 47 34 Q34 38 25 45 Q44 40 48 42 L46 60 Z" fill="#ff2a8d" opacity="0.85"/>
+          <!-- Right Palm Tree -->
+          <path d="M174 60 Q168 40 170 25 Q175 15 188 18 Q175 22 173 26 Q178 22 192 28 Q176 30 173 34 Q186 38 195 45 Q176 40 172 42 L174 60 Z" fill="#ff2a8d" opacity="0.85"/>
+          <defs>
+            <linearGradient id="sun-grad" x1="110" y1="14" x2="110" y2="62" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffc233"/>
+              <stop offset="50%" stop-color="#ff7e29"/>
+              <stop offset="100%" stop-color="#ff2a8d"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="gta-logo-container">
+        <h1 class="gta-title">LONELY</h1>
+        <span class="vi-badge">VI</span>
+      </div>
+      <p class="gta-subtitle">VICE CITY EDITION &bull; PS5 EXPLOIT &amp; PAYLOAD HOST &bull; FW 7.00 - 13.60</p>
     </div>
 
     <div class="status-container">
@@ -760,7 +862,7 @@
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
       </div>
-      <div class="terminal-title">lonely@ps5: ~/exploit</div>
+      <div class="terminal-title">lonely@vice-city: ~/ps5-exploit</div>
       <div class="terminal-port">PORT: 9021</div>
     </div>
 
@@ -842,8 +944,8 @@
 
     <!-- Credits Footer -->
     <div class="credits-box">
-      <div class="credits-title">LONELY PS5 EXPLOIT SUITE &middot; CREDITS</div>
-      <p style="margin: 0 0 6px 0;">Based on <b>Relapse-Exploit</b> by <span style="color:var(--neon-cyan)">ntfargo</span> &amp; <span style="color:var(--neon-pink)">Sonic_Iso</span>.</p>
+      <div class="credits-title">LONELY VI PS5 EXPLOIT SUITE &middot; CREDITS</div>
+      <p style="margin: 0 0 6px 0;">Based on <b>Relapse-Exploit</b> by <span style="color:var(--gta-cyan)">ntfargo</span> &amp; <span style="color:var(--gta-pink)">Sonic_Iso</span>.</p>
       <p style="margin: 0; opacity: 0.85;">
         <b>Kernel &amp; WebKit Research:</b> TheFlow, Dr. Yenyen, ufm42, Jordy, Sleirsgoevy, Flatz, Specter, EchoStretch, cow, nhk, bollarz, EarthOnion.<br>
         <b>Payloads:</b> EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.
