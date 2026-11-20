@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# v11.0 - audit fixes (nexHEN, lonely theme, offline cache fixes)
-# Updated on 2026-11-19T17:40:00
+# v12.0 - Option 2: nexHEN detached daemon via elfldr (FW 9.00-14.02)
+# Updated on 2026-11-19T21:42:00
 
 CACHE:
 ../../../
@@ -62,3 +62,5 @@ CACHE:
 
 NETWORK:
 *
+../../../includes/payloads/Bins/elfldr.bin
+../../../includes/payloads/Bins/elfldr.elf

@@ -239,46 +239,32 @@ function Loadpayloadlocal(PLfile, name, id, needsPayloadLoader, customPort) {
         (resolvedName && resolvedName.toLowerCase().endsWith(".elf"));
 
     if (isElf && cleanPath.indexOf('linux') == -1) {
-        var checkAndBootElfldr = function () {
-            ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
-            ELFLDR = "http://" + ps4Ip + ":9021";
+        ps4Ip = (typeof user !== "undefined" && user.ip) ? user.ip : "127.0.0.1";
+        ELFLDR = "http://" + ps4Ip + ":9021";
 
-            log(window.lang.elfLoaderStarting || "Starting Elf Loader...");
-            sendViaBinLoader("./includes/payloads/Bins/elfldr.elf", function (goldHenSuccess) {
-                if (!goldHenSuccess) {
-                    if (!needsPayloadLoader) {
-                        log(window.lang.binLoaderNotResponding, "red");
-                    }
-                    handleFallback();
+        var attempts = 0;
+        var maxAttempts = 5;
+
+        function trySendElf() {
+            sendElfToElfldr(PLfile, name, function (success) {
+                if (success) {
                     return;
                 }
-
-                // Wait 5 s for elfldr to boot on port 9021, then retry sending the ELF
-                setTimeout(function () {
-                    log(window.lang.elfLoaderSending || "Sending payload to the Elf Loader...");
-                    sendElfToElfldr(PLfile, name, function (retrySuccess) {
-                        if (!retrySuccess) handleFallback();
-                    });
-                }, 3000);
-            });
-        };
-
-        // First, check if elfldr is already running on port 9021
-        sendElfToElfldr(PLfile, name, function (success) {
-            if (success) return;
-
-            // If not running, boot it via GoldHEN binloader
-            if (ps4Ip === "127.0.0.1" && !isPS4Console() && !isLocalIP(window.location.hostname)) {
-                guessIp().then(function () {
-                    checkAndBootElfldr();
-                }).catch(function () {
+                attempts++;
+                if (attempts < maxAttempts) {
+                    log("Waiting for elfldr on port 9021 (attempt " + attempts + "/" + maxAttempts + ")...", "yellow");
+                    setTimeout(trySendElf, 1000);
+                } else {
+                    if (id === "jailbreak") {
+                        log("Could not reach elfldr on port 9021. Please restart console and try again.", "red");
+                        return;
+                    }
                     handleFallback();
-                });
-            } else {
-                checkAndBootElfldr();
-            }
-        });
+                }
+            });
+        }
 
+        trySendElf();
     } else {
         getPayload(PLfile, function (fetchReq) {
             if (fetchReq && fetchReq.status === 404) {

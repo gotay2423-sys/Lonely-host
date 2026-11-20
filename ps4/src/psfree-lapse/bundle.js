@@ -4810,36 +4810,65 @@ async function kexSuccess() {
     runBinLoader();
   } else {
     var payload_path = sessionStorage.getItem("payload_path");
-    
-    // Default HEN or nexHEN selected: load nexHEN-ps4.bin directly via kernel PayloadLoader
     if (!payload_path || payload_path.indexOf('nexHEN') !== -1) {
-      window.log("Loading nexHEN...", "yellow");
-      var loadNexHen = await PayloadLoader('./includes/payloads/HEN/nexHEN-ps4.bin');
-      if (loadNexHen !== 1) {
-        window.log("Failed to load nexHEN!\nPlease restart console and try again...", "red");
-        return;
-      }
-      await new Promise(function(resolve) { setTimeout(resolve, 1500); });
-      window.log("\nKernel exploit succeeded!", "green");
-      window.log("nexHEN loaded successfully!", "green");
-    } else if (isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
-      window.log("Payload path: " + payload_path);
-      // check if elfldr is listening
+      payload_path = './includes/payloads/HEN/nexHEN-ps4.elf';
+    }
+    if (isPayloadElf(payload_path)) payload_path = payload_path.replace('.bin', '.elf');
+    window.log("Payload path: " + payload_path);
+
+    if (payload_path && isPayloadElf(payload_path) && payload_path.indexOf("linux") == -1) {
+      // 1. Check if elfldr background daemon is already listening on port 9021
       var elfLoaderAvailable = await probeElfLoader();
       
       if (!elfLoaderAvailable) {
-        window.log("elfldr is not running, starting elfldr...", "yellow");
+        window.log("Starting elfldr background daemon in kernel...", "yellow");
         var loadElfldr = await PayloadLoader('./includes/payloads/Bins/elfldr.bin');
         if (loadElfldr !== 1) {
-          window.log("Failed to load elfldr!\nPlease restart console and try again...", "red");
+          window.log("Failed to load elfldr daemon!\nPlease restart console and try again...", "red");
           return;
         }
+
+        // Poll port 9021 until elfldr daemon is responsive
+        for (var retry = 0; retry < 12; retry++) {
+          await new Promise(function(resolve) { setTimeout(resolve, 500); });
+          elfLoaderAvailable = await probeElfLoader();
+          if (elfLoaderAvailable) {
+            window.log("elfldr daemon ready on port 9021!", "green");
+            break;
+          }
+        }
+      } else {
+        window.log("elfldr daemon already active on port 9021", "green");
       }
 
-      await new Promise(function(resolve) { setTimeout(resolve, 2000); });
+      // 2. Dispatch ELF payload directly to elfldr daemon on port 9021
+      var elfName = getPayloadName(payload_path);
+      window.log("Dispatching " + elfName + " to elfldr daemon...", "yellow");
+      var dispatchSuccess = await new Promise(function(resolve) {
+        var attempts = 0;
+        function trySend() {
+          sendElfToElfldr(payload_path, elfName, function(ok, resp) {
+            if (ok) {
+              resolve(true);
+            } else if (attempts < 4) {
+              attempts++;
+              window.log("Retrying elfldr dispatch (" + attempts + "/4)...", "yellow");
+              setTimeout(trySend, 1000);
+            } else {
+              resolve(false);
+            }
+          });
+        }
+        trySend();
+      });
 
-      // Sending to elfldr
-      Loadpayloadlocal(payload_path, getPayloadName(payload_path), 'jailbreak');
+      if (!dispatchSuccess) {
+        window.log("Failed to dispatch " + elfName + " to elfldr daemon!", "red");
+        return;
+      }
+
+      window.log("\nKernel exploit succeeded!", "green");
+      window.log(elfName + " launched in detached background daemon!", "green");
     } else {
       window.log("Payload path: " + payload_path);
       // Inject bin payload directly into kernel
