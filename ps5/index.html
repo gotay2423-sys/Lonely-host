@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lonely VI — PS5 Exploit Host (Vice City Edition)</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Pacifico&display=swap');
+
     :root {
       --gta-pink: #ff2a8d;
       --gta-magenta: #e024c3;
@@ -16,28 +18,28 @@
       --gta-mint: #0df5c4;
       --gta-red: #ff3366;
       --gta-bg-dark: #08020e;
-      --gta-panel-bg: rgba(18, 7, 34, 0.88);
-      --gta-border-pink: rgba(255, 42, 141, 0.4);
-      --gta-border-cyan: rgba(0, 240, 255, 0.35);
-      --gta-border-gold: rgba(255, 194, 51, 0.45);
+      --gta-panel-bg: rgba(18, 7, 34, 0.9);
+      --gta-border-pink: rgba(255, 42, 141, 0.5);
+      --gta-border-cyan: rgba(0, 240, 255, 0.4);
+      --gta-border-gold: rgba(255, 194, 51, 0.5);
     }
 
     * { box-sizing: border-box; }
 
     html, body {
       background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(224, 36, 195, 0.28) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(255, 126, 41, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 15% 25%, rgba(0, 240, 255, 0.16) 0%, transparent 50%),
-        linear-gradient(rgba(255, 42, 141, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(180deg, #160628 0%, #0c0316 45%, #05010a 100%);
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(224, 36, 195, 0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(255, 126, 41, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 15% 25%, rgba(0, 240, 255, 0.2) 0%, transparent 50%),
+        linear-gradient(rgba(255, 42, 141, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(180deg, #18062d 0%, #0d0319 40%, #05010a 100%);
       background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px, 100% 100%;
       background-attachment: fixed;
       color: #f3effc;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
-      padding: 24px 16px;
+      padding: 20px 16px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -46,70 +48,137 @@
 
     .container {
       width: 100%;
-      max-width: 860px;
+      max-width: 880px;
       position: relative;
       z-index: 2;
     }
 
-    /* ---------- GTA VI Header ---------- */
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    .gta-art-wrap {
-      margin-bottom: -10px;
-      opacity: 0.95;
+    /* ---------- Top Navigation Hub ---------- */
+    .top-nav-hub {
+      width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .gta-logo-container {
+    .nav-hub-link {
+      background: rgba(22, 9, 42, 0.85);
+      border: 1px solid var(--gta-border-cyan);
+      color: var(--gta-cyan);
+      padding: 7px 16px;
+      border-radius: 18px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .nav-hub-link:hover {
+      border-color: var(--gta-pink);
+      color: var(--gta-pink);
+      box-shadow: 0 0 14px rgba(255, 42, 141, 0.6);
+    }
+
+    .nav-hub-link.nav-ps4 {
+      border-color: rgba(255, 126, 41, 0.5);
+      color: #ff9d5c;
+    }
+
+    .nav-hub-link.nav-ps4:hover {
+      border-color: var(--gta-gold);
+      color: var(--gta-gold);
+      box-shadow: 0 0 14px rgba(255, 194, 51, 0.6);
+    }
+
+    /* ---------- GTA VI Vice City Header Banner ---------- */
+    .gta-banner {
+      position: relative;
+      background: linear-gradient(180deg, rgba(28, 8, 48, 0.9) 0%, rgba(14, 4, 25, 0.95) 100%);
+      border: 2px solid var(--gta-border-pink);
+      border-radius: 20px;
+      padding: 24px 20px 20px 20px;
+      margin-bottom: 22px;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 14px 45px rgba(0, 0, 0, 0.65), 0 0 35px rgba(255, 42, 141, 0.25), inset 0 0 25px rgba(255, 126, 41, 0.12);
+    }
+
+    .gta-banner-bg-art {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .gta-logo-row {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 14px;
-      margin-top: 4px;
+      gap: 16px;
+      position: relative;
     }
 
     .gta-title {
       font-family: 'Montserrat', 'Trebuchet MS', 'Impact', sans-serif;
-      font-size: 54px;
+      font-size: 58px;
       font-weight: 900;
-      letter-spacing: 8px;
+      letter-spacing: 9px;
       text-transform: uppercase;
       margin: 0;
       background: linear-gradient(180deg, #ffffff 0%, #ffd4e8 30%, #ff2a8d 68%, #ff7e29 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 16px rgba(255, 42, 141, 0.75)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.9));
-      line-height: 1.1;
+      filter: drop-shadow(0 0 20px rgba(255, 42, 141, 0.85)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.95));
+      line-height: 1.05;
     }
 
     .vi-badge {
       font-family: 'Arial Black', 'Impact', sans-serif;
       font-style: italic;
-      font-size: 60px;
+      font-size: 68px;
       font-weight: 900;
-      letter-spacing: -2px;
+      letter-spacing: -3px;
       background: linear-gradient(135deg, #00f0ff 0%, #ff2a8d 50%, #ff7e29 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 16px rgba(255, 42, 141, 0.85)) drop-shadow(0 0 28px rgba(0, 240, 255, 0.65));
+      filter: drop-shadow(0 0 18px rgba(255, 42, 141, 0.9)) drop-shadow(0 0 32px rgba(0, 240, 255, 0.75));
       transform: skewX(-7deg);
       line-height: 1;
     }
 
-    .gta-subtitle {
+    .vice-city-script {
+      font-family: 'Pacifico', 'Brush Script MT', 'Dancing Script', cursive;
+      font-size: 32px;
+      color: #ff2a8d;
+      text-shadow: 0 0 12px #ff2a8d, 0 0 25px rgba(255, 42, 141, 0.8), 0 0 45px rgba(255, 42, 141, 0.5);
+      margin-top: -6px;
+      letter-spacing: 2px;
+      transform: rotate(-3deg);
+      display: block;
+    }
+
+    .gta-tagline {
       color: var(--gta-cyan);
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.7), 0 0 20px rgba(0, 240, 255, 0.4);
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.75), 0 0 20px rgba(0, 240, 255, 0.4);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 3.5px;
-      margin-top: 8px;
+      margin-top: 10px;
       text-transform: uppercase;
-      opacity: 0.95;
     }
 
     /* ---------- Status Chips ---------- */
@@ -122,12 +191,12 @@
     }
 
     .chip {
-      background: rgba(22, 9, 42, 0.85);
+      background: rgba(22, 9, 42, 0.88);
       border: 1px solid var(--gta-border-cyan);
       padding: 7px 18px;
       border-radius: 22px;
       font-size: 11.5px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 1.5px;
       text-transform: uppercase;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.08);
@@ -141,7 +210,7 @@
     .fw-chip {
       color: var(--gta-gold);
       border-color: var(--gta-border-gold);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 194, 51, 0.12);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 194, 51, 0.15);
     }
 
     button.chip {
@@ -152,7 +221,7 @@
     .reset-chip {
       color: var(--gta-red);
       border-color: rgba(255, 51, 102, 0.45);
-      background: rgba(35, 8, 24, 0.85);
+      background: rgba(35, 8, 24, 0.88);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 51, 102, 0.12);
       transition: all 0.2s ease;
     }
@@ -196,18 +265,18 @@
     }
 
     #runBtn {
-      background: linear-gradient(135deg, rgba(255, 42, 141, 0.25) 0%, rgba(255, 126, 41, 0.25) 100%);
+      background: linear-gradient(135deg, rgba(255, 42, 141, 0.3) 0%, rgba(255, 126, 41, 0.3) 100%);
       color: #ffffff;
       border: 2px solid var(--gta-pink);
-      padding: 16px 54px;
-      font-size: 18px;
+      padding: 16px 56px;
+      font-size: 19px;
       font-weight: 900;
       font-family: inherit;
-      letter-spacing: 3px;
+      letter-spacing: 3.5px;
       text-transform: uppercase;
       border-radius: 12px;
       cursor: pointer;
-      box-shadow: 0 0 24px rgba(255, 42, 141, 0.45), 0 0 45px rgba(255, 126, 41, 0.25), inset 0 0 16px rgba(255, 42, 141, 0.2);
+      box-shadow: 0 0 26px rgba(255, 42, 141, 0.5), 0 0 50px rgba(255, 126, 41, 0.3), inset 0 0 18px rgba(255, 42, 141, 0.25);
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
@@ -232,7 +301,7 @@
     #runBtn:hover {
       background: linear-gradient(135deg, #ff2a8d 0%, #ff7e29 100%);
       color: #07020d;
-      box-shadow: 0 0 35px rgba(255, 42, 141, 0.85), 0 0 65px rgba(255, 126, 41, 0.6);
+      box-shadow: 0 0 38px rgba(255, 42, 141, 0.9), 0 0 70px rgba(255, 126, 41, 0.65);
       transform: translateY(-2px) scale(1.02);
     }
 
@@ -252,9 +321,9 @@
 
     #runBtn.btn-success {
       border-color: var(--gta-mint);
-      background: linear-gradient(135deg, rgba(13, 245, 196, 0.2) 0%, rgba(0, 240, 255, 0.2) 100%);
+      background: linear-gradient(135deg, rgba(13, 245, 196, 0.25) 0%, rgba(0, 240, 255, 0.25) 100%);
       color: var(--gta-mint);
-      box-shadow: 0 0 25px rgba(13, 245, 196, 0.5);
+      box-shadow: 0 0 30px rgba(13, 245, 196, 0.6);
     }
 
     /* Auto-Run Toggle */
@@ -272,7 +341,7 @@
       cursor: pointer;
       user-select: none;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
       letter-spacing: 1.5px;
       color: #bfa5dc;
       transition: all 0.2s ease;
@@ -311,9 +380,9 @@
     }
 
     .toggle-wrap input:checked + .toggle-slider {
-      background: rgba(255, 42, 141, 0.3);
+      background: rgba(255, 42, 141, 0.35);
       border-color: var(--gta-pink);
-      box-shadow: 0 0 12px rgba(255, 42, 141, 0.5);
+      box-shadow: 0 0 14px rgba(255, 42, 141, 0.55);
     }
 
     .toggle-wrap input:checked + .toggle-slider::after {
@@ -351,7 +420,7 @@
     .terminal-title {
       color: var(--gta-orange);
       letter-spacing: 1.5px;
-      font-weight: 700;
+      font-weight: 800;
       text-transform: uppercase;
       font-size: 11.5px;
     }
@@ -361,7 +430,7 @@
       opacity: 0.9;
       font-size: 11.5px;
       letter-spacing: 1px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     /* ---------- Console Window ---------- */
@@ -560,55 +629,13 @@
       background: rgba(255, 51, 102, 0.2);
     }
 
-    /* Top Nav Hub */
-    .top-nav-hub {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .nav-hub-link {
-      background: rgba(22, 9, 42, 0.85);
-      border: 1px solid var(--gta-border-cyan);
-      color: var(--gta-cyan);
-      padding: 7px 16px;
-      border-radius: 18px;
-      font-size: 11.5px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .nav-hub-link:hover {
-      border-color: var(--gta-pink);
-      color: var(--gta-pink);
-      box-shadow: 0 0 14px rgba(255, 42, 141, 0.5);
-    }
-
-    .nav-hub-link.nav-ps4 {
-      border-color: rgba(255, 126, 41, 0.5);
-      color: #ff9d5c;
-    }
-
-    .nav-hub-link.nav-ps4:hover {
-      border-color: var(--gta-gold);
-      color: var(--gta-gold);
-      box-shadow: 0 0 14px rgba(255, 194, 51, 0.6);
-    }
-
     /* Credits Footer */
     .credits-box {
       margin-top: 26px;
       padding: 16px 20px;
-      background: rgba(15, 5, 30, 0.88);
-      border: 1px solid rgba(255, 42, 141, 0.28);
-      border-radius: 12px;
+      background: rgba(15, 5, 30, 0.9);
+      border: 1px solid rgba(255, 42, 141, 0.3);
+      border-radius: 14px;
       text-align: center;
       font-size: 11.5px;
       color: #bfa5dc;
@@ -758,8 +785,9 @@
     }
 
     @media (max-width: 640px) {
-      .gta-title { font-size: 40px; letter-spacing: 5px; }
-      .vi-badge { font-size: 46px; }
+      .gta-title { font-size: 42px; letter-spacing: 6px; }
+      .vi-badge { font-size: 50px; }
+      .vice-city-script { font-size: 26px; }
       #jb-success-popup {
         top: 16px;
         right: 16px;
@@ -778,8 +806,8 @@
       <img src="./prestige.jpg" alt="Prestige Master" class="jb-popup-img">
       <div class="jb-popup-content">
         <div class="jb-popup-header">
-          <span class="jb-popup-badge">&#9733; EXPLOIT COMPLETE &#9733;</span>
-          <span class="jb-popup-time">Just now</span>
+          <span class="jb-popup-badge">&#9733; MISSION PASSED &#9733;</span>
+          <span class="jb-popup-time">RESPECT +</span>
         </div>
         <div class="jb-popup-title">Jailbreak Success!</div>
         <div class="jb-popup-subtitle">Kernel Active &bull; System Ready</div>
@@ -790,46 +818,58 @@
 
   <div class="container">
     <div class="top-nav-hub">
-      <a href="../index.html" class="nav-hub-link">LONELY HUB</a>
-      <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2)</a>
+      <a href="../index.html" class="nav-hub-link">&larr; LONELY HUB</a>
+      <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2) &rarr;</a>
     </div>
 
-    <div class="header">
-      <!-- Vice City Sunset & Palms SVG Art -->
-      <div class="gta-art-wrap">
-        <svg width="220" height="60" viewBox="0 0 220 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Sun with horizontal scanlines -->
-          <circle cx="110" cy="38" r="24" fill="url(#sun-grad)" />
-          <line x1="84" y1="32" x2="136" y2="32" stroke="#160628" stroke-width="2.5" />
-          <line x1="86" y1="38" x2="134" y2="38" stroke="#160628" stroke-width="2.5" />
-          <line x1="90" y1="44" x2="130" y2="44" stroke="#160628" stroke-width="2.5" />
-          <line x1="96" y1="50" x2="124" y2="50" stroke="#160628" stroke-width="2.5" />
-          <!-- Left Palm Tree -->
-          <path d="M46 60 Q52 40 50 25 Q45 15 32 18 Q45 22 47 26 Q42 22 28 28 Q44 30 47 34 Q34 38 25 45 Q44 40 48 42 L46 60 Z" fill="#ff2a8d" opacity="0.85"/>
-          <!-- Right Palm Tree -->
-          <path d="M174 60 Q168 40 170 25 Q175 15 188 18 Q175 22 173 26 Q178 22 192 28 Q176 30 173 34 Q186 38 195 45 Q176 40 172 42 L174 60 Z" fill="#ff2a8d" opacity="0.85"/>
-          <defs>
-            <linearGradient id="sun-grad" x1="110" y1="14" x2="110" y2="62" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#ffc233"/>
-              <stop offset="50%" stop-color="#ff7e29"/>
-              <stop offset="100%" stop-color="#ff2a8d"/>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+    <!-- GTA VI Vice City Header Banner with Panorama Art -->
+    <div class="gta-banner">
+      <svg class="gta-banner-bg-art" viewBox="0 0 860 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bg-sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#18062d" stop-opacity="0.2"/>
+            <stop offset="60%" stop-color="#b81b7a" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#ff7e29" stop-opacity="0.6"/>
+          </linearGradient>
+          <linearGradient id="sun-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ffc233"/>
+            <stop offset="50%" stop-color="#ff7e29"/>
+            <stop offset="100%" stop-color="#ff2a8d"/>
+          </linearGradient>
+        </defs>
+        <rect width="860" height="180" fill="url(#bg-sky)"/>
+        <!-- Centered Setting Sun -->
+        <circle cx="430" cy="115" r="50" fill="url(#sun-grad)" opacity="0.85"/>
+        <line x1="370" y1="100" x2="490" y2="100" stroke="#150524" stroke-width="3" />
+        <line x1="375" y1="110" x2="485" y2="110" stroke="#150524" stroke-width="3" />
+        <line x1="382" y1="120" x2="478" y2="120" stroke="#150524" stroke-width="3" />
+        <line x1="395" y1="130" x2="465" y2="130" stroke="#150524" stroke-width="3" />
+        <!-- Distant Vice City Skyline -->
+        <path d="M220 180 L220 155 L235 155 L235 165 L250 165 L250 148 L270 148 L270 180 L590 180 L590 150 L610 150 L610 160 L625 160 L625 142 L640 142 L640 180 Z" fill="#0d0218" opacity="0.6"/>
+        <!-- Left Palm Trees -->
+        <path d="M70 180 Q105 100 95 45 Q75 20 25 30 Q70 42 78 55 Q55 42 15 60 Q65 66 75 75 Q40 85 10 108 Q66 92 80 96 L70 180 Z" fill="#0a0114" opacity="0.95"/>
+        <path d="M110 180 Q130 120 125 70 Q112 48 75 52 Q110 60 115 72 Q98 62 65 78 Q105 84 112 92 Q85 100 60 120 Q108 105 118 108 L110 180 Z" fill="#0a0114" opacity="0.8"/>
+        <!-- Right Palm Trees -->
+        <path d="M790 180 Q755 100 765 45 Q785 20 835 30 Q790 42 782 55 Q805 42 845 60 Q795 66 785 75 Q820 85 850 108 Q794 92 780 96 L790 180 Z" fill="#0a0114" opacity="0.95"/>
+        <path d="M750 180 Q730 120 735 70 Q748 48 785 52 Q750 60 745 72 Q762 62 795 78 Q755 84 748 92 Q775 100 800 120 Q752 105 742 108 L750 180 Z" fill="#0a0114" opacity="0.8"/>
+      </svg>
 
-      <div class="gta-logo-container">
-        <h1 class="gta-title">LONELY</h1>
-        <span class="vi-badge">VI</span>
+      <div class="header-content">
+        <div class="gta-logo-row">
+          <h1 class="gta-title">LONELY</h1>
+          <span class="vi-badge">VI</span>
+        </div>
+        <span class="vice-city-script">Vice City</span>
+        <p class="gta-tagline">PS5 KERNEL EXPLOIT &amp; PAYLOAD SUITE &bull; FW 7.00 - 13.60</p>
       </div>
-      <p class="gta-subtitle">VICE CITY EDITION &bull; PS5 EXPLOIT &amp; PAYLOAD HOST &bull; FW 7.00 - 13.60</p>
     </div>
 
+    <!-- Status Chips -->
     <div class="status-container">
-      <div class="chip fw-chip">FW <span id="fwText">7.00 - 13.60</span></div>
+      <div class="chip fw-chip">&#9733; FW <span id="fwText">7.00 - 13.60</span></div>
       <div class="chip status-chip">
         <span class="led" id="statusLed"></span>
-        <span id="statusText">SYSTEM READY</span>
+        <span id="statusText">VICE CITY KERNEL: READY</span>
       </div>
       <div class="chip elfldr-chip" id="elfldrChip">
         <span class="led led-yellow" id="elfldrLed"></span>
@@ -845,8 +885,9 @@
       </button>
     </div>
 
+    <!-- Action Run Button -->
     <div class="controls">
-      <button id="runBtn" tabindex="0">RUN EXPLOIT</button>
+      <button id="runBtn" tabindex="0">&#9733; RUN EXPLOIT &#9733;</button>
       <div class="auto-run-bar">
         <label class="toggle-wrap" title="Automatically run exploit on page load">
           <input type="checkbox" id="autoJbToggle">
@@ -856,13 +897,14 @@
       </div>
     </div>
 
+    <!-- Terminal Window -->
     <div class="terminal-bar">
       <div class="terminal-dots">
         <span class="dot dot-red"></span>
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
       </div>
-      <div class="terminal-title">lonely@vice-city: ~/ps5-exploit</div>
+      <div class="terminal-title">VCPD DISPATCH // PS5 KERNEL CONSOLE</div>
       <div class="terminal-port">PORT: 9021</div>
     </div>
 
@@ -871,7 +913,7 @@
     <!-- Payload Host Menu -->
     <div class="payload-section" id="payloadSection">
       <div class="payload-header">
-        <span class="payload-title">Payload Menu</span>
+        <span class="payload-title">Vice City Armory &bull; Payloads</span>
         <span class="payload-subtitle">ELFLDR on port 9021 &middot; Select payload to dispatch</span>
       </div>
 
