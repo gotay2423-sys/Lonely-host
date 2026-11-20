@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lonely-ps5-v2.7';
+const CACHE_NAME = 'lonely-ps5-v3.0-gta6';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -91,6 +91,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Network-First strategy for HTML navigation requests (ensures fresh UI updates when online)
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      }).catch(() => {
+        return caches.match('./index.html').then((cached) => cached || caches.match('./'));
+      })
+    );
+    return;
+  }
+
+  // Cache-First strategy for static assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
