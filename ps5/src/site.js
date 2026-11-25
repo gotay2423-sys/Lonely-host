@@ -61,7 +61,15 @@ function writeLog(message, type = "log", replace = false) {
   if (type === "error") marker = "-";
   if (type === "info" || type === "success") marker = "+";
   line.textContent = `[${marker}] ${message}`;
-  output.scrollTop = output.scrollHeight;
+
+  // Keep internal scroll at bottom without moving parent window scroll position
+  if (output) {
+    const prevWindowY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    output.scrollTop = output.scrollHeight;
+    if ((window.pageYOffset || document.documentElement.scrollTop || 0) !== prevWindowY) {
+      window.scrollTo(0, prevWindowY);
+    }
+  }
 }
 
 function writeEvent(name, detail, type) {
@@ -443,6 +451,7 @@ async function dispatchPayload(payloadName, btn) {
 // Attach listeners to all payload send buttons
 document.querySelectorAll(".btn-send").forEach((btn) => {
   btn.addEventListener("click", () => {
+    if (window.gowAudio) window.gowAudio.playBladeClash();
     const payload = btn.getAttribute("data-payload");
     if (payload) {
       dispatchPayload(payload, btn);
@@ -598,23 +607,109 @@ initOfflineCache();
 
 
 /* ==========================================================================
-   God of War Audio Synthesizer (Pure Web Audio API - Zero External Files)
+   God of War Audio Engine (Dual Engine: HTML5 Audio Blob/WAV + Web Audio API)
+   Universal compatibility: PS5 WebKit, PS4, Safari, Chrome & PC
    ========================================================================== */
 class GowSoundManager {
   constructor() {
     this.ctx = null;
     this.enabled = localStorage.getItem("lonely_gow_sound") !== "false";
+    this.audios = {};
+    this.initAudioElements();
   }
 
-  init() {
+  // Synthesize a PCM 16-bit Mono WAV in memory with zero external requests
+  createWavUrl(sampleFn, duration, sampleRate = 22050) {
+    try {
+      const numSamples = Math.floor(duration * sampleRate);
+      const dataSize = numSamples * 2;
+      const buffer = new ArrayBuffer(44 + dataSize);
+      const view = new DataView(buffer);
+
+      function writeStr(offset, str) {
+        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+      }
+
+      writeStr(0, "RIFF");
+      view.setUint32(4, 36 + dataSize, true);
+      writeStr(8, "WAVE");
+      writeStr(12, "fmt ");
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true); // PCM
+      view.setUint16(22, 1, true); // Mono
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true);
+      view.setUint16(32, 2, true);
+      view.setUint16(34, 16, true); // 16-bit
+      writeStr(36, "data");
+      view.setUint32(40, dataSize, true);
+
+      for (let i = 0; i < numSamples; i++) {
+        const t = i / sampleRate;
+        let s = sampleFn(t);
+        s = Math.max(-1, Math.min(1, s));
+        view.setInt16(44 + i * 2, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+      }
+
+      const blob = new Blob([buffer], { type: "audio/wav" });
+      return URL.createObjectURL(blob);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  initAudioElements() {
+    // 1. Heavy Spartan War Drum
+    const drumUrl = this.createWavUrl(
+      (t) => Math.sin(2 * Math.PI * (135 * Math.exp(-t * 12) + 38) * t) * Math.exp(-t * 8.5),
+      0.35
+    );
+    if (drumUrl) this.audios.drum = new Audio(drumUrl);
+
+    // 2. Sharp Blades of Chaos Steel Clash
+    const clashUrl = this.createWavUrl(
+      (t) =>
+        (0.5 * Math.sin(2 * Math.PI * 1350 * t) +
+          0.35 * Math.sin(2 * Math.PI * 2600 * t) +
+          0.15 * Math.sin(2 * Math.PI * 4200 * t)) *
+        Math.exp(-t * 14),
+      0.25
+    );
+    if (clashUrl) this.audios.clash = new Audio(clashUrl);
+
+    // 3. Ethereal Leviathan Axe Victory Chime
+    const chimeUrl = this.createWavUrl(
+      (t) =>
+        (0.35 * Math.sin(2 * Math.PI * 659.25 * t) +
+          0.35 * Math.sin(2 * Math.PI * 987.77 * t) +
+          0.30 * Math.sin(2 * Math.PI * 1318.51 * t)) *
+        Math.exp(-t * 4.2),
+      0.9
+    );
+    if (chimeUrl) this.audios.chime = new Audio(chimeUrl);
+  }
+
+  initWebAudio() {
     if (!this.ctx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) {
-        this.ctx = new AudioCtx();
-      }
+      if (AudioCtx) this.ctx = new AudioCtx();
     }
     if (this.ctx && this.ctx.state === "suspended") {
       this.ctx.resume();
+    }
+  }
+
+  playHtmlAudio(name) {
+    if (!this.enabled) return false;
+    const a = this.audios[name];
+    if (!a) return false;
+    try {
+      a.currentTime = 0;
+      const p = a.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+      return true;
+    } catch (_) {
+      return false;
     }
   }
 
@@ -624,97 +719,86 @@ class GowSoundManager {
     return this.enabled;
   }
 
-  // Heavy Spartan War Drum
   playWarDrum() {
     if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
+    this.initWebAudio();
+    this.playHtmlAudio("drum");
 
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      const filter = this.ctx.createBiquadFilter();
-
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(140, now);
-      filter.frequency.exponentialRampToValueAtTime(30, now + 0.35);
-
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(85, now);
-      osc.frequency.exponentialRampToValueAtTime(35, now + 0.35);
-
-      gain.gain.setValueAtTime(0.5, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
-
-      osc.connect(filter);
-      filter.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.4);
-    } catch (_) {}
-  }
-
-  // Sharp Blades of Chaos Steel Clash
-  playBladeClash() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    try {
-      const now = this.ctx.currentTime;
-      // High metallic chime
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(1200, now);
-      osc.frequency.exponentialRampToValueAtTime(300, now + 0.22);
-
-      gain.gain.setValueAtTime(0.35, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.26);
-    } catch (_) {}
-  }
-
-  // Ethereal Leviathan Axe Ice / Victory Chime
-  playVictoryChime() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-
-    try {
-      const notes = [880, 1100, 1320, 1760]; // A major chord harmonics
-      const now = this.ctx.currentTime;
-
-      notes.forEach((freq, idx) => {
+    // Also run Web Audio API if active
+    if (this.ctx && this.ctx.state === "running") {
+      try {
+        const now = this.ctx.currentTime;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
-
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-
-        gain.gain.setValueAtTime(0.2, now + idx * 0.08);
-        gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.08 + 1.2);
-
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(32, now + 0.35);
+        gain.gain.setValueAtTime(0.5, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
         osc.connect(gain);
         gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.4);
+      } catch (_) {}
+    }
+  }
 
-        osc.start(now + idx * 0.08);
-        osc.stop(now + idx * 0.08 + 1.25);
-      });
-    } catch (_) {}
+  playBladeClash() {
+    if (!this.enabled) return;
+    this.initWebAudio();
+    this.playHtmlAudio("clash");
+
+    if (this.ctx && this.ctx.state === "running") {
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(1300, now);
+        osc.frequency.exponentialRampToValueAtTime(300, now + 0.22);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.26);
+      } catch (_) {}
+    }
+  }
+
+  playVictoryChime() {
+    if (!this.enabled) return;
+    this.initWebAudio();
+    this.playHtmlAudio("chime");
+
+    if (this.ctx && this.ctx.state === "running") {
+      try {
+        const notes = [659.25, 987.77, 1318.51];
+        const now = this.ctx.currentTime;
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.25, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.08 + 1.1);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 1.15);
+        });
+      } catch (_) {}
+    }
   }
 }
 
 const gowAudio = new GowSoundManager();
 window.gowAudio = gowAudio;
+
+// Unlock audio on first user touch or click
+window.addEventListener("pointerdown", () => {
+  gowAudio.initWebAudio();
+}, { once: true });
 
 // Hook Run Exploit button to play war drum sound
 if (runBtn) {
@@ -749,6 +833,51 @@ window.showJbSuccessPopup = function(sub) {
     origShowJbPopup(sub);
   }
 };
+
+/* ==========================================================================
+   Background & Panel Glass Opacity Manager
+   Allows user to edit opacity on the "square" covering the background
+   ========================================================================== */
+const glassToggleBtn = document.getElementById("glassToggleBtn");
+const OPACITY_PRESETS = [
+  { label: "25% (CLEAR)", panelOpacity: "0.25", bgDim: "0.15" },
+  { label: "50% (BALANCED)", panelOpacity: "0.50", bgDim: "0.28" },
+  { label: "75% (DEEP)", panelOpacity: "0.75", bgDim: "0.45" },
+  { label: "95% (SOLID)", panelOpacity: "0.95", bgDim: "0.75" }
+];
+
+let currentOpacityIdx = 1; // Default to 50% Balanced
+
+function applyOpacityPreset(idx, save = true) {
+  currentOpacityIdx = (idx + OPACITY_PRESETS.length) % OPACITY_PRESETS.length;
+  const preset = OPACITY_PRESETS[currentOpacityIdx];
+
+  document.documentElement.style.setProperty("--panel-opacity", preset.panelOpacity);
+  document.documentElement.style.setProperty("--bg-dim-opacity", preset.bgDim);
+
+  if (glassToggleBtn) {
+    glassToggleBtn.textContent = `◐ GLASS: ${preset.label}`;
+  }
+
+  if (save) {
+    localStorage.setItem("lonely_panel_opacity_idx", String(currentOpacityIdx));
+  }
+}
+
+// Load saved opacity preference
+const savedOpacityIdx = localStorage.getItem("lonely_panel_opacity_idx");
+if (savedOpacityIdx !== null && !isNaN(parseInt(savedOpacityIdx, 10))) {
+  applyOpacityPreset(parseInt(savedOpacityIdx, 10), false);
+} else {
+  applyOpacityPreset(1, false);
+}
+
+if (glassToggleBtn) {
+  glassToggleBtn.addEventListener("click", () => {
+    applyOpacityPreset(currentOpacityIdx + 1, true);
+    if (gowAudio) gowAudio.playBladeClash();
+  });
+}
 
 /* ==========================================================================
    Valkyrie Forge: Custom Payload Drag & Drop / File Picker Loader

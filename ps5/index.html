@@ -9,7 +9,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
   <style>
+    /* ==========================================================================
+       BACKGROUND & PANEL OPACITY SETTINGS (EDIT HERE OR USE IN-APP GLASS BUTTON)
+       --bg-dim-opacity: 0.0 (crystal-clear art) to 0.85 (dark tint). Default: 0.28
+       --panel-opacity:  0.15 (high glass transparency) to 1.0 (solid). Default: 0.50
+       ========================================================================== */
     :root {
+      --bg-dim-opacity: 0.28;
+      --panel-opacity: 0.50;
+
       --gow-crimson: #c01515;
       --gow-crimson-bright: #e63946;
       --gow-crimson-dark: #6e0c0c;
@@ -19,7 +27,8 @@
       --gow-frost-glow: rgba(0, 240, 255, 0.45);
       --gow-ash: #e2e8f0;
       --gow-slate-dark: #080a0f;
-      --gow-panel-bg: rgba(14, 17, 26, 0.92);
+      --gow-panel-bg: rgba(12, 16, 26, var(--panel-opacity));
+      --gow-card-bg: rgba(16, 22, 34, calc(var(--panel-opacity) + 0.08));
       --gow-border-gold: rgba(212, 175, 55, 0.45);
       --gow-border-crimson: rgba(192, 21, 21, 0.45);
     }
@@ -28,7 +37,7 @@
 
     html, body {
       background:
-        linear-gradient(180deg, rgba(10, 13, 20, 0.82) 0%, rgba(5, 7, 12, 0.88) 100%),
+        linear-gradient(180deg, rgba(10, 13, 20, var(--bg-dim-opacity)) 0%, rgba(5, 7, 12, calc(var(--bg-dim-opacity) + 0.14)) 100%),
         url('./gow_bg.jpg');
       background-size: cover, cover;
       background-position: center top;
@@ -36,16 +45,20 @@
       color: #e2e8f0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
-      padding: 24px 16px;
+      padding: 20px 16px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .container {
       width: 100%;
       max-width: 860px;
+      min-width: 0;
+      box-sizing: border-box;
       position: relative;
       z-index: 2;
     }
@@ -88,14 +101,16 @@
     /* God of War Header Banner */
     .gow-header-banner {
       position: relative;
-      background: linear-gradient(180deg, rgba(22, 27, 42, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%);
+      background: linear-gradient(180deg, rgba(20, 25, 40, var(--panel-opacity)) 0%, rgba(10, 13, 22, calc(var(--panel-opacity) + 0.08)) 100%);
       border: 2px solid var(--gow-border-gold);
       border-radius: 20px;
-      padding: 24px 20px 22px 20px;
-      margin-bottom: 22px;
+      padding: 22px 20px 20px 20px;
+      margin-bottom: 20px;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 30px rgba(192, 21, 21, 0.25), inset 0 0 30px rgba(212, 175, 55, 0.1);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(192, 21, 21, 0.2), inset 0 0 25px rgba(212, 175, 55, 0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     /* Corner Nordic Knot Accents */
@@ -156,6 +171,9 @@
       z-index: 1;
       pointer-events: none;
       animation: runic-spin 30s linear infinite;
+      will-change: transform;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     /* Realm Tabs */
@@ -443,7 +461,7 @@
 
     /* Terminal Console */
     .terminal-bar {
-      background: #141824;
+      background: rgba(18, 22, 34, calc(var(--panel-opacity) + 0.15));
       border: 1px solid var(--gow-border-gold);
       border-bottom: 1px solid rgba(0, 240, 255, 0.25);
       border-top-left-radius: 14px;
@@ -454,7 +472,9 @@
       justify-content: space-between;
       font-size: 11.5px;
       font-family: 'Cinzel', serif;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .terminal-dots { display: flex; gap: 8px; }
@@ -485,14 +505,29 @@
       border-top: none;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
-      padding: 18px 20px;
-      height: 280px;
+      padding: 16px 18px;
+      height: 260px;
       overflow-y: auto;
+      overflow-x: hidden;
+      word-break: break-all;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
       font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.6;
       color: var(--gow-frost);
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), inset 0 0 25px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), inset 0 0 25px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-sizing: border-box;
+    }
+
+    #console div {
+      word-break: break-all;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     #console::-webkit-scrollbar, .payload-grid::-webkit-scrollbar { width: 7px; }
@@ -512,12 +547,14 @@
 
     /* Armory Payloads Section */
     .payload-section {
-      margin-top: 28px;
+      margin-top: 22px;
       background: var(--gow-panel-bg);
       border: 1px solid var(--gow-border-gold);
       border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.08);
+      padding: 20px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(212, 175, 55, 0.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .payload-header {
@@ -551,14 +588,16 @@
     }
 
     .payload-card {
-      background: rgba(18, 22, 34, 0.85);
+      background: var(--gow-card-bg);
       border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 12px 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       transition: all 0.2s ease;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
     }
 
     .payload-card:hover {
@@ -711,16 +750,18 @@
 
     /* Credits Footer */
     .credits-box {
-      margin-top: 26px;
-      padding: 16px 20px;
-      background: rgba(14, 17, 26, 0.9);
+      margin-top: 22px;
+      padding: 14px 18px;
+      background: var(--gow-panel-bg);
       border: 1px solid var(--gow-border-gold);
       border-radius: 14px;
       text-align: center;
       font-size: 11.5px;
       color: #94a3b8;
       line-height: 1.6;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .credits-title {
@@ -737,14 +778,14 @@
     /* God of War Favor Success Notification Popup */
     #jb-success-popup {
       position: fixed;
-      top: 24px;
+      bottom: 24px;
       right: 24px;
       z-index: 99999;
       max-width: 380px;
       width: calc(100% - 48px);
       pointer-events: none;
       opacity: 0;
-      transform: translateY(-20px) scale(0.95);
+      transform: translateY(20px) scale(0.95);
       transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -832,6 +873,30 @@
       color: #ffffff;
       text-shadow: 0 0 8px var(--gow-crimson-bright);
     }
+  
+    #runBtn.btn-success {
+      background: linear-gradient(180deg, #163824 0%, #0c1f14 100%) !important;
+      border-color: #00ffaa !important;
+      color: #00ffaa !important;
+      box-shadow: 0 0 24px rgba(0, 255, 170, 0.5), inset 0 0 12px rgba(0, 255, 170, 0.2) !important;
+    }
+    #runBtn:disabled {
+      opacity: 0.85;
+      cursor: wait;
+    }
+
+    /* Glass Opacity Toggle Button */
+    .glass-btn {
+      background: rgba(22, 28, 44, 0.85);
+      border-color: var(--gow-border-gold);
+      color: var(--gow-gold-light);
+      cursor: pointer;
+    }
+    .glass-btn:hover {
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.6);
+      color: #ffffff;
+    }
+
   </style>
 </head>
 <body>
@@ -852,6 +917,7 @@
 
   <div class="container">
     <div class="top-nav-hub">
+      <button type="button" id="glassToggleBtn" class="nav-hub-link glass-btn" title="Click to cycle background glass opacity: 25% Clear, 50% Balanced, 75% Deep, 95% Solid">&#9680; GLASS: 50%</button>
       <button type="button" id="audioToggleBtn" class="nav-hub-link audio-btn" title="Toggle Synthesized God of War Sound Effects">&#9876; SOUND: ON</button>
       <a href="../index.html" class="nav-hub-link">&larr; LONELY HUB</a>
       <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2) &rarr;</a>
