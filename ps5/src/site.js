@@ -611,13 +611,13 @@ initOfflineCache();
    ========================================================================== */
 const glassToggleBtn = document.getElementById("glassToggleBtn");
 const OPACITY_PRESETS = [
-  { label: "25% (CLEAR)", panelOpacity: "0.25", bgDim: "0.15" },
-  { label: "50% (BALANCED)", panelOpacity: "0.50", bgDim: "0.28" },
-  { label: "75% (DEEP)", panelOpacity: "0.75", bgDim: "0.45" },
-  { label: "95% (SOLID)", panelOpacity: "0.95", bgDim: "0.75" }
+  { label: "20% (CRYSTAL)", panelOpacity: "0.20", bgDim: "0.10" },
+  { label: "40% (BALANCED)", panelOpacity: "0.40", bgDim: "0.20" },
+  { label: "65% (DEEP)", panelOpacity: "0.65", bgDim: "0.40" },
+  { label: "90% (SOLID)", panelOpacity: "0.90", bgDim: "0.75" }
 ];
 
-let currentOpacityIdx = 1; // Default to 50% Balanced
+let currentOpacityIdx = 1; // Default to 40% Balanced for great art visibility
 
 function applyOpacityPreset(idx, save = true) {
   currentOpacityIdx = (idx + OPACITY_PRESETS.length) % OPACITY_PRESETS.length;
@@ -625,6 +625,8 @@ function applyOpacityPreset(idx, save = true) {
 
   document.documentElement.style.setProperty("--panel-opacity", preset.panelOpacity);
   document.documentElement.style.setProperty("--bg-dim-opacity", preset.bgDim);
+  document.documentElement.style.setProperty("--gow-panel-bg", `rgba(12, 16, 26, ${preset.panelOpacity})`);
+  document.documentElement.style.setProperty("--gow-card-bg", `rgba(18, 24, 38, ${Math.min(0.92, parseFloat(preset.panelOpacity) + 0.25)})`);
 
   if (glassToggleBtn) {
     glassToggleBtn.textContent = `◐ GLASS: ${preset.label}`;

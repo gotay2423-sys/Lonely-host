@@ -38,6 +38,13 @@ def send_elf_to_ps5(target_ip: str, payload_name: str, port: int = 9021, timeout
     if len(data) < 4 or data[:4] != b"\x7fELF":
         return False, f"File '{safe_name}' is not a valid ELF binary."
 
+    if safe_name.lower().startswith("nexhen"):
+        sys.stdout.write(
+            f"[!] WARNING: '{safe_name}' executes low-level kernel patches and hooks elfldr on port 9021.\n"
+            f"    If your PS5 firmware kernel offsets do not match, this will trigger an immediate kernel panic (shutdown).\n"
+            f"    For safe background tools across all FW versions, use zftpd-ps5.elf, klogsrv-ps5.elf, or MemDBG-ps5.elf.\n"
+        )
+
     try:
         with socket.create_connection((target_ip, port), timeout=timeout) as s:
             s.sendall(data)

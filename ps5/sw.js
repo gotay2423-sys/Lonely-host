@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lonely-ps5-v4.3-god-of-war';
+const CACHE_NAME = 'lonely-ps5-v4.4-god-of-war';
 
 const ASSETS_TO_CACHE = [
   './',
