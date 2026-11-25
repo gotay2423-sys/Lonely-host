@@ -680,22 +680,7 @@
     }
 
     
-    /* Sound Toggle Button */
-    .audio-btn {
-      background: rgba(30, 15, 20, 0.85);
-      border-color: rgba(230, 57, 70, 0.5);
-      color: var(--gow-crimson-bright);
-      cursor: pointer;
-    }
-    .audio-btn:hover {
-      box-shadow: 0 0 14px rgba(230, 57, 70, 0.7);
-      color: #ffffff;
-    }
-    .audio-btn.audio-muted {
-      color: #718096;
-      border-color: #4a5568;
-      background: rgba(18, 22, 34, 0.85);
-    }
+
 
     /* Valkyrie Forge Custom Payload Box */
     .custom-payload-box {
@@ -781,81 +766,86 @@
       bottom: 24px;
       right: 24px;
       z-index: 99999;
-      max-width: 380px;
+      max-width: 420px;
       width: calc(100% - 48px);
       pointer-events: none;
       opacity: 0;
       transform: translateY(20px) scale(0.95);
-      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
 
     #jb-success-popup.jb-popup-show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
+      opacity: 1 !important;
+      transform: translateY(0) scale(1) !important;
+      pointer-events: auto !important;
     }
 
     .jb-popup-card {
       position: relative;
-      display: flex;
+      display: flex !important;
       align-items: center;
-      gap: 15px;
       padding: 14px 18px;
-      background: rgba(18, 12, 16, 0.98);
-      border: 2px solid var(--gow-gold);
-      border-radius: 18px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.5), inset 0 0 15px rgba(192, 21, 21, 0.3);
+      background: #140d14 !important;
+      background: rgba(20, 13, 20, 0.98) !important;
+      border: 2px solid #d4af37 !important;
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.95), 0 0 25px rgba(212, 175, 55, 0.6) !important;
       cursor: pointer;
+      box-sizing: border-box;
+      width: 100%;
     }
 
     .jb-popup-img {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--gow-gold);
-      box-shadow: 0 0 14px rgba(212, 175, 55, 0.8);
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
       flex-shrink: 0;
+      margin-right: 14px;
     }
 
     .jb-popup-content {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .jb-popup-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2px;
+      flex: 1 1 auto !important;
+      min-width: 0 !important;
+      display: block !important;
+      overflow: visible !important;
     }
 
     .jb-popup-badge {
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      color: var(--gow-gold-light);
+      display: block !important;
+      font-size: 10.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: 1.5px !important;
+      color: #f5d77f !important;
+      text-transform: uppercase !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      margin-bottom: 2px !important;
       text-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
-      text-transform: uppercase;
-      font-family: 'Cinzel', serif;
     }
 
     .jb-popup-title {
-      font-family: 'Cinzel', serif;
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: var(--gow-gold-light);
+      display: block !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.6px !important;
+      color: #ffffff !important;
+      line-height: 1.25 !important;
       text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-      line-height: 1.2;
     }
 
     .jb-popup-subtitle {
-      font-size: 11px;
-      color: var(--gow-frost);
-      margin-top: 3px;
-      letter-spacing: 0.5px;
+      display: block !important;
+      font-size: 11.5px !important;
+      font-weight: 600 !important;
+      color: #00f0ff !important;
+      margin-top: 3px !important;
+      letter-spacing: 0.5px !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      word-break: break-word !important;
+      text-shadow: 0 0 6px rgba(0, 240, 255, 0.4);
     }
 
     .jb-popup-close {
@@ -897,19 +887,32 @@
       color: #ffffff;
     }
 
+  
+    /* Realm Tab Icons */
+    .realm-tab-svg {
+      width: 13px;
+      height: 13px;
+      vertical-align: -2px;
+      margin-right: 6px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .icon-all { color: var(--gow-gold-light); }
+    .icon-midgard { color: var(--gow-crimson-bright); }
+    .icon-alfheim { color: var(--gow-frost); }
+    .icon-niflheim { color: var(--gow-gold-light); }
+
   </style>
 </head>
 <body>
   <!-- Jailbreak Success Small Popup Message -->
   <div id="jb-success-popup" role="alert" onclick="closeJbSuccessPopup()">
     <div class="jb-popup-card">
-      <img src="./kratos_crest.png" alt="Kratos God of War" class="jb-popup-img">
+      <img src="./kratos_crest.png" alt="Kratos" class="jb-popup-img">
       <div class="jb-popup-content">
-        <div class="jb-popup-header">
-          <span class="jb-popup-badge">&#9733; FAVOR COMPLETED &#9733;</span>
-        </div>
-        <div class="jb-popup-title">Jailbreak Success!</div>
-        <div class="jb-popup-subtitle">Kernel Conquered &bull; Midgard Secured</div>
+        <span class="jb-popup-badge">&#9733; FAVOR COMPLETED &#9733;</span>
+        <span class="jb-popup-title">Jailbreak Success!</span>
+        <span class="jb-popup-subtitle">Kernel Conquered &bull; Midgard Secured</span>
       </div>
       <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
     </div>
@@ -918,7 +921,6 @@
   <div class="container">
     <div class="top-nav-hub">
       <button type="button" id="glassToggleBtn" class="nav-hub-link glass-btn" title="Click to cycle background glass opacity: 25% Clear, 50% Balanced, 75% Deep, 95% Solid">&#9680; GLASS: 50%</button>
-      <button type="button" id="audioToggleBtn" class="nav-hub-link audio-btn" title="Toggle Synthesized God of War Sound Effects">&#9876; SOUND: ON</button>
       <a href="../index.html" class="nav-hub-link">&larr; LONELY HUB</a>
       <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2) &rarr;</a>
     </div>
@@ -999,10 +1001,30 @@
 
       <!-- Realm Filter Tabs -->
       <div class="realm-tabs" id="realmTabs">
-        <button type="button" class="realm-tab active" data-filter="all">&#9876; All Realms</button>
-        <button type="button" class="realm-tab" data-filter="midgard">&#5807; Midgard (System)</button>
-        <button type="button" class="realm-tab" data-filter="alfheim">&#5807; Alfheim (Network)</button>
-        <button type="button" class="realm-tab" data-filter="niflheim">&#5807; Niflheim (Debug)</button>
+        <button type="button" class="realm-tab active" data-filter="all">
+          <svg class="realm-tab-svg icon-all" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14.5 2.5L13 4l4 4 1.5-1.5c.6-.6.6-1.5 0-2.1l-1.9-1.9c-.6-.6-1.5-.6-2.1 0zm-3 3L3.5 13.5l1 1L12 7l-1.5-1.5zm6 6L9.5 19.5l1 1 8-8-1-1zM2.5 19.5l2 2 3-3-2-2-3 3z"/>
+          </svg>
+          All Realms
+        </button>
+        <button type="button" class="realm-tab" data-filter="midgard">
+          <svg class="realm-tab-svg icon-midgard" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 2.18l7 3.12v4.7c0 4.54-3.07 8.79-7 9.94-3.93-1.15-7-5.4-7-9.94V6.3l7-3.12z"/>
+          </svg>
+          Midgard (System)
+        </button>
+        <button type="button" class="realm-tab" data-filter="alfheim">
+          <svg class="realm-tab-svg icon-alfheim" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+          </svg>
+          Alfheim (Network)
+        </button>
+        <button type="button" class="realm-tab" data-filter="niflheim">
+          <svg class="realm-tab-svg icon-niflheim" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22 11h-4.17l3.24-3.24-1.41-1.42L15 11h-2V9l4.66-4.66-1.42-1.41L13 6.17V2h-2v4.17L7.76 2.93 6.34 4.34 11 9v2H9L4.34 6.34 2.93 7.76 6.17 11H2v2h4.17l-3.24 3.24 1.41 1.42L9 13h2v2l-4.66 4.66 1.42 1.41L11 17.83V22h2v-4.17l3.24 3.24 1.42-1.41L13 15v-2h2l4.66 4.66 1.41-1.42L17.83 13H22v-2z"/>
+          </svg>
+          Niflheim (Debug)
+        </button>
       </div>
 
       <div class="payload-grid" id="payloadGrid">

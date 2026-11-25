@@ -451,7 +451,6 @@ async function dispatchPayload(payloadName, btn) {
 // Attach listeners to all payload send buttons
 document.querySelectorAll(".btn-send").forEach((btn) => {
   btn.addEventListener("click", () => {
-    if (window.gowAudio) window.gowAudio.playBladeClash();
     const payload = btn.getAttribute("data-payload");
     if (payload) {
       dispatchPayload(payload, btn);
@@ -607,234 +606,6 @@ initOfflineCache();
 
 
 /* ==========================================================================
-   God of War Audio Engine (Dual Engine: HTML5 Audio Blob/WAV + Web Audio API)
-   Universal compatibility: PS5 WebKit, PS4, Safari, Chrome & PC
-   ========================================================================== */
-class GowSoundManager {
-  constructor() {
-    this.ctx = null;
-    this.enabled = localStorage.getItem("lonely_gow_sound") !== "false";
-    this.audios = {};
-    this.initAudioElements();
-  }
-
-  // Synthesize a PCM 16-bit Mono WAV in memory with zero external requests
-  createWavUrl(sampleFn, duration, sampleRate = 22050) {
-    try {
-      const numSamples = Math.floor(duration * sampleRate);
-      const dataSize = numSamples * 2;
-      const buffer = new ArrayBuffer(44 + dataSize);
-      const view = new DataView(buffer);
-
-      function writeStr(offset, str) {
-        for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-      }
-
-      writeStr(0, "RIFF");
-      view.setUint32(4, 36 + dataSize, true);
-      writeStr(8, "WAVE");
-      writeStr(12, "fmt ");
-      view.setUint32(16, 16, true);
-      view.setUint16(20, 1, true); // PCM
-      view.setUint16(22, 1, true); // Mono
-      view.setUint32(24, sampleRate, true);
-      view.setUint32(28, sampleRate * 2, true);
-      view.setUint16(32, 2, true);
-      view.setUint16(34, 16, true); // 16-bit
-      writeStr(36, "data");
-      view.setUint32(40, dataSize, true);
-
-      for (let i = 0; i < numSamples; i++) {
-        const t = i / sampleRate;
-        let s = sampleFn(t);
-        s = Math.max(-1, Math.min(1, s));
-        view.setInt16(44 + i * 2, s < 0 ? s * 0x8000 : s * 0x7fff, true);
-      }
-
-      const blob = new Blob([buffer], { type: "audio/wav" });
-      return URL.createObjectURL(blob);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  initAudioElements() {
-    // 1. Heavy Spartan War Drum
-    const drumUrl = this.createWavUrl(
-      (t) => Math.sin(2 * Math.PI * (135 * Math.exp(-t * 12) + 38) * t) * Math.exp(-t * 8.5),
-      0.35
-    );
-    if (drumUrl) this.audios.drum = new Audio(drumUrl);
-
-    // 2. Sharp Blades of Chaos Steel Clash
-    const clashUrl = this.createWavUrl(
-      (t) =>
-        (0.5 * Math.sin(2 * Math.PI * 1350 * t) +
-          0.35 * Math.sin(2 * Math.PI * 2600 * t) +
-          0.15 * Math.sin(2 * Math.PI * 4200 * t)) *
-        Math.exp(-t * 14),
-      0.25
-    );
-    if (clashUrl) this.audios.clash = new Audio(clashUrl);
-
-    // 3. Ethereal Leviathan Axe Victory Chime
-    const chimeUrl = this.createWavUrl(
-      (t) =>
-        (0.35 * Math.sin(2 * Math.PI * 659.25 * t) +
-          0.35 * Math.sin(2 * Math.PI * 987.77 * t) +
-          0.30 * Math.sin(2 * Math.PI * 1318.51 * t)) *
-        Math.exp(-t * 4.2),
-      0.9
-    );
-    if (chimeUrl) this.audios.chime = new Audio(chimeUrl);
-  }
-
-  initWebAudio() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
-    }
-    if (this.ctx && this.ctx.state === "suspended") {
-      this.ctx.resume();
-    }
-  }
-
-  playHtmlAudio(name) {
-    if (!this.enabled) return false;
-    const a = this.audios[name];
-    if (!a) return false;
-    try {
-      a.currentTime = 0;
-      const p = a.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  toggle() {
-    this.enabled = !this.enabled;
-    localStorage.setItem("lonely_gow_sound", this.enabled ? "true" : "false");
-    return this.enabled;
-  }
-
-  playWarDrum() {
-    if (!this.enabled) return;
-    this.initWebAudio();
-    this.playHtmlAudio("drum");
-
-    // Also run Web Audio API if active
-    if (this.ctx && this.ctx.state === "running") {
-      try {
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = "sawtooth";
-        osc.frequency.setValueAtTime(140, now);
-        osc.frequency.exponentialRampToValueAtTime(32, now + 0.35);
-        gain.gain.setValueAtTime(0.5, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.4);
-      } catch (_) {}
-    }
-  }
-
-  playBladeClash() {
-    if (!this.enabled) return;
-    this.initWebAudio();
-    this.playHtmlAudio("clash");
-
-    if (this.ctx && this.ctx.state === "running") {
-      try {
-        const now = this.ctx.currentTime;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(1300, now);
-        osc.frequency.exponentialRampToValueAtTime(300, now + 0.22);
-        gain.gain.setValueAtTime(0.35, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.26);
-      } catch (_) {}
-    }
-  }
-
-  playVictoryChime() {
-    if (!this.enabled) return;
-    this.initWebAudio();
-    this.playHtmlAudio("chime");
-
-    if (this.ctx && this.ctx.state === "running") {
-      try {
-        const notes = [659.25, 987.77, 1318.51];
-        const now = this.ctx.currentTime;
-        notes.forEach((freq, idx) => {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = "sine";
-          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
-          gain.gain.setValueAtTime(0.25, now + idx * 0.08);
-          gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.08 + 1.1);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start(now + idx * 0.08);
-          osc.stop(now + idx * 0.08 + 1.15);
-        });
-      } catch (_) {}
-    }
-  }
-}
-
-const gowAudio = new GowSoundManager();
-window.gowAudio = gowAudio;
-
-// Unlock audio on first user touch or click
-window.addEventListener("pointerdown", () => {
-  gowAudio.initWebAudio();
-}, { once: true });
-
-// Hook Run Exploit button to play war drum sound
-if (runBtn) {
-  runBtn.addEventListener("click", () => {
-    gowAudio.playWarDrum();
-    gowAudio.playBladeClash();
-  });
-}
-
-// Hook Audio Toggle Button in top nav
-const audioToggleBtn = document.getElementById("audioToggleBtn");
-function updateAudioBtnUI() {
-  if (audioToggleBtn) {
-    audioToggleBtn.textContent = gowAudio.enabled ? "⚔ SOUND: ON" : "⚔ SOUND: MUTED";
-    audioToggleBtn.classList.toggle("audio-muted", !gowAudio.enabled);
-  }
-}
-if (audioToggleBtn) {
-  updateAudioBtnUI();
-  audioToggleBtn.addEventListener("click", () => {
-    gowAudio.toggle();
-    updateAudioBtnUI();
-    if (gowAudio.enabled) gowAudio.playBladeClash();
-  });
-}
-
-// Hook showJbSuccessPopup to victory chime
-const origShowJbPopup = window.showJbSuccessPopup;
-window.showJbSuccessPopup = function(sub) {
-  gowAudio.playVictoryChime();
-  if (typeof origShowJbPopup === "function") {
-    origShowJbPopup(sub);
-  }
-};
-
-/* ==========================================================================
    Background & Panel Glass Opacity Manager
    Allows user to edit opacity on the "square" covering the background
    ========================================================================== */
@@ -875,7 +646,6 @@ if (savedOpacityIdx !== null && !isNaN(parseInt(savedOpacityIdx, 10))) {
 if (glassToggleBtn) {
   glassToggleBtn.addEventListener("click", () => {
     applyOpacityPreset(currentOpacityIdx + 1, true);
-    if (gowAudio) gowAudio.playBladeClash();
   });
 }
 
@@ -900,8 +670,7 @@ function initCustomPayloadDrop() {
     if (!file) return;
     updateStatus(`Forging ${file.name} (${Math.round(file.size / 1024)} KB)...`);
     writeLog(`[Valkyrie Forge] Reading custom payload: ${file.name}...`, "info");
-    gowAudio.playBladeClash();
-
+    
     try {
       const arrayBuffer = await file.arrayBuffer();
       const bytes = new Uint8Array(arrayBuffer);
@@ -911,8 +680,7 @@ function initCustomPayloadDrop() {
 
       updateStatus(`⚔ ${file.name} dispatched successfully!`);
       writeLog(`[Valkyrie Forge] Successfully delivered ${file.name} to ELFLDR on port 9021!`, "success");
-      gowAudio.playVictoryChime();
-
+      
       if (typeof window.showJbSuccessPopup === "function") {
         window.showJbSuccessPopup(`${file.name} Dispatched via Valkyrie Forge`);
       }
