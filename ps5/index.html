@@ -139,6 +139,11 @@
     }
 
     /* Outer Norse Runic Orbit Ring */
+        @keyframes runic-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
     .kratos-runic-orbit {
       position: absolute;
       inset: -8px;
@@ -150,6 +155,70 @@
         inset 0 0 15px rgba(192, 21, 21, 0.25);
       z-index: 1;
       pointer-events: none;
+      animation: runic-spin 30s linear infinite;
+    }
+
+    /* Realm Tabs */
+    .realm-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .realm-tab {
+      background: rgba(18, 22, 34, 0.7);
+      border: 1px solid var(--gow-border-gold);
+      color: #94a3b8;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      font-family: 'Cinzel', serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+    }
+
+    .realm-tab:hover {
+      color: var(--gow-gold-light);
+      border-color: var(--gow-crimson-bright);
+      box-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
+    }
+
+    .realm-tab.active {
+      background: rgba(192, 21, 21, 0.3);
+      color: #ffffff;
+      border-color: var(--gow-crimson-bright);
+      box-shadow: 0 0 12px rgba(230, 57, 70, 0.6);
+    }
+
+    .realm-tag {
+      display: inline-block;
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-family: 'Cinzel', serif;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gow-gold-light);
+    }
+
+    .realm-tag.frost {
+      background: rgba(0, 240, 255, 0.12);
+      border-color: rgba(0, 240, 255, 0.4);
+      color: var(--gow-frost);
+    }
+
+    .realm-tag.crimson {
+      background: rgba(230, 57, 70, 0.2);
+      border-color: rgba(230, 57, 70, 0.5);
+      color: #ffffff;
     }
 
     /* Circular Medallion */
@@ -792,65 +861,81 @@
         <span class="payload-subtitle">ELFLDR on port 9021 &middot; Select payload to dispatch</span>
       </div>
 
-      <div class="payload-grid">
-        <div class="payload-card card-featured">
+      <!-- Realm Filter Tabs -->
+      <div class="realm-tabs" id="realmTabs">
+        <button type="button" class="realm-tab active" data-filter="all">&#9876; All Realms</button>
+        <button type="button" class="realm-tab" data-filter="midgard">&#5807; Midgard (System)</button>
+        <button type="button" class="realm-tab" data-filter="alfheim">&#5807; Alfheim (Network)</button>
+        <button type="button" class="realm-tab" data-filter="niflheim">&#5807; Niflheim (Debug)</button>
+      </div>
+
+      <div class="payload-grid" id="payloadGrid">
+        <div class="payload-card card-featured" data-realm="midgard">
           <div class="p-info">
+            <span class="realm-tag crimson">Midgard &bull; System</span>
             <div class="p-name">nexHEN</div>
             <div class="p-desc">Homebrew Enabler &amp; Debug Settings</div>
           </div>
           <button class="btn-send btn-featured" data-payload="nexHEN.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="alfheim">
           <div class="p-info">
+            <span class="realm-tag frost">Alfheim &bull; Network</span>
             <div class="p-name">zftpd</div>
             <div class="p-desc">High-speed FTP server (Port 21 / 1337)</div>
           </div>
           <button class="btn-send" data-payload="zftpd-ps5.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="niflheim">
           <div class="p-info">
+            <span class="realm-tag">Niflheim &bull; Debug</span>
             <div class="p-name">MemDBG</div>
             <div class="p-desc">Memory debugger &amp; trainer daemon</div>
           </div>
           <button class="btn-send" data-payload="MemDBG-ps5.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="niflheim">
           <div class="p-info">
+            <span class="realm-tag">Niflheim &bull; Debug</span>
             <div class="p-name">klogsrv</div>
             <div class="p-desc">Real-time kernel log server</div>
           </div>
           <button class="btn-send" data-payload="klogsrv-ps5.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="midgard">
           <div class="p-info">
+            <span class="realm-tag crimson">Midgard &bull; System</span>
             <div class="p-name">shsrv</div>
             <div class="p-desc">Interactive system shell daemon</div>
           </div>
           <button class="btn-send" data-payload="shsrv-ps5.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="alfheim">
           <div class="p-info">
+            <span class="realm-tag frost">Alfheim &bull; Network</span>
             <div class="p-name">websrv</div>
             <div class="p-desc">Web-based file manager</div>
           </div>
           <button class="btn-send" data-payload="websrv-ps5.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="niflheim">
           <div class="p-info">
+            <span class="realm-tag">Niflheim &bull; Debug</span>
             <div class="p-name">gdbsrv</div>
             <div class="p-desc">GDB remote debugger stub</div>
           </div>
           <button class="btn-send" data-payload="gdbsrv-ps5.elf">SEND</button>
         </div>
 
-        <div class="payload-card">
+        <div class="payload-card" data-realm="alfheim">
           <div class="p-info">
+            <span class="realm-tag frost">Alfheim &bull; Network</span>
             <div class="p-name">BetterLAN</div>
             <div class="p-desc">LAN multiplayer bridge &amp; tunnel</div>
           </div>
@@ -898,6 +983,29 @@
     }
     window.showJbSuccessPopup = showJbSuccessPopup;
     window.closeJbSuccessPopup = closeJbSuccessPopup;
+  </script>
+  <script>
+    // Realm Tab Filter Handler
+    document.addEventListener("DOMContentLoaded", function () {
+      var tabs = document.querySelectorAll("#realmTabs .realm-tab");
+      var cards = document.querySelectorAll("#payloadGrid .payload-card");
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          tabs.forEach(function (t) { t.classList.remove("active"); });
+          tab.classList.add("active");
+          var filter = tab.getAttribute("data-filter");
+
+          cards.forEach(function (card) {
+            if (filter === "all" || card.getAttribute("data-realm") === filter) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>
