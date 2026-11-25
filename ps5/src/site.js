@@ -595,3 +595,264 @@ if (resetCacheBtn) {
 }
 
 initOfflineCache();
+
+
+/* ==========================================================================
+   God of War Audio Synthesizer (Pure Web Audio API - Zero External Files)
+   ========================================================================== */
+class GowSoundManager {
+  constructor() {
+    this.ctx = null;
+    this.enabled = localStorage.getItem("lonely_gow_sound") !== "false";
+  }
+
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) {
+        this.ctx = new AudioCtx();
+      }
+    }
+    if (this.ctx && this.ctx.state === "suspended") {
+      this.ctx.resume();
+    }
+  }
+
+  toggle() {
+    this.enabled = !this.enabled;
+    localStorage.setItem("lonely_gow_sound", this.enabled ? "true" : "false");
+    return this.enabled;
+  }
+
+  // Heavy Spartan War Drum
+  playWarDrum() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(140, now);
+      filter.frequency.exponentialRampToValueAtTime(30, now + 0.35);
+
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(85, now);
+      osc.frequency.exponentialRampToValueAtTime(35, now + 0.35);
+
+      gain.gain.setValueAtTime(0.5, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.4);
+    } catch (_) {}
+  }
+
+  // Sharp Blades of Chaos Steel Clash
+  playBladeClash() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const now = this.ctx.currentTime;
+      // High metallic chime
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(1200, now);
+      osc.frequency.exponentialRampToValueAtTime(300, now + 0.22);
+
+      gain.gain.setValueAtTime(0.35, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.26);
+    } catch (_) {}
+  }
+
+  // Ethereal Leviathan Axe Ice / Victory Chime
+  playVictoryChime() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    try {
+      const notes = [880, 1100, 1320, 1760]; // A major chord harmonics
+      const now = this.ctx.currentTime;
+
+      notes.forEach((freq, idx) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+        gain.gain.setValueAtTime(0.2, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0005, now + idx * 0.08 + 1.2);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 1.25);
+      });
+    } catch (_) {}
+  }
+}
+
+const gowAudio = new GowSoundManager();
+window.gowAudio = gowAudio;
+
+// Hook Run Exploit button to play war drum sound
+if (runBtn) {
+  runBtn.addEventListener("click", () => {
+    gowAudio.playWarDrum();
+    gowAudio.playBladeClash();
+  });
+}
+
+// Hook Audio Toggle Button in top nav
+const audioToggleBtn = document.getElementById("audioToggleBtn");
+function updateAudioBtnUI() {
+  if (audioToggleBtn) {
+    audioToggleBtn.textContent = gowAudio.enabled ? "⚔ SOUND: ON" : "⚔ SOUND: MUTED";
+    audioToggleBtn.classList.toggle("audio-muted", !gowAudio.enabled);
+  }
+}
+if (audioToggleBtn) {
+  updateAudioBtnUI();
+  audioToggleBtn.addEventListener("click", () => {
+    gowAudio.toggle();
+    updateAudioBtnUI();
+    if (gowAudio.enabled) gowAudio.playBladeClash();
+  });
+}
+
+// Hook showJbSuccessPopup to victory chime
+const origShowJbPopup = window.showJbSuccessPopup;
+window.showJbSuccessPopup = function(sub) {
+  gowAudio.playVictoryChime();
+  if (typeof origShowJbPopup === "function") {
+    origShowJbPopup(sub);
+  }
+};
+
+/* ==========================================================================
+   Valkyrie Forge: Custom Payload Drag & Drop / File Picker Loader
+   ========================================================================== */
+function initCustomPayloadDrop() {
+  const dropZone = document.getElementById("customDropZone");
+  const fileInput = document.getElementById("customFileInput");
+  const statusEl = document.getElementById("customDropStatus");
+
+  if (!dropZone || !fileInput) return;
+
+  function updateStatus(text, isError = false) {
+    if (statusEl) {
+      statusEl.textContent = text;
+      statusEl.style.color = isError ? "var(--gow-crimson-bright)" : "var(--gow-frost)";
+    }
+  }
+
+  async function handleFile(file) {
+    if (!file) return;
+    updateStatus(`Forging ${file.name} (${Math.round(file.size / 1024)} KB)...`);
+    writeLog(`[Valkyrie Forge] Reading custom payload: ${file.name}...`, "info");
+    gowAudio.playBladeClash();
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const bytes = new Uint8Array(arrayBuffer);
+
+      updateStatus(`Dispatching ${file.name} to 127.0.0.1:9021...`);
+      await sendPayloadViaRop(bytes, file.name);
+
+      updateStatus(`⚔ ${file.name} dispatched successfully!`);
+      writeLog(`[Valkyrie Forge] Successfully delivered ${file.name} to ELFLDR on port 9021!`, "success");
+      gowAudio.playVictoryChime();
+
+      if (typeof window.showJbSuccessPopup === "function") {
+        window.showJbSuccessPopup(`${file.name} Dispatched via Valkyrie Forge`);
+      }
+    } catch (err) {
+      updateStatus(`Failed: ${err.message}`, true);
+      writeLog(`[Valkyrie Forge] Payload dispatch failed: ${err.message}`, "error");
+    }
+  }
+
+  dropZone.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  fileInput.addEventListener("change", (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      handleFile(e.target.files[0]);
+    }
+  });
+
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("drop-active");
+  });
+
+  dropZone.addEventListener("dragleave", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("drop-active");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("drop-active");
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+}
+
+initCustomPayloadDrop();
+
+/* ==========================================================================
+   Firmware Quick-Switcher / Override Helper
+   ========================================================================== */
+const fwChip = document.getElementById("fwChip");
+if (fwChip) {
+  fwChip.addEventListener("click", () => {
+    const supported = ["7.00", "7.01", "7.20", "7.40", "7.60", "7.61", "8.00", "8.20", "8.40", "8.60", "9.00", "9.20", "9.40", "9.60", "10.00", "10.01", "10.20", "10.40", "10.60", "11.00", "11.20", "11.60", "12.00", "12.02", "12.20", "12.40", "12.60", "12.70", "13.00", "13.20", "13.40", "13.42", "13.60"];
+    const choice = prompt(`Manual Firmware Override:\nCurrent: ${window.fw_str || "Auto"}\n\nEnter supported version (e.g. 7.61, 8.00, 10.00, or 'auto'):`);
+    if (choice) {
+      const clean = choice.trim().toLowerCase();
+      if (clean === "auto") {
+        delete window.fw_override;
+        localStorage.removeItem("lonely_fw_override");
+        writeLog("Firmware set to Auto-Detect.", "info");
+      } else if (supported.includes(clean)) {
+        window.fw_override = clean;
+        localStorage.setItem("lonely_fw_override", clean);
+        if (fwText) fwText.textContent = clean + " (OVERRIDE)";
+        writeLog(`Firmware manually overridden to FW ${clean}.`, "success");
+      } else {
+        alert(`Unsupported firmware: ${choice}. Supported range: 7.00 - 13.60.`);
+      }
+    }
+  });
+
+  // Restore stored override
+  const storedOverride = localStorage.getItem("lonely_fw_override");
+  if (storedOverride) {
+    window.fw_override = storedOverride;
+    if (fwText) fwText.textContent = storedOverride + " (OVERRIDE)";
+  }
+}

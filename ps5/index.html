@@ -640,6 +640,75 @@
       background: rgba(230, 57, 70, 0.2);
     }
 
+    
+    /* Sound Toggle Button */
+    .audio-btn {
+      background: rgba(30, 15, 20, 0.85);
+      border-color: rgba(230, 57, 70, 0.5);
+      color: var(--gow-crimson-bright);
+      cursor: pointer;
+    }
+    .audio-btn:hover {
+      box-shadow: 0 0 14px rgba(230, 57, 70, 0.7);
+      color: #ffffff;
+    }
+    .audio-btn.audio-muted {
+      color: #718096;
+      border-color: #4a5568;
+      background: rgba(18, 22, 34, 0.85);
+    }
+
+    /* Valkyrie Forge Custom Payload Box */
+    .custom-payload-box {
+      margin-top: 18px;
+      border: 2px dashed rgba(212, 175, 55, 0.45);
+      border-radius: 14px;
+      background: rgba(14, 18, 28, 0.75);
+      padding: 18px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+    }
+    .custom-payload-box:hover, .custom-payload-box.drop-active {
+      border-color: var(--gow-gold);
+      background: rgba(30, 15, 20, 0.85);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.35), inset 0 0 20px rgba(230, 57, 70, 0.2);
+      transform: translateY(-2px);
+    }
+    .custom-drop-icon {
+      font-size: 22px;
+      color: var(--gow-gold-light);
+      margin-bottom: 4px;
+    }
+    .custom-drop-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--gow-gold-light);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+    }
+    .custom-drop-subtitle {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+    .drop-browse-link {
+      color: var(--gow-frost);
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    .custom-drop-status {
+      font-size: 11px;
+      color: var(--gow-frost);
+      margin-top: 6px;
+      font-family: 'Consolas', monospace;
+      letter-spacing: 0.5px;
+    }
+
     /* Credits Footer */
     .credits-box {
       margin-top: 26px;
@@ -783,6 +852,7 @@
 
   <div class="container">
     <div class="top-nav-hub">
+      <button type="button" id="audioToggleBtn" class="nav-hub-link audio-btn" title="Toggle Synthesized God of War Sound Effects">&#9876; SOUND: ON</button>
       <a href="../index.html" class="nav-hub-link">&larr; LONELY HUB</a>
       <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2) &rarr;</a>
     </div>
@@ -810,7 +880,7 @@
 
     <!-- Status Chips -->
     <div class="status-container">
-      <div class="chip fw-chip">&#9876; FW <span id="fwText">7.00 - 13.60</span></div>
+      <div class="chip fw-chip" id="fwChip" title="Click to manually override target firmware" style="cursor: pointer;">&#9876; FW <span id="fwText">7.00 - 13.60</span></div>
       <div class="chip status-chip">
         <span class="led" id="statusLed"></span>
         <span id="statusText">REALM: MIDGARD (ONLINE)</span>
@@ -941,6 +1011,15 @@
           </div>
           <button class="btn-send" data-payload="betterlan-ps5.elf">SEND</button>
         </div>
+      </div>
+
+      <!-- Valkyrie Forge: Custom Payload Loader -->
+      <div class="custom-payload-box" id="customDropZone" title="Click or drop a payload to send directly to port 9021">
+        <input type="file" id="customFileInput" accept=".elf,.bin" style="display:none;">
+        <div class="custom-drop-icon">&#9876;</div>
+        <div class="custom-drop-title">VALKYRIE FORGE &bull; CUSTOM PAYLOAD LOADER</div>
+        <div class="custom-drop-subtitle">Drag &amp; drop any <b>.elf</b> or <b>.bin</b> file here, or <span class="drop-browse-link">Browse from Device</span></div>
+        <div class="custom-drop-status" id="customDropStatus">Ready to dispatch to 127.0.0.1:9021</div>
       </div>
     </div>
 
