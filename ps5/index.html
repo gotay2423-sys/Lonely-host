@@ -4,42 +4,39 @@
   <meta charset="utf-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lonely VI — PS5 Exploit Host (Vice City Edition)</title>
+  <title>Lonely — PS5 Exploit Host (God of War Edition)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,900&family=Pacifico&display=swap');
-
     :root {
-      --gta-pink: #ff2a8d;
-      --gta-magenta: #e024c3;
-      --gta-purple: #8c1bab;
-      --gta-orange: #ff7e29;
-      --gta-gold: #ffc233;
-      --gta-cyan: #00f0ff;
-      --gta-mint: #0df5c4;
-      --gta-red: #ff3366;
-      --gta-bg-dark: #08020e;
-      --gta-panel-bg: rgba(18, 7, 34, 0.9);
-      --gta-border-pink: rgba(255, 42, 141, 0.5);
-      --gta-border-cyan: rgba(0, 240, 255, 0.4);
-      --gta-border-gold: rgba(255, 194, 51, 0.5);
+      --gow-crimson: #c01515;
+      --gow-crimson-bright: #e63946;
+      --gow-crimson-dark: #6e0c0c;
+      --gow-gold: #d4af37;
+      --gow-gold-light: #f5d77f;
+      --gow-frost: #00f0ff;
+      --gow-frost-glow: rgba(0, 240, 255, 0.45);
+      --gow-ash: #e2e8f0;
+      --gow-slate-dark: #080a0f;
+      --gow-panel-bg: rgba(14, 17, 26, 0.92);
+      --gow-border-gold: rgba(212, 175, 55, 0.45);
+      --gow-border-crimson: rgba(192, 21, 21, 0.45);
     }
 
     * { box-sizing: border-box; }
 
     html, body {
       background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(224, 36, 195, 0.35) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 85% 15%, rgba(255, 126, 41, 0.25) 0%, transparent 50%),
-        radial-gradient(ellipse 60% 40% at 15% 25%, rgba(0, 240, 255, 0.2) 0%, transparent 50%),
-        linear-gradient(rgba(255, 42, 141, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(180deg, #18062d 0%, #0d0319 40%, #05010a 100%);
-      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px, 100% 100%;
+        linear-gradient(180deg, rgba(10, 13, 20, 0.82) 0%, rgba(5, 7, 12, 0.88) 100%),
+        url('./gow_bg.jpg');
+      background-size: cover, cover;
+      background-position: center top;
       background-attachment: fixed;
-      color: #f3effc;
+      color: #e2e8f0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       margin: 0;
-      padding: 20px 16px;
+      padding: 24px 16px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -48,12 +45,12 @@
 
     .container {
       width: 100%;
-      max-width: 880px;
+      max-width: 860px;
       position: relative;
       z-index: 2;
     }
 
-    /* ---------- Top Navigation Hub ---------- */
+    /* Top Navigation Hub */
     .top-nav-hub {
       width: 100%;
       display: flex;
@@ -63,125 +60,172 @@
     }
 
     .nav-hub-link {
-      background: rgba(22, 9, 42, 0.85);
-      border: 1px solid var(--gta-border-cyan);
-      color: var(--gta-cyan);
-      padding: 7px 16px;
+      background: rgba(18, 22, 34, 0.85);
+      border: 1px solid var(--gow-border-gold);
+      color: var(--gow-gold-light);
+      padding: 6px 16px;
       border-radius: 18px;
-      font-size: 11.5px;
-      font-weight: 800;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 1.5px;
       text-decoration: none;
       transition: all 0.2s ease;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      font-family: 'Cinzel', serif;
     }
 
     .nav-hub-link:hover {
-      border-color: var(--gta-pink);
-      color: var(--gta-pink);
-      box-shadow: 0 0 14px rgba(255, 42, 141, 0.6);
+      border-color: var(--gow-crimson-bright);
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(230, 57, 70, 0.6);
     }
 
     .nav-hub-link.nav-ps4 {
-      border-color: rgba(255, 126, 41, 0.5);
-      color: #ff9d5c;
+      border-color: rgba(0, 240, 255, 0.4);
+      color: var(--gow-frost);
     }
 
-    .nav-hub-link.nav-ps4:hover {
-      border-color: var(--gta-gold);
-      color: var(--gta-gold);
-      box-shadow: 0 0 14px rgba(255, 194, 51, 0.6);
-    }
-
-    /* ---------- GTA VI Vice City Header Banner ---------- */
-    .gta-banner {
+    /* God of War Header Banner */
+    .gow-header-banner {
       position: relative;
-      background: linear-gradient(180deg, rgba(28, 8, 48, 0.9) 0%, rgba(14, 4, 25, 0.95) 100%);
-      border: 2px solid var(--gta-border-pink);
+      background: linear-gradient(180deg, rgba(22, 27, 42, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%);
+      border: 2px solid var(--gow-border-gold);
       border-radius: 20px;
-      padding: 24px 20px 20px 20px;
+      padding: 24px 20px 22px 20px;
       margin-bottom: 22px;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 14px 45px rgba(0, 0, 0, 0.65), 0 0 35px rgba(255, 42, 141, 0.25), inset 0 0 25px rgba(255, 126, 41, 0.12);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), 0 0 30px rgba(192, 21, 21, 0.25), inset 0 0 30px rgba(212, 175, 55, 0.1);
     }
 
-    .gta-banner-bg-art {
+    /* Corner Nordic Knot Accents */
+    .gow-header-banner::before {
+      content: "ᛟ ᚱ ᛒ ᛁ ᛋ";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      opacity: 0.35;
-      z-index: 0;
+      top: 8px;
+      left: 14px;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: rgba(212, 175, 55, 0.4);
+      font-family: serif;
+    }
+    .gow-header-banner::after {
+      content: "ᛈ ᛋ ᚡ";
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: rgba(0, 240, 255, 0.4);
+      font-family: serif;
     }
 
-    .header-content {
+    /* Kratos God of War Shield Crest */
+    .kratos-crest-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 14px;
       position: relative;
-      z-index: 1;
     }
 
-    .gta-logo-row {
-      display: inline-flex;
+    .kratos-crest-frame {
+      position: relative;
+      width: 136px;
+      height: 136px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Outer Norse Runic Orbit Ring */
+    .kratos-runic-orbit {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(212, 175, 55, 0.6);
+      box-shadow: 
+        0 0 25px rgba(230, 57, 70, 0.5), 
+        0 0 45px rgba(212, 175, 55, 0.3), 
+        inset 0 0 15px rgba(192, 21, 21, 0.25);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Circular Medallion */
+    .kratos-medallion {
+      position: relative;
+      width: 126px;
+      height: 126px;
+      border-radius: 50%;
+      border: 3.5px solid var(--gow-gold);
+      box-shadow: 
+        0 0 22px rgba(212, 175, 55, 0.85), 
+        0 0 45px rgba(230, 57, 70, 0.7), 
+        inset 0 0 16px rgba(0, 0, 0, 0.95);
+      overflow: hidden;
+      background: radial-gradient(circle, #2a221f 0%, #0d0f17 100%);
+      z-index: 2;
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      position: relative;
     }
 
-    .gta-title {
-      font-family: 'Montserrat', 'Trebuchet MS', 'Impact', sans-serif;
-      font-size: 58px;
+    .kratos-medallion img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: contrast(1.15) brightness(1.02) saturate(1.08);
+      transform: scale(1.02);
+    }
+
+    /* Subtle Medallion Glass, Vignette & Crimson Edge Glare */
+    .kratos-medallion-glare {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: 
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 65%, rgba(10, 13, 20, 0.75) 100%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 45%, rgba(230, 57, 70, 0.25) 100%);
+      pointer-events: none;
+      box-shadow: inset 0 0 14px rgba(212, 175, 55, 0.7), inset 0 0 22px rgba(0, 0, 0, 0.6);
+    }
+
+    .gow-title {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-size: 52px;
       font-weight: 900;
-      letter-spacing: 9px;
+      letter-spacing: 8px;
       text-transform: uppercase;
       margin: 0;
-      background: linear-gradient(180deg, #ffffff 0%, #ffd4e8 30%, #ff2a8d 68%, #ff7e29 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f5d77f 35%, #d4af37 70%, #9e791b 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 20px rgba(255, 42, 141, 0.85)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.95));
-      line-height: 1.05;
+      filter: drop-shadow(0 0 18px rgba(212, 175, 55, 0.7)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.95));
+      line-height: 1.1;
     }
 
-    .vi-badge {
-      font-family: 'Arial Black', 'Impact', sans-serif;
-      font-style: italic;
-      font-size: 68px;
-      font-weight: 900;
-      letter-spacing: -3px;
-      background: linear-gradient(135deg, #00f0ff 0%, #ff2a8d 50%, #ff7e29 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 18px rgba(255, 42, 141, 0.9)) drop-shadow(0 0 32px rgba(0, 240, 255, 0.75));
-      transform: skewX(-7deg);
-      line-height: 1;
-    }
-
-    .vice-city-script {
-      font-family: 'Pacifico', 'Brush Script MT', 'Dancing Script', cursive;
-      font-size: 32px;
-      color: #ff2a8d;
-      text-shadow: 0 0 12px #ff2a8d, 0 0 25px rgba(255, 42, 141, 0.8), 0 0 45px rgba(255, 42, 141, 0.5);
-      margin-top: -6px;
-      letter-spacing: 2px;
-      transform: rotate(-3deg);
-      display: block;
-    }
-
-    .gta-tagline {
-      color: var(--gta-cyan);
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.75), 0 0 20px rgba(0, 240, 255, 0.4);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 3.5px;
-      margin-top: 10px;
+    .gow-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--gow-crimson-bright);
+      text-shadow: 0 0 10px rgba(230, 57, 70, 0.65), 0 0 20px rgba(192, 21, 21, 0.4);
+      margin-top: 6px;
       text-transform: uppercase;
     }
 
-    /* ---------- Status Chips ---------- */
+    .gow-tagline {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #94a3b8;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    /* Status Chips */
     .status-container {
       display: flex;
       justify-content: center;
@@ -191,51 +235,44 @@
     }
 
     .chip {
-      background: rgba(22, 9, 42, 0.88);
-      border: 1px solid var(--gta-border-cyan);
+      background: rgba(18, 22, 34, 0.9);
+      border: 1px solid var(--gow-border-gold);
       padding: 7px 18px;
-      border-radius: 22px;
-      font-size: 11.5px;
-      font-weight: 800;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.08);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(212, 175, 55, 0.08);
       display: flex;
       align-items: center;
-      color: #f1ecff;
+      color: var(--gow-gold-light);
+      font-family: 'Cinzel', serif;
     }
 
     .fw-chip {
-      color: var(--gta-gold);
-      border-color: var(--gta-border-gold);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 194, 51, 0.15);
+      color: var(--gow-gold-light);
+      border-color: var(--gow-gold);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(212, 175, 55, 0.15);
     }
 
-    button.chip {
-      font-family: inherit;
-      cursor: pointer;
+    .status-chip {
+      color: var(--gow-frost);
+      border-color: rgba(0, 240, 255, 0.45);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.1);
     }
 
     .reset-chip {
-      color: var(--gta-red);
-      border-color: rgba(255, 51, 102, 0.45);
-      background: rgba(35, 8, 24, 0.88);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(255, 51, 102, 0.12);
-      transition: all 0.2s ease;
+      color: var(--gow-crimson-bright);
+      border-color: rgba(230, 57, 70, 0.5);
+      background: rgba(35, 10, 15, 0.85);
+      cursor: pointer;
+      font-family: inherit;
     }
 
-    .reset-chip:hover, .reset-chip:focus {
-      background: rgba(255, 51, 102, 0.25);
-      border-color: var(--gta-red);
-      color: #ffffff;
-      box-shadow: 0 0 18px rgba(255, 51, 102, 0.7);
-      outline: none;
-    }
-
-    .reset-chip:active {
-      transform: scale(0.97);
+    .reset-chip:hover {
+      background: rgba(230, 57, 70, 0.25);
+      box-shadow: 0 0 16px rgba(230, 57, 70, 0.7);
     }
 
     .led {
@@ -244,162 +281,101 @@
       border-radius: 50%;
       display: inline-block;
       margin-right: 8px;
-      background: var(--gta-cyan);
-      box-shadow: 0 0 8px var(--gta-cyan);
-      animation: pulse 1.8s ease-in-out infinite;
+      background: var(--gow-frost);
+      box-shadow: 0 0 8px var(--gow-frost);
     }
+    .led-green { background: #00ffaa; box-shadow: 0 0 8px #00ffaa; }
+    .led-yellow { background: var(--gow-gold-light); box-shadow: 0 0 8px var(--gow-gold-light); }
+    .led-red { background: var(--gow-crimson-bright); box-shadow: 0 0 8px var(--gow-crimson-bright); }
 
-    .led.led-yellow { background: var(--gta-gold); box-shadow: 0 0 8px var(--gta-gold); }
-    .led.led-green  { background: var(--gta-mint); box-shadow: 0 0 8px var(--gta-mint); }
-    .led.led-red    { background: var(--gta-red);  box-shadow: 0 0 8px var(--gta-red); }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.85); }
-    }
-
-    /* ---------- GTA VI Action Controls ---------- */
+    /* Controls */
     .controls {
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
       margin-bottom: 24px;
     }
 
     #runBtn {
-      background: linear-gradient(135deg, rgba(255, 42, 141, 0.3) 0%, rgba(255, 126, 41, 0.3) 100%);
+      background: linear-gradient(180deg, #321014 0%, #1c0a0c 100%);
       color: #ffffff;
-      border: 2px solid var(--gta-pink);
-      padding: 16px 56px;
-      font-size: 19px;
-      font-weight: 900;
-      font-family: inherit;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      border-radius: 12px;
+      border: 2px solid var(--gow-border-gold);
+      padding: 14px 44px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      border-radius: 28px;
       cursor: pointer;
-      box-shadow: 0 0 26px rgba(255, 42, 141, 0.5), 0 0 50px rgba(255, 126, 41, 0.3), inset 0 0 18px rgba(255, 42, 141, 0.25);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    #runBtn::after {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%; width: 50%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-      transform: skewX(-20deg);
-      animation: shine 4.5s ease-in-out infinite;
-    }
-
-    @keyframes shine {
-      0%, 65% { left: -100%; }
-      100% { left: 160%; }
+      text-transform: uppercase;
+      font-family: 'Cinzel', serif;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(192, 21, 21, 0.4), inset 0 0 12px rgba(212, 175, 55, 0.2);
+      transition: all 0.25s ease;
     }
 
     #runBtn:hover {
-      background: linear-gradient(135deg, #ff2a8d 0%, #ff7e29 100%);
-      color: #07020d;
-      box-shadow: 0 0 38px rgba(255, 42, 141, 0.9), 0 0 70px rgba(255, 126, 41, 0.65);
-      transform: translateY(-2px) scale(1.02);
+      background: linear-gradient(180deg, #5c141a 0%, #2e0c10 100%);
+      border-color: var(--gow-gold-light);
+      box-shadow: 0 0 28px rgba(230, 57, 70, 0.8), 0 0 18px rgba(212, 175, 55, 0.6);
+      transform: translateY(-2px);
     }
 
-    #runBtn:focus, #runBtn:focus-visible {
-      outline: 3px solid var(--gta-cyan);
-      outline-offset: 4px;
-    }
-
-    #runBtn:disabled {
-      border-color: #554460;
-      color: #887799;
-      background: rgba(40, 25, 55, 0.3);
-      box-shadow: none;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    #runBtn.btn-success {
-      border-color: var(--gta-mint);
-      background: linear-gradient(135deg, rgba(13, 245, 196, 0.25) 0%, rgba(0, 240, 255, 0.25) 100%);
-      color: var(--gta-mint);
-      box-shadow: 0 0 30px rgba(13, 245, 196, 0.6);
-    }
-
-    /* Auto-Run Toggle */
     .auto-run-bar {
-      margin-top: 14px;
       display: flex;
-      justify-content: center;
       align-items: center;
+      gap: 10px;
     }
 
     .toggle-wrap {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 10px;
-      cursor: pointer;
-      user-select: none;
-      font-size: 12px;
-      font-weight: 800;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 1.5px;
-      color: #bfa5dc;
-      transition: all 0.2s ease;
+      color: #94a3b8;
+      cursor: pointer;
     }
 
-    .toggle-wrap:hover {
-      color: var(--gta-cyan);
-    }
-
-    .toggle-wrap input {
-      display: none;
-    }
+    .toggle-wrap input { display: none; }
 
     .toggle-slider {
-      width: 38px;
+      width: 36px;
       height: 20px;
-      background: rgba(22, 9, 42, 0.9);
-      border: 1px solid var(--gta-border-cyan);
-      border-radius: 20px;
+      background: rgba(18, 22, 34, 0.9);
+      border: 1px solid var(--gow-border-gold);
+      border-radius: 10px;
       position: relative;
-      transition: all 0.25s ease;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+      transition: all 0.2s ease;
     }
 
     .toggle-slider::after {
       content: "";
       position: absolute;
-      width: 14px;
-      height: 14px;
       top: 2px;
       left: 2px;
+      width: 14px;
+      height: 14px;
+      background: var(--gow-gold);
       border-radius: 50%;
-      background: var(--gta-cyan);
-      box-shadow: 0 0 6px var(--gta-cyan);
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
     }
 
     .toggle-wrap input:checked + .toggle-slider {
-      background: rgba(255, 42, 141, 0.35);
-      border-color: var(--gta-pink);
-      box-shadow: 0 0 14px rgba(255, 42, 141, 0.55);
+      background: rgba(192, 21, 21, 0.5);
+      border-color: var(--gow-crimson-bright);
     }
 
     .toggle-wrap input:checked + .toggle-slider::after {
-      left: 20px;
-      background: var(--gta-pink);
-      box-shadow: 0 0 8px var(--gta-pink);
+      left: 18px;
+      background: var(--gow-crimson-bright);
+      box-shadow: 0 0 8px var(--gow-crimson-bright);
     }
 
-    .toggle-wrap input:checked ~ .toggle-text {
-      color: var(--gta-pink);
-      text-shadow: 0 0 8px rgba(255, 42, 141, 0.6);
-    }
-
-    /* ---------- Terminal Chrome Bar ---------- */
+    /* Terminal Console */
     .terminal-bar {
-      background: #15062a;
-      border: 1px solid var(--gta-border-pink);
+      background: #141824;
+      border: 1px solid var(--gow-border-gold);
       border-bottom: 1px solid rgba(0, 240, 255, 0.25);
       border-top-left-radius: 14px;
       border-top-right-radius: 14px;
@@ -407,18 +383,19 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 11.5px;
+      font-family: 'Cinzel', serif;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .terminal-dots { display: flex; gap: 8px; }
     .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-    .dot-red { background: var(--gta-red); box-shadow: 0 0 6px var(--gta-red); }
-    .dot-yellow { background: var(--gta-gold); box-shadow: 0 0 6px var(--gta-gold); }
-    .dot-green { background: var(--gta-mint); box-shadow: 0 0 6px var(--gta-mint); }
+    .dot-red { background: var(--gow-crimson-bright); box-shadow: 0 0 6px var(--gow-crimson-bright); }
+    .dot-yellow { background: var(--gow-gold); box-shadow: 0 0 6px var(--gow-gold); }
+    .dot-green { background: var(--gow-frost); box-shadow: 0 0 6px var(--gow-frost); }
 
     .terminal-title {
-      color: var(--gta-orange);
+      color: var(--gow-gold-light);
       letter-spacing: 1.5px;
       font-weight: 800;
       text-transform: uppercase;
@@ -426,17 +403,16 @@
     }
 
     .terminal-port {
-      color: var(--gta-cyan);
-      opacity: 0.9;
-      font-size: 11.5px;
+      color: var(--gow-frost);
+      opacity: 0.95;
+      font-size: 11px;
       letter-spacing: 1px;
       font-weight: 800;
     }
 
-    /* ---------- Console Window ---------- */
     #console {
-      background: var(--gta-panel-bg);
-      border: 1px solid var(--gta-border-pink);
+      background: var(--gow-panel-bg);
+      border: 1px solid var(--gow-border-gold);
       border-top: none;
       border-bottom-left-radius: 14px;
       border-bottom-right-radius: 14px;
@@ -444,47 +420,35 @@
       height: 280px;
       overflow-y: auto;
       font-family: 'Consolas', 'Courier New', monospace;
-      font-size: 13.5px;
+      font-size: 13px;
       line-height: 1.6;
-      color: var(--gta-mint);
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), inset 0 0 25px rgba(255, 42, 141, 0.1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      color: var(--gow-frost);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.75), inset 0 0 25px rgba(0, 0, 0, 0.9);
     }
 
-    /* WebKit Scrollbar */
-    #console::-webkit-scrollbar, .payload-grid::-webkit-scrollbar {
-      width: 7px;
-    }
+    #console::-webkit-scrollbar, .payload-grid::-webkit-scrollbar { width: 7px; }
     #console::-webkit-scrollbar-track, .payload-grid::-webkit-scrollbar-track {
-      background: rgba(8, 2, 14, 0.6);
+      background: rgba(10, 13, 20, 0.6);
       border-radius: 4px;
     }
     #console::-webkit-scrollbar-thumb, .payload-grid::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--gta-pink), var(--gta-orange));
+      background: linear-gradient(180deg, var(--gow-gold), var(--gow-crimson));
       border-radius: 4px;
-      box-shadow: 0 0 8px var(--gta-pink);
-    }
-    #console::-webkit-scrollbar-thumb:hover, .payload-grid::-webkit-scrollbar-thumb:hover {
-      background: var(--gta-cyan);
-      box-shadow: 0 0 10px var(--gta-cyan);
+      box-shadow: 0 0 8px var(--gow-crimson);
     }
 
-    /* Log Typography */
-    .log-info { color: var(--gta-cyan); text-shadow: 0 0 5px rgba(0, 240, 255, 0.4); }
-    .log-success { color: var(--gta-mint); text-shadow: 0 0 6px rgba(13, 245, 196, 0.5); font-weight: bold; }
-    .log-error { color: var(--gta-red); text-shadow: 0 0 6px rgba(255, 51, 102, 0.6); font-weight: bold; }
+    .log-info { color: var(--gow-frost); text-shadow: 0 0 5px rgba(0, 240, 255, 0.4); }
+    .log-success { color: #00ffaa; text-shadow: 0 0 6px rgba(0, 255, 170, 0.5); font-weight: bold; }
+    .log-error { color: var(--gow-crimson-bright); text-shadow: 0 0 6px rgba(230, 57, 70, 0.6); font-weight: bold; }
 
-    /* ---------- Payload Section ---------- */
+    /* Armory Payloads Section */
     .payload-section {
       margin-top: 28px;
-      background: var(--gta-panel-bg);
-      border: 1px solid var(--gta-border-pink);
+      background: var(--gow-panel-bg);
+      border: 1px solid var(--gow-border-gold);
       border-radius: 16px;
       padding: 22px;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 42, 141, 0.08);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.08);
     }
 
     .payload-header {
@@ -493,103 +457,75 @@
       align-items: center;
       margin-bottom: 16px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 42, 141, 0.25);
+      border-bottom: 1px solid var(--gow-border-gold);
     }
 
     .payload-title {
-      font-size: 17px;
-      font-weight: 900;
-      letter-spacing: 2.5px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--gow-gold-light);
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      background: linear-gradient(90deg, #ffffff 0%, #ff2a8d 50%, #ff7e29 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 10px rgba(255, 42, 141, 0.5));
     }
 
     .payload-subtitle {
-      font-size: 11.5px;
-      color: #bfa5dc;
-      letter-spacing: 1px;
+      font-size: 11px;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
     }
 
     .payload-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
     }
 
     .payload-card {
-      background: linear-gradient(140deg, rgba(30, 12, 54, 0.85) 0%, rgba(14, 5, 26, 0.95) 100%);
-      border: 1px solid rgba(0, 240, 255, 0.25);
+      background: rgba(18, 22, 34, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       border-radius: 12px;
       padding: 14px 16px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 12px;
       transition: all 0.2s ease;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     }
 
     .payload-card:hover {
-      border-color: var(--gta-pink);
+      border-color: var(--gow-crimson-bright);
+      box-shadow: 0 0 16px rgba(230, 57, 70, 0.4);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 42, 141, 0.3);
     }
 
-    .card-featured {
-      border-color: var(--gta-pink);
-      background: linear-gradient(140deg, rgba(65, 14, 75, 0.9) 0%, rgba(22, 6, 38, 0.95) 100%);
-      box-shadow: 0 6px 22px rgba(255, 42, 141, 0.35), inset 0 0 15px rgba(255, 126, 41, 0.15);
-    }
-
-    .card-featured .p-name {
-      color: #ffc233;
-      text-shadow: 0 0 10px rgba(255, 194, 51, 0.6);
-    }
-
-    .btn-featured {
-      background: linear-gradient(135deg, rgba(255, 42, 141, 0.25) 0%, rgba(255, 126, 41, 0.25) 100%);
-      border: 1px solid var(--gta-pink);
-      color: #ffffff;
-      font-weight: 800;
-    }
-
-    .btn-featured:hover {
-      background: linear-gradient(135deg, #ff2a8d 0%, #ff7e29 100%);
-      color: #07020d;
-      box-shadow: 0 0 16px var(--gta-pink);
-    }
-
-    .p-info {
-      flex-grow: 1;
-      min-width: 0;
+    .payload-card.card-featured {
+      border-color: var(--gow-crimson-bright);
+      background: linear-gradient(135deg, rgba(35, 12, 16, 0.85) 0%, rgba(18, 22, 34, 0.9) 100%);
+      box-shadow: 0 0 14px rgba(230, 57, 70, 0.35);
     }
 
     .p-name {
-      font-size: 15px;
       font-weight: 800;
-      color: #ffffff;
+      font-size: 13.5px;
+      color: var(--gow-gold-light);
+      font-family: 'Cinzel', serif;
       letter-spacing: 1px;
     }
 
     .p-desc {
-      font-size: 11px;
-      color: #a894c2;
+      font-size: 10.5px;
+      color: #94a3b8;
       margin-top: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .btn-send {
       background: rgba(0, 240, 255, 0.12);
-      border: 1px solid var(--gta-cyan);
-      color: var(--gta-cyan);
+      border: 1px solid var(--gow-frost);
+      color: var(--gow-frost);
       border-radius: 8px;
-      padding: 8px 16px;
-      font-size: 12px;
-      font-family: inherit;
+      padding: 7px 16px;
+      font-size: 11px;
+      font-family: 'Cinzel', serif;
       font-weight: 800;
       letter-spacing: 1px;
       cursor: pointer;
@@ -598,62 +534,69 @@
     }
 
     .btn-send:hover {
-      background: var(--gta-cyan);
-      color: #07020d;
-      box-shadow: 0 0 14px var(--gta-cyan);
+      background: var(--gow-frost);
+      color: #07090f;
+      box-shadow: 0 0 14px var(--gow-frost);
     }
 
-    .btn-send:focus-visible {
-      outline: 3px solid var(--gta-pink);
-      outline-offset: 2px;
+    .btn-featured {
+      background: rgba(192, 21, 21, 0.25);
+      border-color: var(--gow-crimson-bright);
+      color: #ffffff;
+    }
+
+    .btn-featured:hover {
+      background: var(--gow-crimson-bright);
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(230, 57, 70, 0.8);
     }
 
     .btn-send[data-state="sending"] {
-      border-color: var(--gta-gold);
-      color: var(--gta-gold);
-      background: rgba(255, 194, 51, 0.2);
-      animation: pulse 1s infinite;
+      border-color: var(--gow-gold);
+      color: var(--gow-gold);
+      background: rgba(212, 175, 55, 0.2);
       pointer-events: none;
     }
 
     .btn-send[data-state="sent"] {
-      border-color: var(--gta-mint);
-      color: var(--gta-mint);
-      background: rgba(13, 245, 196, 0.2);
-      box-shadow: 0 0 12px rgba(13, 245, 196, 0.5);
+      border-color: #00ffaa;
+      color: #00ffaa;
+      background: rgba(0, 255, 170, 0.2);
+      box-shadow: 0 0 12px rgba(0, 255, 170, 0.5);
     }
 
     .btn-send[data-state="failed"] {
-      border-color: var(--gta-red);
-      color: var(--gta-red);
-      background: rgba(255, 51, 102, 0.2);
+      border-color: var(--gow-crimson-bright);
+      color: var(--gow-crimson-bright);
+      background: rgba(230, 57, 70, 0.2);
     }
 
     /* Credits Footer */
     .credits-box {
       margin-top: 26px;
       padding: 16px 20px;
-      background: rgba(15, 5, 30, 0.9);
-      border: 1px solid rgba(255, 42, 141, 0.3);
+      background: rgba(14, 17, 26, 0.9);
+      border: 1px solid var(--gow-border-gold);
       border-radius: 14px;
       text-align: center;
       font-size: 11.5px;
-      color: #bfa5dc;
+      color: #94a3b8;
       line-height: 1.6;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
     }
 
     .credits-title {
-      color: var(--gta-gold);
+      color: var(--gow-gold-light);
       font-weight: 900;
       letter-spacing: 2px;
       margin: 0 0 6px 0;
-      font-size: 12.5px;
+      font-size: 12px;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(255, 194, 51, 0.5);
+      font-family: 'Cinzel', serif;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
     }
 
-    /* ---------- GTA VI Mission Notification Popup ---------- */
+    /* God of War Favor Success Notification Popup */
     #jb-success-popup {
       position: fixed;
       top: 24px;
@@ -679,47 +622,27 @@
       align-items: center;
       gap: 15px;
       padding: 14px 18px;
-      background: rgba(18, 6, 34, 0.97);
-      border: 2px solid var(--gta-pink);
+      background: rgba(18, 12, 16, 0.98);
+      border: 2px solid var(--gow-gold);
       border-radius: 18px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 42, 141, 0.5), inset 0 0 15px rgba(255, 126, 41, 0.2);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.5), inset 0 0 15px rgba(192, 21, 21, 0.3);
       cursor: pointer;
-    }
-
-    .jb-popup-glow {
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 20% 50%, rgba(255, 42, 141, 0.25), transparent 60%);
-      pointer-events: none;
     }
 
     .jb-popup-img {
       width: 52px;
       height: 52px;
-      min-width: 52px;
-      min-height: 52px;
-      max-width: 52px;
-      max-height: 52px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--gta-gold);
-      box-shadow: 0 0 14px rgba(255, 194, 51, 0.8);
+      border: 2px solid var(--gow-gold);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.8);
       flex-shrink: 0;
-      z-index: 1;
     }
 
     .jb-popup-content {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      min-width: 0;
-      z-index: 1;
     }
 
     .jb-popup-header {
@@ -730,40 +653,30 @@
     }
 
     .jb-popup-badge {
-      font-family: inherit;
       font-size: 10px;
       font-weight: 900;
       letter-spacing: 1.5px;
-      color: var(--gta-gold);
-      text-shadow: 0 0 8px rgba(255, 194, 51, 0.7);
+      color: var(--gow-gold-light);
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
       text-transform: uppercase;
-    }
-
-    .jb-popup-time {
-      font-family: inherit;
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Cinzel', serif;
     }
 
     .jb-popup-title {
-      font-family: 'Montserrat', 'Trebuchet MS', sans-serif;
-      font-size: 16px;
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
       font-weight: 900;
-      letter-spacing: 0.5px;
-      color: #ffffff;
-      text-shadow: 0 0 10px rgba(255, 42, 141, 0.8);
+      letter-spacing: 1px;
+      color: var(--gow-gold-light);
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
       line-height: 1.2;
     }
 
     .jb-popup-subtitle {
-      font-family: inherit;
-      font-size: 11.5px;
-      color: var(--gta-mint);
+      font-size: 11px;
+      color: var(--gow-frost);
       margin-top: 3px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-shadow: 0 0 6px rgba(13, 245, 196, 0.5);
+      letter-spacing: 0.5px;
     }
 
     .jb-popup-close {
@@ -775,26 +688,11 @@
       cursor: pointer;
       padding: 0 4px;
       line-height: 1;
-      transition: color 0.2s ease;
-      z-index: 1;
     }
 
     .jb-popup-close:hover {
       color: #ffffff;
-      text-shadow: 0 0 8px var(--gta-pink);
-    }
-
-    @media (max-width: 640px) {
-      .gta-title { font-size: 42px; letter-spacing: 6px; }
-      .vi-badge { font-size: 50px; }
-      .vice-city-script { font-size: 26px; }
-      #jb-success-popup {
-        top: 16px;
-        right: 16px;
-        left: 16px;
-        width: auto;
-        max-width: none;
-      }
+      text-shadow: 0 0 8px var(--gow-crimson-bright);
     }
   </style>
 </head>
@@ -802,15 +700,13 @@
   <!-- Jailbreak Success Small Popup Message -->
   <div id="jb-success-popup" role="alert" onclick="closeJbSuccessPopup()">
     <div class="jb-popup-card">
-      <div class="jb-popup-glow"></div>
-      <img src="./prestige.jpg" alt="Prestige Master" class="jb-popup-img">
+      <img src="./kratos_crest.png" alt="Kratos God of War" class="jb-popup-img">
       <div class="jb-popup-content">
         <div class="jb-popup-header">
-          <span class="jb-popup-badge">&#9733; MISSION PASSED &#9733;</span>
-          <span class="jb-popup-time">RESPECT +</span>
+          <span class="jb-popup-badge">&#9733; FAVOR COMPLETED &#9733;</span>
         </div>
         <div class="jb-popup-title">Jailbreak Success!</div>
-        <div class="jb-popup-subtitle">Kernel Active &bull; System Ready</div>
+        <div class="jb-popup-subtitle">Kernel Conquered &bull; Midgard Secured</div>
       </div>
       <button type="button" class="jb-popup-close" onclick="event.stopPropagation(); closeJbSuccessPopup();" aria-label="Close">&times;</button>
     </div>
@@ -822,54 +718,33 @@
       <a href="http://lonely2-host.duckdns.org/" class="nav-hub-link nav-ps4">PS4 HOST (LONELY2) &rarr;</a>
     </div>
 
-    <!-- GTA VI Vice City Header Banner with Panorama Art -->
-    <div class="gta-banner">
-      <svg class="gta-banner-bg-art" viewBox="0 0 860 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bg-sky" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#18062d" stop-opacity="0.2"/>
-            <stop offset="60%" stop-color="#b81b7a" stop-opacity="0.45"/>
-            <stop offset="100%" stop-color="#ff7e29" stop-opacity="0.6"/>
-          </linearGradient>
-          <linearGradient id="sun-grad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#ffc233"/>
-            <stop offset="50%" stop-color="#ff7e29"/>
-            <stop offset="100%" stop-color="#ff2a8d"/>
-          </linearGradient>
-        </defs>
-        <rect width="860" height="180" fill="url(#bg-sky)"/>
-        <!-- Centered Setting Sun -->
-        <circle cx="430" cy="115" r="50" fill="url(#sun-grad)" opacity="0.85"/>
-        <line x1="370" y1="100" x2="490" y2="100" stroke="#150524" stroke-width="3" />
-        <line x1="375" y1="110" x2="485" y2="110" stroke="#150524" stroke-width="3" />
-        <line x1="382" y1="120" x2="478" y2="120" stroke="#150524" stroke-width="3" />
-        <line x1="395" y1="130" x2="465" y2="130" stroke="#150524" stroke-width="3" />
-        <!-- Distant Vice City Skyline -->
-        <path d="M220 180 L220 155 L235 155 L235 165 L250 165 L250 148 L270 148 L270 180 L590 180 L590 150 L610 150 L610 160 L625 160 L625 142 L640 142 L640 180 Z" fill="#0d0218" opacity="0.6"/>
-        <!-- Left Palm Trees -->
-        <path d="M70 180 Q105 100 95 45 Q75 20 25 30 Q70 42 78 55 Q55 42 15 60 Q65 66 75 75 Q40 85 10 108 Q66 92 80 96 L70 180 Z" fill="#0a0114" opacity="0.95"/>
-        <path d="M110 180 Q130 120 125 70 Q112 48 75 52 Q110 60 115 72 Q98 62 65 78 Q105 84 112 92 Q85 100 60 120 Q108 105 118 108 L110 180 Z" fill="#0a0114" opacity="0.8"/>
-        <!-- Right Palm Trees -->
-        <path d="M790 180 Q755 100 765 45 Q785 20 835 30 Q790 42 782 55 Q805 42 845 60 Q795 66 785 75 Q820 85 850 108 Q794 92 780 96 L790 180 Z" fill="#0a0114" opacity="0.95"/>
-        <path d="M750 180 Q730 120 735 70 Q748 48 785 52 Q750 60 745 72 Q762 62 795 78 Q755 84 748 92 Q775 100 800 120 Q752 105 742 108 L750 180 Z" fill="#0a0114" opacity="0.8"/>
-      </svg>
+    <!-- God of War Header Banner -->
+    <div class="gow-header-banner">
+      <!-- Kratos God of War Shield Crest -->
+      <div class="kratos-crest-wrap">
+        <div class="kratos-crest-frame">
+          <!-- Outer Norse Runic Orbit Ring -->
+          <div class="kratos-runic-orbit"></div>
 
-      <div class="header-content">
-        <div class="gta-logo-row">
-          <h1 class="gta-title">LONELY</h1>
-          <span class="vi-badge">VI</span>
+          <!-- Circular Medallion -->
+          <div class="kratos-medallion">
+            <img src="./kratos_crest.png" alt="Kratos God of War">
+            <div class="kratos-medallion-glare"></div>
+          </div>
         </div>
-        <span class="vice-city-script">Vice City</span>
-        <p class="gta-tagline">PS5 KERNEL EXPLOIT &amp; PAYLOAD SUITE &bull; FW 7.00 - 13.60</p>
       </div>
+
+      <h1 class="gow-title">LONELY</h1>
+      <div class="gow-subtitle">&#9876; GOD OF WAR EDITION &#9876;</div>
+      <p class="gow-tagline">PS5 KERNEL EXPLOIT &amp; PAYLOAD SUITE &bull; FW 7.00 - 13.60</p>
     </div>
 
     <!-- Status Chips -->
     <div class="status-container">
-      <div class="chip fw-chip">&#9733; FW <span id="fwText">7.00 - 13.60</span></div>
+      <div class="chip fw-chip">&#9876; FW <span id="fwText">7.00 - 13.60</span></div>
       <div class="chip status-chip">
         <span class="led" id="statusLed"></span>
-        <span id="statusText">VICE CITY KERNEL: READY</span>
+        <span id="statusText">REALM: MIDGARD (ONLINE)</span>
       </div>
       <div class="chip elfldr-chip" id="elfldrChip">
         <span class="led led-yellow" id="elfldrLed"></span>
@@ -887,7 +762,7 @@
 
     <!-- Action Run Button -->
     <div class="controls">
-      <button id="runBtn" tabindex="0">&#9733; RUN EXPLOIT &#9733;</button>
+      <button id="runBtn" tabindex="0">&#9876; RUN EXPLOIT &#9876;</button>
       <div class="auto-run-bar">
         <label class="toggle-wrap" title="Automatically run exploit on page load">
           <input type="checkbox" id="autoJbToggle">
@@ -904,7 +779,7 @@
         <span class="dot dot-yellow"></span>
         <span class="dot dot-green"></span>
       </div>
-      <div class="terminal-title">VCPD DISPATCH // PS5 KERNEL CONSOLE</div>
+      <div class="terminal-title">KRATOS @ MIDGARD // PS5 KERNEL DISPATCH</div>
       <div class="terminal-port">PORT: 9021</div>
     </div>
 
@@ -913,7 +788,7 @@
     <!-- Payload Host Menu -->
     <div class="payload-section" id="payloadSection">
       <div class="payload-header">
-        <span class="payload-title">Vice City Armory &bull; Payloads</span>
+        <span class="payload-title">&#9876; Armory of the Nine Realms</span>
         <span class="payload-subtitle">ELFLDR on port 9021 &middot; Select payload to dispatch</span>
       </div>
 
@@ -986,8 +861,8 @@
 
     <!-- Credits Footer -->
     <div class="credits-box">
-      <div class="credits-title">LONELY VI PS5 EXPLOIT SUITE &middot; CREDITS</div>
-      <p style="margin: 0 0 6px 0;">Based on <b>Relapse-Exploit</b> by <span style="color:var(--gta-cyan)">ntfargo</span> &amp; <span style="color:var(--gta-pink)">Sonic_Iso</span>.</p>
+      <div class="credits-title">LONELY PS5 EXPLOIT SUITE &middot; GOD OF WAR EDITION</div>
+      <p style="margin: 0 0 6px 0;">Based on <b>Relapse-Exploit</b> by <span style="color:var(--gow-frost)">ntfargo</span> &amp; <span style="color:var(--gow-crimson-bright)">Sonic_Iso</span>.</p>
       <p style="margin: 0; opacity: 0.85;">
         <b>Kernel &amp; WebKit Research:</b> TheFlow, Dr. Yenyen, ufm42, Jordy, Sleirsgoevy, Flatz, Specter, EchoStretch, cow, nhk, bollarz, EarthOnion.<br>
         <b>Payloads:</b> EchoStretch (nexHEN), John T&ouml;rnblom (elfldr), Scene Collective.

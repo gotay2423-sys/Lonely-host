@@ -1,9 +1,11 @@
 CACHE MANIFEST
-# Lonely Host PS5 Offline Cache v3.2 - GTA 6 Vice City Bold Edition
-# 2026-11-20
+# Lonely Host PS5 Offline Cache v4.0 - God of War Edition
+# 2026-11-25
 
 CACHE:
 index.html
+gow_bg.jpg
+kratos_crest.png
 prestige.jpg
 src/firmware.js
 src/main.js

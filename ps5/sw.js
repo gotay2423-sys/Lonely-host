@@ -1,8 +1,10 @@
-const CACHE_NAME = 'lonely-ps5-v3.0-gta6';
+const CACHE_NAME = 'lonely-ps5-v4.0-god-of-war';
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './gow_bg.jpg',
+  './kratos_crest.png',
   './prestige.jpg',
   './src/firmware.js',
   './src/main.js',
