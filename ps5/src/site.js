@@ -523,6 +523,8 @@ if (cacheChip) {
           "./src/utils/int64.js",
           "./src/utils/syscalls.js",
           "./src/utils/rop_slave.js",
+          "./payloads/kstuff.elf",
+          "./payloads/kstuff-1.15-dr-test3-stable.elf",
           "./payloads/nexHEN.elf",
           "./payloads/zftpd-ps5.elf",
           "./payloads/MemDBG-ps5.elf",

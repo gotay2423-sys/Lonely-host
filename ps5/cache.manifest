@@ -1,6 +1,6 @@
 CACHE MANIFEST
-# Lonely Host PS5 Offline Cache v4.4 - God of War Solid Icons & Flex Grid Edition
-# 2026-11-25
+# Lonely Host PS5 Offline Cache v4.5 - God of War kstuff Lite Edition
+# 2026-11-26
 
 CACHE:
 index.html
@@ -51,6 +51,8 @@ offsets/13.20.js
 offsets/13.40.js
 offsets/13.42.js
 offsets/13.60.js
+payloads/kstuff.elf
+payloads/kstuff-1.15-dr-test3-stable.elf
 payloads/nexHEN.elf
 payloads/zftpd-ps5.elf
 payloads/MemDBG-ps5.elf

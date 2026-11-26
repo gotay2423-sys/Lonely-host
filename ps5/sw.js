@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lonely-ps5-v4.4-god-of-war';
+const CACHE_NAME = 'lonely-ps5-v4.5-god-of-war';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -52,6 +52,8 @@ const ASSETS_TO_CACHE = [
   './offsets/13.42.js',
   './offsets/13.60.js',
   // Payloads
+  './payloads/kstuff.elf',
+  './payloads/kstuff-1.15-dr-test3-stable.elf',
   './payloads/nexHEN.elf',
   './payloads/zftpd-ps5.elf',
   './payloads/MemDBG-ps5.elf',
